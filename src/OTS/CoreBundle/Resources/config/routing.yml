@@ -1,4 +1,4 @@
-core_homepage:
+ots_core_home:
     path:     /
     defaults: 
-        - _controller: OTSCoreBundle:Core:index
+        _controller: OTSCoreBundle:Core:index
