@@ -1,4 +1,4 @@
-Symfony
+Unofficial concept for the online ticketing service of the Louvre museum
 =======
 
-A Symfony project created on April 6, 2017, 4:33 pm.
+This is an unofficial concept for the online ticketing service of the Louvre museum, done as a project toward my web developement degree.
