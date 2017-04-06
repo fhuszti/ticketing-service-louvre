@@ -4,10 +4,27 @@
   	Home - {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/home.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
 {% block body %}
 	{% for message in app.session.flashbag.get('info') %}
         <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
 
-    <h1>Bonsoir</h1>
+    <div class="row" id="cover">
+        <div class="col-xs-12" id="cover-img">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2></h2>
+        </div>
+    </div>
 {% endblock %}

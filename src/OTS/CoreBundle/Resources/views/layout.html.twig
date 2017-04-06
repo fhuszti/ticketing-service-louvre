@@ -7,18 +7,25 @@
 	  	<title>{% block title %}Buy tickets - Musée du Louvre{% endblock %}</title>
 
 	  	{% block stylesheets %}
-	    	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		  	{% stylesheets filter='cssrewrite'
+		  		'//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'
+		  		'bundles/otscore/css/header.css'
+		  		'bundles/otscore/css/footer.css' %}
+		  		<link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+		  	{% endstylesheets %}
 	  	{% endblock %}
 	</head>
 
 	<body>
 	  	<div class="container-fluid">
-		    <header id="navbar navbar-default navbar-fixed-top">
+		    <header class="navbar navbar-default navbar-fixed-top" id="header">
 		      	<div class="container">
 		      		<div class="navbar-header">
                     	<a href="{{ path('ots_core_home') }}" title="Back to the homepage" class="navbar-brand">
-                        	<img src="http://assets.fhuszti.com/louvre/logo.png" alt="Logo - Musée du Louvre" style="height: 30px" />
-                    	</a>
+                        	{% image 'http://assets.fhuszti.com/louvre/logo.png' %}
+    							<img src="{{ asset_url }}" alt="Logo - Musée du Louvre" />
+							{% endimage %}
+						</a>
 
                     	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         	<span class="icon-bar"></span>
@@ -66,10 +73,10 @@
 		    {% block body %}
 		    {% endblock %}
 
-		    <footer class="row">
+		    <footer class="row" id="footer">
 		      	<div class="col-xs-12 col-sm-4">
-		      		<a href="#" title="Legal notice">
-		      			Legal notice
+		      		<a href="#" title="Legal information and terms of use">
+		      			Legal information and terms of use
 		      		</a>
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
@@ -77,7 +84,7 @@
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
 		      		<a href="#" title="Terms &amp; Conditions">
-		      			T&Cs
+		      			T&amp;Cs
 		      		</a>
 		      	</div>
 		    </footer>
