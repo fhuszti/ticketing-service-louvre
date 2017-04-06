@@ -1,0 +1,3 @@
+ots_billing_homepage:
+    path:     /
+    defaults: { _controller: OTSBillingBundle:Default:index }
