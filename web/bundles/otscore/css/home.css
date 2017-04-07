@@ -23,27 +23,21 @@
 }
 
 #prices {
-	margin: 0;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+	padding: 20px 5px;
 }
 .price-block {
 	padding: 5px;
 }
 .price-box {
 	border: 5px #eee ridge;
-	background-image: radial-gradient(circle at center, #222, #331107);
+	border-radius: 5px;
+	background-color: rgba(170, 170, 170, 0.1);
 	color: #eee;
 	padding-bottom: 15px;
-}
-.row.match-my-cols {
-    overflow: hidden; 
-}
-
-.row.match-my-cols [class*="col-"]{
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
 }
 #booking-btn {
 	margin: 10px 0;
 	color: #eee;
-	background-image: radial-gradient(circle at center, #222, #331107);
+	background-color: rgba(170, 170, 170, 0.2);
 }

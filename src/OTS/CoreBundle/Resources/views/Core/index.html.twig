@@ -38,7 +38,7 @@
     </div>
 
     <div class="row text-center" id="prices">
-        <div class="row match-my-cols">
+        <div class="match-my-cols">
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
                 <h2>Normal rate</h2>
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="row match-my-cols">
+        <div class="match-my-cols">
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
                 <h2>Child rate</h2>
@@ -88,8 +88,10 @@
             </div>
         </div>
 
-        <a class="btn btn-default btn-block btn-lg" id="booking-btn" href="{{ path('ots_billing_home') }}">
+       <div class="col-xs-12">
+       <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('ots_billing_home') }}">
             Book a ticket online
         </a>
+        </div>
     </div>
 {% endblock %}
