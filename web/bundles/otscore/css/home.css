@@ -41,3 +41,45 @@
 	color: #eee;
 	background-color: rgba(170, 170, 170, 0.2);
 }
+
+#contact {
+	padding-bottom: 20px;
+	background-color: #eee;
+	color: #331107;
+}
+#contact h2 {
+	margin-bottom: 30px;
+}
+.vertical-align {
+	display: flex;
+	align-items: center;
+}
+.vertical-align p {
+	margin: 5px 0;
+}
+.hr-border {
+	border-bottom: 1px solid #331107;
+	padding-bottom: 5px;
+}
+.fa-facebook-square, .fa-google-plus-square, .fa-twitter-square {
+	color: #331107;
+	margin: 0 3px;
+	cursor: pointer;
+}
+.fa-facebook-square:active, .fa-facebook-square:focus, .fa-facebook-square:hover {
+	color: #3b5998;
+}
+.fa-google-plus-square:active, .fa-google-plus-square:focus, .fa-google-plus-square:hover {
+	color: #d34836;
+}
+.fa-twitter-square:active, .fa-twitter-square:focus, .fa-twitter-square:hover {
+	color: #00aced;
+}
+
+
+
+@media (max-width: 767px) {
+	.vertical-align {
+		display: block;
+	}
+}
