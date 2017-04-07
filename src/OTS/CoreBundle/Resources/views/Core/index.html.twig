@@ -1,4 +1,5 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
+{% set homepage = true %}
 
 {% block title %}
   	Home - {{ parent() }}
@@ -23,7 +24,7 @@
     </div>
 
     <div class="row text-center">
-        <div class="col-xs-12" id="opening-hours">
+        <div class="col-xs-12" id="opening-time">
             <h2>Opening time</h2>
 
             <p class="left-centered">
@@ -126,4 +127,12 @@
             </div>
         </div>
     </div>
+
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts
+            'bundles/otscore/js/home.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 {% endblock %}

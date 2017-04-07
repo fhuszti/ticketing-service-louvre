@@ -17,7 +17,7 @@
 	  	{% endblock %}
 	</head>
 
-	<body>
+	<body{% if homepage is defined %} data-spy="scroll" data-target=".navbar" data-offset="300"{% endif %}>
 	  	<div class="container-fluid">
 		    <header class="navbar navbar-default navbar-fixed-top" id="header">
 		      	<div class="container">
@@ -40,28 +40,27 @@
 	                        <!-- actual menu list -->
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li>
-	                                <a href="{{ path('ots_core_home') }}" title="Homepage">
+	                                <a href="#cover" title="Homepage" class="scrollspy-link">
 	                                    Home
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#" title="Opening time">
+	                                <a href="#opening-time" title="Opening time" class="scrollspy-link">
 	                                    Opening time
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#" title="Prices">
+	                                <a href="#prices" title="Prices" class="scrollspy-link">
 	                                    Prices
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#" title="Contact">
+	                                <a href="#contact" title="Contact" class="scrollspy-link">
 	                                    Contact
 	                                </a>
 	                            </li>
 	                            <li>
-	                            <li>
-	                                <a href="#" title="Book online">
+	                                <a href="{{ path('ots_billing_home') }}" title="Book online">
 	                                    Book online
 	                                </a>
 	                            </li>
@@ -92,8 +91,11 @@
 	  	</div>
 
 	  	{% block javascripts %}
-	    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	    	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	  		{% javascripts
+		  		'//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
+		  		'//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js' %}
+		  		<script type="text/javascript" src="{{ asset_url }}"></script>
+		  	{% endjavascripts %}
 	  	{% endblock %}
 	</body>
 </html>

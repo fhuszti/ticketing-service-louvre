@@ -8,13 +8,13 @@
 	background-position: center 20%;
 }
 
-#opening-hours {
+#opening-time {
 	padding-top: 10px;
 	padding-bottom: 30px;
 	background-color: #c82d00;
 	color: white;
 }
-#opening-hours h2 {
+#opening-time h2 {
 	margin-bottom: 30px;
 }
 .left-centered {
@@ -32,6 +32,7 @@
 .price-box {
 	border: 5px #eee ridge;
 	border-radius: 5px;
+	background-color: rgb(170, 170, 170);
 	background-color: rgba(170, 170, 170, 0.1);
 	color: #eee;
 	padding-bottom: 15px;
@@ -39,6 +40,7 @@
 #booking-btn {
 	margin: 10px 0;
 	color: #eee;
+	background-color: rgb(170, 170, 170);
 	background-color: rgba(170, 170, 170, 0.2);
 }
 
