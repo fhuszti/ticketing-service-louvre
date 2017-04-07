@@ -1,11 +1,11 @@
 @font-face {
 	font-family: 'Work Sans';
-	src: url('../fonts/WorkSans-Regular.eot');
-	src: url('../fonts/WorkSans-Regular.eot?iefix') format('eot'),
-	     url('../fonts/WorkSans-Regular.woff') format('woff'),
-     	 url('../fonts/WorkSans-Regular.woff2') format('woff2'),
-	     url('../fonts/WorkSans-Regular.ttf') format('truetype'),
-	     url('../fonts/WorkSans-Regular.svg#webfont') format('svg');
+	src: url('../../bundles/otscore/fonts/WorkSans-Regular.eot');
+	src: url('../../bundles/otscore/fonts/WorkSans-Regular.eot?iefix') format('eot'),
+	     url('../../bundles/otscore/fonts/WorkSans-Regular.woff') format('woff'),
+     	 url('../../bundles/otscore/fonts/WorkSans-Regular.woff2') format('woff2'),
+	     url('../../bundles/otscore/fonts/WorkSans-Regular.ttf') format('truetype'),
+	     url('../../bundles/otscore/fonts/WorkSans-Regular.svg#webfont') format('svg');
 }
 
 body {

@@ -127,12 +127,12 @@
             </div>
         </div>
     </div>
-
-    {% block javascripts %}
-        {{ parent() }}
-        {% javascripts
-            'bundles/otscore/js/home.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+        'bundles/otscore/js/home.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
