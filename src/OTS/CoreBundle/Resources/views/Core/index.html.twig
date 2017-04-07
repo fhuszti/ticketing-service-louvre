@@ -36,4 +36,60 @@
             </p>
         </div>
     </div>
+
+    <div class="row text-center" id="prices">
+        <div class="row match-my-cols">
+            <div class="col-xs-12 col-sm-6 price-block">
+                <div class="price-box">
+                <h2>Normal rate</h2>
+
+                <p>
+                    12 years old and older
+                </p>
+
+                <h3>16€</h3>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 price-block">
+                <div class="price-box">
+                <h2>Discounted rate</h2>
+
+                <p>
+                    Student, french military, museum employee or Ministry of Culture employee
+                </p>
+
+                <h3>10€</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row match-my-cols">
+            <div class="col-xs-12 col-sm-6 price-block">
+                <div class="price-box">
+                <h2>Child rate</h2>
+
+                <p>
+                    From 4 to 12 years old<br />
+                    Free for children younger than 4
+                </p>
+
+                <h3>8€</h3>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 price-block">
+                <div class="price-box">
+                <h2>Senior rate</h2>
+
+                <p>
+                    60 years old and older
+                </p>
+
+                <h3>12€</h3>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn btn-default btn-block btn-lg" id="booking-btn" href="{{ path('ots_billing_home') }}">
+            Book a ticket online
+        </a>
+    </div>
 {% endblock %}

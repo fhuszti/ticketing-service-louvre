@@ -21,3 +21,29 @@
 	display: inline-block;
 	text-align: left;
 }
+
+#prices {
+	margin: 0;
+}
+.price-block {
+	padding: 5px;
+}
+.price-box {
+	border: 5px #eee ridge;
+	background-image: radial-gradient(circle at center, #222, #331107);
+	color: #eee;
+	padding-bottom: 15px;
+}
+.row.match-my-cols {
+    overflow: hidden; 
+}
+
+.row.match-my-cols [class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+#booking-btn {
+	margin: 10px 0;
+	color: #eee;
+	background-image: radial-gradient(circle at center, #222, #331107);
+}
