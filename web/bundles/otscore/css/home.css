@@ -109,7 +109,7 @@
 
 @media (max-width: 500px) {
 	#cover .title-block {
-		top: 25%;
+		top: 20%;
 	}
 }
 @media (max-width: 767px) {
