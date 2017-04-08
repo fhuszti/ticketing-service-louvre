@@ -8,10 +8,6 @@
 	     url('../../bundles/otscore/fonts/WorkSans-Regular.svg#webfont') format('svg');
 }
 
-body {
-	font-family: 'Work Sans', Arial, sans-serif;
-}
-
 #header {
 	background-color: #222;
 	border: none;

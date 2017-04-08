@@ -1,3 +1,7 @@
+#wrapper {
+	margin-top: 0;
+}
+
 #cover {
 	position: relative;
 	text-align: center;

@@ -1,0 +1,42 @@
+{% extends "OTSCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  	Terms & Conditions - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+
+    <h1 id="title">Terms & Conditions</h1>
+    <hr />
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porttitor tortor sit amet velit laoreet interdum. Curabitur rhoncus, mauris nec porta pretium, nisl tortor sollicitudin odio, ut consectetur ex nisi sit amet augue. Aliquam a suscipit lacus. Quisque rhoncus enim ac magna laoreet, non gravida ex sodales. Phasellus tempus blandit iaculis. Cras aliquam quam eget lobortis efficitur. Vestibulum molestie nec orci bibendum posuere.
+    </p>
+
+    <p>
+        Suspendisse in felis suscipit, sodales elit in, gravida ligula. Proin molestie nisi at posuere auctor. Pellentesque at ex in urna fringilla porta vitae vel mi. Suspendisse bibendum urna vitae dolor fermentum posuere. Nam iaculis tortor nibh, et mollis orci placerat ac. Praesent id pretium ex, et tristique urna. Ut ullamcorper aliquam ultrices. Donec hendrerit sollicitudin dignissim. Donec vestibulum, nibh id eleifend ultrices, erat turpis blandit massa, in tincidunt elit mauris et nisi. Morbi vitae imperdiet est. Pellentesque quis vehicula eros. Nam quis dui fermentum, suscipit leo vitae, hendrerit tellus. Nunc fringilla eu tortor nec semper. Etiam aliquet elit ac odio bibendum, vitae iaculis velit dictum. Nullam vitae efficitur libero, sed fringilla ex.
+    </p>
+
+    <p>
+        Nullam iaculis libero sed varius aliquam. Morbi pellentesque sit amet sem in placerat. Cras non nisi placerat, varius elit sit amet, egestas dolor. Nullam volutpat nulla risus. Integer facilisis neque ac dapibus rutrum. Nulla sapien felis, lobortis quis blandit eget, sagittis eget odio. Suspendisse dolor velit, laoreet non tellus in, iaculis porttitor est. Donec tristique imperdiet lectus, iaculis tempor felis porttitor et. Sed varius, ipsum sed rutrum maximus, sem libero consectetur nisi, eu bibendum justo felis lobortis sem. Cras et ornare augue.
+    </p>
+
+    <p>
+        Donec sed lacinia magna. Sed pharetra ipsum augue, in tempus leo interdum vel. Suspendisse ullamcorper congue turpis nec rhoncus. Proin et sapien nibh. Sed molestie nunc consectetur laoreet aliquet. Cras imperdiet iaculis leo, porta feugiat libero ultricies non. Aenean gravida feugiat erat, a feugiat eros fringilla eu.
+    </p>
+
+    <p>
+        Nunc nisi massa, porttitor nec pulvinar at, interdum nec sem. Sed mollis eu ligula eu consectetur. Donec dignissim ante sed tortor convallis, ut elementum elit sollicitudin. Vestibulum eu finibus est. Ut consectetur sem ut nisi interdum, id vestibulum mi luctus. Vestibulum leo mi, gravida ac efficitur et, vehicula ac eros. Curabitur maximus augue ut neque euismod, in molestie felis lacinia. Proin elementum, massa quis pretium lacinia, lorem augue feugiat metus, vel aliquet dolor justo quis tellus. Aliquam id tristique metus. Cras facilisis purus at neque ultrices rhoncus non eget orci. Nulla pulvinar feugiat velit, non laoreet nisl vehicula sit amet. Pellentesque ut consectetur metus. Nullam sed elit iaculis, consequat diam vestibulum, convallis nisl.
+    </p>
+{% endblock %}

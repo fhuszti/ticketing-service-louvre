@@ -10,4 +10,14 @@ class CoreController extends Controller
     {
         return $this->render('OTSCoreBundle:Core:index.html.twig');
     }
+
+    public function legalAction()
+    {
+        return $this->render('OTSCoreBundle:Core:legal.html.twig');
+    }
+
+    public function termsAction()
+    {
+        return $this->render('OTSCoreBundle:Core:terms.html.twig');
+    }
 }

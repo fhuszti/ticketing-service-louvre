@@ -1,0 +1,34 @@
+{% extends "OTSCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  	Legal information and Terms of Use - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+
+    <h1 id="title">Legal information and Terms of Use</h1>
+    <hr />
+
+    <p>
+        Curabitur nec ex augue. Integer convallis quam id scelerisque efficitur. Mauris erat orci, volutpat sit amet pulvinar a, vehicula sit amet sem. Sed egestas convallis risus eu finibus. Proin lacinia ipsum quam, vitae placerat lacus blandit non. Nullam mollis neque quis euismod ornare. Etiam velit libero, bibendum ut purus non, suscipit sollicitudin diam. Curabitur dignissim ut leo vitae eleifend. Pellentesque sed tellus ullamcorper, aliquet est vel, lacinia dolor. Donec lacus turpis, hendrerit et justo ac, egestas facilisis massa. Sed laoreet nisi sapien, et euismod enim molestie condimentum. Integer eget mi eget leo bibendum bibendum. Donec quis turpis vel lacus maximus ultrices at eget orci. Vestibulum condimentum feugiat ornare. Praesent vitae rutrum ligula, vitae porta est.
+    </p>
+
+    <p>
+        Aenean sollicitudin posuere erat eu condimentum. Curabitur dignissim vulputate libero, non efficitur enim. Suspendisse efficitur euismod nunc, sed tincidunt est hendrerit et. Pellentesque sit amet consequat elit. Phasellus sed accumsan lacus. Ut accumsan, mi vitae facilisis laoreet, eros ipsum tempor dolor, a ornare lectus nibh vitae velit. Aliquam ornare nulla vitae urna convallis rutrum. Praesent malesuada justo sit amet ipsum hendrerit, vitae dignissim mauris sodales. Quisque id diam vitae risus bibendum molestie. Quisque venenatis pretium est.
+    </p>
+
+    <p>
+        Duis sollicitudin leo ut sapien eleifend posuere. Fusce augue nulla, congue nec neque vel, elementum pellentesque ipsum. Nunc lacus massa, molestie et sagittis et, dignissim non orci. Aenean elementum tincidunt tellus vel faucibus. Vivamus faucibus suscipit erat vitae fermentum. Quisque est neque, auctor ac cursus ac, fringilla vel diam. Suspendisse venenatis molestie nisl, eu auctor dui volutpat ut. Mauris ullamcorper mollis neque, nec facilisis tellus accumsan in. Morbi pellentesque, nunc eu fringilla vehicula, velit lectus mollis enim, nec tristique metus massa at mi. Nulla pulvinar dui a nibh tristique, vel ullamcorper odio sollicitudin. Nulla facilisi. Aliquam erat volutpat. Aenean efficitur turpis sapien, sit amet blandit turpis porta nec. Vivamus lacus ipsum, ullamcorper in ex vitae, porttitor sagittis neque.
+    </p>
+{% endblock %}

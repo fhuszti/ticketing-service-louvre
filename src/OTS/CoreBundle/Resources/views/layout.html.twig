@@ -10,6 +10,7 @@
 		  	{% stylesheets filter='cssrewrite'
 		  		'//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'
 		  		'../vendor/components/font-awesome/css/font-awesome.min.css'
+		  		'bundles/otscore/css/main.css'
 		  		'bundles/otscore/css/header.css'
 		  		'bundles/otscore/css/footer.css' %}
 		  		<link rel="stylesheet" href="{{ asset_url }}" type="text/css">
@@ -70,21 +71,23 @@
 		      	</div>
 		    </header>
 
-		    {% block body %}
-		    {% endblock %}
+		    <div id="wrapper">
+			    {% block body %}
+			    {% endblock %}
+		    </div>
 
 		    <footer class="row" id="footer">
 		      	<div class="col-xs-12 col-sm-4">
-		      		<a href="#" title="Legal information and terms of use">
-		      			Legal information and terms of use
+		      		<a href="{{ path('ots_core_legal') }}" title="Legal information and terms of use">
+		      			Legal information
 		      		</a>
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
 		      		&copy; Musée du Louvre - All rights reserved
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
-		      		<a href="#" title="Terms &amp; Conditions">
-		      			T&amp;Cs
+		      		<a href="{{ path('ots_core_terms') }}" title="Terms &amp; Conditions">
+		      			Terms &amp; Conditions
 		      		</a>
 		      	</div>
 		    </footer>
