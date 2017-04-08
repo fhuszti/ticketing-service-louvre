@@ -41,22 +41,22 @@
 	                        <!-- actual menu list -->
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li>
-	                                <a href="#cover" title="Homepage" class="scrollspy-link">
+	                                <a href="{% if homepage is defined %}#cover{% else %}{{ path('ots_core_home') }}{% endif %}" title="Homepage" class="scrollspy-link">
 	                                    Home
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#opening-time" title="Opening time" class="scrollspy-link">
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#opening-time" title="Opening time" class="scrollspy-link">
 	                                    Opening time
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#prices" title="Prices" class="scrollspy-link">
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#prices" title="Prices" class="scrollspy-link">
 	                                    Prices
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="#contact" title="Contact" class="scrollspy-link">
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#contact" title="Contact" class="scrollspy-link">
 	                                    Contact
 	                                </a>
 	                            </li>
