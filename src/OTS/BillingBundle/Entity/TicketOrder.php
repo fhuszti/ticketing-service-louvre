@@ -55,15 +55,17 @@ class TicketOrder
 
     /**
      * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order")
-     * @Assert\All({
-     *     @Assert\Valid()
-     * })
+     * @Assert\Valid()
      */
     private $tickets;
 
 
 
-    public function __construct() {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
         $this->tickets = new ArrayCollection();
     }
 
@@ -149,13 +151,6 @@ class TicketOrder
     public function getNbTickets()
     {
         return $this->nbTickets;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

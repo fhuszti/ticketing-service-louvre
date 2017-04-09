@@ -4,6 +4,7 @@ namespace OTS\BillingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use OTS\BillingBundle\Entity\TicketOrder;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -26,6 +27,16 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="The first name must be a valid string."
+     * )
+     * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage="The first name must have at least 2 characters.",
+     *     maxMessage="The first name must have at most 50 characters."
+     * )
      */
     private $firstName;
 
@@ -33,6 +44,16 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="The name must be a valid string."
+     * )
+     * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage="The name must have at least 2 characters.",
+     *     maxMessage="The name must have at most 50 characters."
+     * )
      */
     private $name;
 
@@ -40,6 +61,16 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="The country must be a valid string."
+     * )
+     * @Assert\Length(
+     *     min=2,
+     *     max=50,
+     *     minMessage="The country must have at least 2 characters.",
+     *     maxMessage="The country must have at most 50 characters."
+     * )
      */
     private $country;
 
@@ -47,6 +78,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birth_date", type="datetime")
+     * @Assert\DateTime(message="Birth date must be either a valid DateTime object or a valid date string.")
      */
     private $birthDate;
 
@@ -54,6 +86,10 @@ class Ticket
      * @var bool
      *
      * @ORM\Column(name="discounted", type="boolean")
+     * @Assert\Type(
+     *     type="bool",
+     *     message="The discount must be a boolean."
+     * )
      */
     private $discounted;
 
@@ -61,12 +97,17 @@ class Ticket
      * @var int
      *
      * @ORM\Column(name="price", type="integer")
+     * @Assert\GreaterThanOrEqual(
+     *     value=0,
+     *     message="The price of the ticket must be equal to or over 0."
+     * )
      */
     private $price;
 
     /**
      * @ORM\ManyToOne(targetEntity="OTS\BillingBundle\Entity\TicketOrder", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $order;
 
@@ -232,7 +273,7 @@ class Ticket
      *
      * @return Ticket
      */
-    public function setOrder(\OTS\BillingBundle\Entiy\TicketOrder $order)
+    public function setOrder(TicketOrder $order)
     {
         $this->order = $order;
 
