@@ -34,8 +34,11 @@ class TicketOrder
     /**
      * @var bool
      *
-     * @ORM\Column(name="type", type="boolean")
-     * @Assert\Type(type="bool", message="Order type must be a boolean")
+     * @ORM\Column(name="type", type="boolean.")
+     * @Assert\Type(
+     *     type="bool",
+     *     message="Order type must be a boolean"
+     * )
      */
     private $type;
 
@@ -43,7 +46,10 @@ class TicketOrder
      * @var int
      *
      * @ORM\Column(name="nb_tickets", type="smallint")
-     * @Assert\GreaterThanOrEqual(value=0, message="Number of tikets must be equal to or over 0.")
+     * @Assert\GreaterThanOrEqual(
+     *     value=0,
+     *     message="Number of tikets must be equal to or over 0."
+     * )
      */
     private $nbTickets;
 
