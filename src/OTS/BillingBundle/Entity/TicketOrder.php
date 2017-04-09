@@ -3,6 +3,8 @@
 namespace OTS\BillingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TicketOrder
@@ -25,6 +27,7 @@ class TicketOrder
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime(message="Order date must be either a valid DateTime object or a valid date string.")
      */
     private $date;
 
@@ -32,6 +35,7 @@ class TicketOrder
      * @var bool
      *
      * @ORM\Column(name="type", type="boolean")
+     * @Assert\Type(type="bool", message="Order type must be a boolean")
      */
     private $type;
 
@@ -39,13 +43,24 @@ class TicketOrder
      * @var int
      *
      * @ORM\Column(name="nb_tickets", type="smallint")
+     * @Assert\GreaterThanOrEqual(value=0, message="Number of tikets must be equal to or over 0.")
      */
     private $nbTickets;
 
     /**
      * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order")
+     * @Assert\All({
+     *     @Assert\Valid()
+     * })
      */
     private $tickets;
+
+
+
+    public function __construct() {
+        $this->tickets = new ArrayCollection();
+    }
+
 
 
     /**
