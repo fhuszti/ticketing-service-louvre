@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new OTS\BillingBundle\OTSBillingBundle(),
             new OTS\CoreBundle\OTSCoreBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

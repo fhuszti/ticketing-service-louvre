@@ -23,6 +23,7 @@
         "php": ">=5.5.9",
         "components/font-awesome": "^4.7",
         "coresphere/console-bundle": "^0.5.0",
+        "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
