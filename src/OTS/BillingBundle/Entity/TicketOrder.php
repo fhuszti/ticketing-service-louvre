@@ -26,18 +26,18 @@ class TicketOrder
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
-     * @Assert\DateTime(message="Order date must be either a valid DateTime object or a valid date string.")
+     * @ORM\Column(name="date", type="date")
+     * @Assert\Date(message="Order date must be either a valid DateTime object or a valid date string.")
      */
     private $date;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="type", type="boolean.")
+     * @ORM\Column(name="type", type="boolean")
      * @Assert\Type(
      *     type="bool",
-     *     message="Order type must be a boolean"
+     *     message="Order type must be a boolean."
      * )
      */
     private $type;
@@ -46,9 +46,9 @@ class TicketOrder
      * @var int
      *
      * @ORM\Column(name="nb_tickets", type="smallint")
-     * @Assert\GreaterThanOrEqual(
+     * @Assert\GreaterThan(
      *     value=0,
-     *     message="Number of tikets must be equal to or over 0."
+     *     message="Number of tikets must be greater than 0."
      * )
      */
     private $nbTickets;

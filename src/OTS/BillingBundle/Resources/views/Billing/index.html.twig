@@ -44,7 +44,7 @@
                 <h2>Order</h2>
                 <hr />
 
-
+                {{ form(orderForm) }}
             </div>
             <div class="tab-pane fade" id="informations">
                 <h2>Informations</h2>
@@ -60,4 +60,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $( "#orderForm_date").datepicker();
+        });
+    </script>
 {% endblock %}
