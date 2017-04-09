@@ -20,6 +20,7 @@ class TicketOrderType extends AbstractType
                     'invalid_message' => "Order date must be either a valid DateTime object or a valid date string.",
                     'widget' => 'single_text',
                     'html5' => false,
+                    'label' => 'Date of the visit'
                 ))
                 ->add('type', ChoiceType::class, array(
                     'label' => 'Ticket type',
@@ -31,7 +32,8 @@ class TicketOrderType extends AbstractType
                     'multiple' => false,
                 ))
                 ->add('nbTickets', IntegerType::class, array(
-                    'invalid_message' => "The number of tickets in the order must be a valid integer greater than 0."
+                    'invalid_message' => "The number of tickets in the order must be a valid integer greater than 0.",
+                    'label' => "Tickets count"
                 ));
     }
     
