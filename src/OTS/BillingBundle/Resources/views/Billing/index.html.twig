@@ -1,0 +1,63 @@
+{% extends "OTSCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  	Book online - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/billing.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+
+    <h1 id="title">Book online</h1>
+    <hr />
+
+    <div class="row">
+        <ul class="nav nav-pills nav-justified">
+            <li class="active">
+                <a href="#order" data-toggle="tab">
+                    1. Order
+                </a>
+            </li>
+            <li>
+                <a href="#informations" data-toggle="tab">
+                    2. Informations
+                </a>
+            </li>
+            <li>
+                <a href="#payment" data-toggle="tab">
+                    3. Payment
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="order">
+                <h2>Order</h2>
+                <hr />
+
+
+            </div>
+            <div class="tab-pane fade" id="informations">
+                <h2>Informations</h2>
+                <hr />
+
+                
+            </div>
+            <div class="tab-pane fade" id="payment">
+                <h2>Payment</h2>
+                <hr />
+
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}
