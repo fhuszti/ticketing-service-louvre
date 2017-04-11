@@ -18,6 +18,7 @@
     {% endfor %}
 
     <h1 id="title">Book online</h1>
+    <h2>Step : {{ step }}</h2>
     <hr />
 
     <div class="row">
@@ -40,19 +41,30 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade active in" id="order">
+            <div class="well tab-pane fade active in" id="order">
                 <h2>Order</h2>
                 <hr />
 
-                {{ form(orderForm) }}
+                {{ form_start(orderForm) }}
+                    {{ form_errors(orderForm) }}
+
+                    {{ form_row(orderForm.date) }}
+                    <input type="hidden" id="orderForm_php_date" value="" name='orderForm[date]' />
+
+                    {{ form_row(orderForm.type) }}
+
+                    {{ form_row(orderForm.nbTickets) }}
+
+                    {{ form_rest(orderForm) }}
+                {{ form_end(orderForm) }}
             </div>
-            <div class="tab-pane fade" id="informations">
+            <div class="well tab-pane fade" id="informations">
                 <h2>Informations</h2>
                 <hr />
 
                 {{ form(ticketForm) }}
             </div>
-            <div class="tab-pane fade" id="payment">
+            <div class="well tab-pane fade" id="payment">
                 <h2>Payment</h2>
                 <hr />
 
@@ -64,9 +76,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $(function() {
-            $( "#orderForm_date").datepicker();
-        });
-    </script>
+    {% javascripts
+        'bundles/otscore/js/billing.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

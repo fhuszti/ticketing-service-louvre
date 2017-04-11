@@ -24,7 +24,7 @@ class TicketOrder
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="date", type="date")
      * @Assert\Date(message="Order date must be either a valid DateTime object or a valid date string.")

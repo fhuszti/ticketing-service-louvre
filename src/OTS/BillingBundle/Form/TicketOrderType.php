@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TicketOrderType extends AbstractType
 {
@@ -25,15 +26,20 @@ class TicketOrderType extends AbstractType
                 ->add('type', ChoiceType::class, array(
                     'label' => 'Ticket type',
                     'choices' => array(
-                        'Full-day' => 1,
-                        'Half-day' => 0,
+                        'Full-day' => true,
+                        'Half-day' => false,
                     ),
                     'expanded' => true,
                     'multiple' => false,
                 ))
                 ->add('nbTickets', IntegerType::class, array(
                     'invalid_message' => "The number of tickets in the order must be a valid integer greater than 0.",
-                    'label' => "Tickets count"
+                    'label' => "Tickets count",
+                    'attr' => array('min' => 1)
+                ))
+                ->add('save', SubmitType::class, array(
+                    'attr' => array('class' => 'btn btn-default'),
+                    'label' => 'Next step',
                 ));
     }
     
