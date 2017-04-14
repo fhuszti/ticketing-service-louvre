@@ -55,6 +55,8 @@
 
                     {{ form_row(orderForm.nbTickets) }}
 
+                    {{ form_row(orderForm.save) }}
+
                     {{ form_rest(orderForm) }}
                 {{ form_end(orderForm) }}
             </div>
@@ -62,7 +64,26 @@
                 <h2>Informations</h2>
                 <hr />
 
-                {{ form(ticketForm) }}
+                
+                {% for ticketForm in ticketForms %}
+                    {{ form_start(ticketForm) }}
+                        {{ form_errors(ticketForm) }}
+
+                        {{ form_row(ticketForm.firstName) }}
+
+                        {{ form_row(ticketForm.name) }}
+
+                        {{ form_row(ticketForm.country) }}
+
+                        {{ form_row(ticketForm.birthDate) }}
+
+                        {{ form_row(ticketForm.discounted) }}
+
+                        {{ form_row(ticketForm.save) }}
+
+                        {{ form_rest(ticketForm) }}
+                    {{ form_end(ticketForm) }}
+                {% endfor %}
             </div>
             <div class="well tab-pane fade" id="payment">
                 <h2>Payment</h2>
