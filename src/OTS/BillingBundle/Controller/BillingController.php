@@ -67,7 +67,6 @@ class BillingController extends Controller
 		    foreach ($ticketFormBuilders as $ticketFormBuilder) {
 		    	if ($request->request->has($ticketFormBuilder->getName())) {
 			        $step = 1;
-				   	$orderForm = $this->get('form.factory')->createNamed('orderForm', TicketOrderType::class, $order);
 
 				   	//then we check for the step 2 form
 				    $ticketFormBuilder->submit($request->request->get($ticketFormBuilder->getName()), false);

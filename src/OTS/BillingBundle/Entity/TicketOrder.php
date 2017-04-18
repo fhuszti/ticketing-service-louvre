@@ -54,7 +54,7 @@ class TicketOrder
     private $nbTickets;
 
     /**
-     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order", cascade={"persist"})
      * @Assert\Valid()
      */
     private $tickets;
