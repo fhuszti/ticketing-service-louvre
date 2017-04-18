@@ -60,52 +60,9 @@ class BillingController extends Controller
 			}
 		}
 
-    	// Step we're currently at
-    	/*$step = 0;
-
-    	$nbTickets = 0;
-    	$ticketForms = array();
-
-    	$orderForm = $this->get('form.factory')->createNamed('orderForm', TicketOrderType::class, $order);
-    	
-
-    	if('POST' === $request->getMethod()) {
-			//first step
-			if ($request->request->has($orderForm->getName())) {
-		        $orderForm->submit($request->request->get($orderForm->getName()), false);
-		        if ($orderForm->isValid()) {
-		        	$step = 1;
-
-		        	//we get the number of tickets wanted
-		        	$postData = $request->request->get('orderForm');
-		        	$nbTickets = $postData['nbTickets'];
-		        	
-		        	//we dynamically create as many ticket forms as needed
-		        	$ticketFormBuilders = $this->generateTicketFormBuilders($nbTickets);
-		        	$ticketForms = $this->generateForms($ticketFormBuilders);
-		        }
-		    }
-
-		    //second step
-		    foreach ($ticketFormBuilders as $ticketFormBuilder) {
-		    	if ($request->request->has($ticketFormBuilder->getName())) {
-			        $step = 1;
-
-				   	//then we check for the step 2 form
-				    $ticketFormBuilder->submit($request->request->get($ticketFormBuilder->getName()), false);
-			        if ($ticketFormBuilder->isValid()) {
-			        	$step = 2;
-			        }
-			    }
-		    }
-		}*/
-
-        return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+		return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
         	'orderForm' => $form->createView(),
         	'flow' => $flow,
-        	/*'step' => $step,
-        	'nbTickets' => $nbTickets,
-        	'ticketForms' => $ticketForms,*/
         ));
     }
 }

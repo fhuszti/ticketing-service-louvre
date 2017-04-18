@@ -33,6 +33,9 @@
             }}
                 {{ form_errors(orderForm) }}
 
+                {{ form_row(orderForm.date) }}
+                <input type="hidden" id="ots_billingbundle_ticketorder_php_date" value="" name='ots_billingbundle_ticketorder[date]' />
+
                 {{ form_rest(orderForm) }}
 
                 {% include '@CraueFormFlow/FormFlow/buttons.html.twig' %}

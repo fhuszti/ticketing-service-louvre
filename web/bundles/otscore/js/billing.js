@@ -13,7 +13,8 @@ $(function() {
             altField: '#ots_billingbundle_ticketorder_php_date',
             altFormat: "yy-mm-dd",
             minDate: 0,
-            beforeShowDay: disableDates
+            beforeShowDay: disableDates,
+            dateFormat: 'dd/mm/yy'
         });
 
         $("#ots_billingbundle_ticketorder_date").attr({
