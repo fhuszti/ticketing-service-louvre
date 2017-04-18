@@ -18,7 +18,9 @@ class TicketOrderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date',      DateType::class, array(
+        switch ($options['flow_step']) {
+            case 1:
+                $builder->add('date',      DateType::class, array(
                     'invalid_message' => "Order date must be either a valid DateTime object or a valid date string.",
                     'widget' =>          'single_text',
                     'html5' =>           false,
@@ -37,17 +39,20 @@ class TicketOrderType extends AbstractType
                     'invalid_message' => "The number of tickets in the order must be a valid integer greater than 0.",
                     'label' =>           "Tickets count",
                     'attr' =>      array('min' => 1)
-                ))
-                ->add('tickets',   CollectionType::class, array(
+                ));
+                break;
+            case 2:
+                //ticket forms
+                $builder->add('tickets',   CollectionType::class, array(
                     'entry_type' =>      TicketType::class,
                     'allow_add' =>       true,
                     'allow_delete' =>    true,
                     'by_reference' =>    false
-                ))
-                ->add('save',      SubmitType::class, array(
-                    'attr' =>      array('class' => 'btn btn-default'),
-                    'label' =>           'Next step',
                 ));
+                break;
+        }
+
+        
     }
     
     /**

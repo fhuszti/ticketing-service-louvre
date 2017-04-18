@@ -9,14 +9,14 @@ $(function() {
     }
 
     function setupDatepicker() {
-        $("#orderForm_date").datepicker({
-            altField: '#orderForm_php_date',
+        $("#ots_billingbundle_ticketorder_date").datepicker({
+            altField: '#ots_billingbundle_ticketorder_php_date',
             altFormat: "yy-mm-dd",
             minDate: 0,
             beforeShowDay: disableDates
         });
 
-        $("#orderForm_date").attr({
+        $("#ots_billingbundle_ticketorder_date").attr({
             name: ''
         });
     }

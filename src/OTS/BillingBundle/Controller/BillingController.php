@@ -37,8 +37,31 @@ class BillingController extends Controller
     {
     	$order = new TicketOrder();
     	
+    	$flow = $this->get('ots_billing.form.flow.ticketOrder'); // must match the flow's service id
+		$flow->bind($order);
+
+		// form of the current step
+		$form = $flow->createForm();
+		if ($flow->isValid($form)) {
+			$flow->saveCurrentStepData($form);
+
+			if ($flow->nextStep()) {
+				// form for the next step
+				$form = $flow->createForm();
+			} else {
+				// flow finished
+				/*$em = $this->getDoctrine()->getManager();
+				$em->persist($formData);
+				$em->flush();*/
+
+				$flow->reset(); // remove step data from the session
+
+				return $this->redirect($this->generateUrl('home')); // redirect when done
+			}
+		}
+
     	// Step we're currently at
-    	$step = 0;
+    	/*$step = 0;
 
     	$nbTickets = 0;
     	$ticketForms = array();
@@ -75,13 +98,14 @@ class BillingController extends Controller
 			        }
 			    }
 		    }
-		}
+		}*/
 
         return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-        	'orderForm' => $orderForm->createView(),
-        	'step' => $step,
+        	'orderForm' => $form->createView(),
+        	'flow' => $flow,
+        	/*'step' => $step,
         	'nbTickets' => $nbTickets,
-        	'ticketForms' => $ticketForms,
+        	'ticketForms' => $ticketForms,*/
         ));
     }
 }

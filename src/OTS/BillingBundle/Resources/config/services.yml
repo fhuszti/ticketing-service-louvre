@@ -1,4 +1,4 @@
 services:
-#    ots_billing.example:
-#        class: OTS\BillingBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    ots_billing.form.flow.ticketOrder:
+        class: OTS\BillingBundle\Form\TicketOrderFlow
+        parent: craue.form.flow

@@ -7,7 +7,8 @@
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets filter='cssrewrite'
-        'bundles/otscore/css/billing.css' %}
+        'bundles/otscore/css/billing.css'
+        '@CraueFormFlowBundle/Resources/assets/css/buttons.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
     {% endstylesheets %}
 {% endblock %}
@@ -18,80 +19,24 @@
     {% endfor %}
 
     <h1 id="title">Book online</h1>
-    <h2>Step : {{ step }}</h2>
+    <h2>Step : {{ flow.getCurrentStepNumber() }}</h2>
     <hr />
 
     <div class="row">
-        <ul class="nav nav-pills nav-justified">
-            <li class="active">
-                <a href="#order" data-toggle="tab">
-                    1. Order
-                </a>
-            </li>
-            <li>
-                <a href="#informations" data-toggle="tab">
-                    2. Informations
-                </a>
-            </li>
-            <li>
-                <a href="#payment" data-toggle="tab">
-                    3. Payment
-                </a>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <div class="well tab-pane fade active in" id="order">
-                <h2>Order</h2>
-                <hr />
-
-                {{ form_start(orderForm) }}
-                    {{ form_errors(orderForm) }}
-
-                    {{ form_row(orderForm.date) }}
-                    <input type="hidden" id="orderForm_php_date" value="" name='orderForm[date]' />
-
-                    {{ form_row(orderForm.type) }}
-
-                    {{ form_row(orderForm.nbTickets) }}
-
-                    {{ form_row(orderForm.save) }}
-
-                    {{ form_rest(orderForm) }}
-                {{ form_end(orderForm) }}
-            </div>
-            <div class="well tab-pane fade" id="informations">
-                <h2>Informations</h2>
-                <hr />
-
-                
-                {% for ticketForm in ticketForms %}
-                    {{ form_start(ticketForm) }}
-                        {{ form_errors(ticketForm) }}
-
-                        {{ form_row(ticketForm.firstName) }}
-
-                        {{ form_row(ticketForm.name) }}
-
-                        {{ form_row(ticketForm.country) }}
-
-                        {{ form_row(ticketForm.birthDate) }}
-
-                        {{ form_row(ticketForm.discounted) }}
-
-                        {{ form_row(ticketForm.save) }}
-
-                        {{ form_rest(ticketForm) }}
-                    {{ form_end(ticketForm) }}
-                {% endfor %}
-            </div>
-            <div class="well tab-pane fade" id="payment">
-                <h2>Payment</h2>
-                <hr />
-
-                
-            </div>
+        <div>
+            {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
         </div>
+            {{ form_start(orderForm, {
+                    'action': path(app.request.attributes.get('_route'),
+                    app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
+                })
+            }}
+                {{ form_errors(orderForm) }}
+
+                {{ form_rest(orderForm) }}
+
+                {% include '@CraueFormFlow/FormFlow/buttons.html.twig' %}
+            {{ form_end(orderForm) }}
     </div>
 {% endblock %}
 
