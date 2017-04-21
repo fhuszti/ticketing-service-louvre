@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TicketType extends AbstractType
 {
@@ -37,10 +36,6 @@ class TicketType extends AbstractType
                 ))
                 ->add('discounted', CheckboxType::class, array(
                     'label' => 'Reduced price'
-                ))
-                ->add('save', SubmitType::class, array(
-                    'attr' => array('class' => 'btn btn-default'),
-                    'label' => 'Next step',
                 ));
     }
     

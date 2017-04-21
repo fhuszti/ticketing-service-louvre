@@ -1,4 +1,37 @@
 $(function() {
+    var step_checker = $('#step_checker').text();
+
+    //create one ticket form
+    function addTicketForm(collectionHolder) {
+        //get data-prototype
+        var prototype = collectionHolder.data('prototype');
+        //get current index
+        var index = collectionHolder.data('index');
+
+        //replace __name__ variables in the prototype by current index
+        var newForm = prototype.replace(/__name__label__/g, 'Ticket n°'+(index+1))
+                               .replace(/__name__/g, index);
+
+        //increment the index for next time
+        collectionHolder.data('index', index + 1);
+
+        collectionHolder.append($('<div></div>').append(newForm));
+    }
+
+    //dynamically creates ticket forms on number of tickets change
+    function generateTicketForms() {
+        var i,
+            collectionHolder = $('#ots_billingbundle_ticketorder_tickets'),
+            nbTickets = $('#ots_billingbundle_ticketorder_nbTickets').val();
+        
+        collectionHolder.data('index', 0);
+
+        for(i = 0; i < nbTickets; i++) {
+            addTicketForm(collectionHolder);
+        }
+    }
+
+    //disable some dates in datepicker
     function disableDates(date) {
         var noTuesday = date.getDay() != 2,
             noSunday = date.getDay() != 0,
@@ -8,6 +41,7 @@ $(function() {
         return [noTuesday && noSunday && disabledDates.indexOf(stringDate) == -1, ''];
     }
 
+    //initial setup datepicker
     function setupDatepicker() {
         $("#ots_billingbundle_ticketorder_date").datepicker({
             altField: '#ots_billingbundle_ticketorder_php_date',
@@ -23,4 +57,8 @@ $(function() {
     }
 
     setupDatepicker();
+
+    if (step_checker === '2') {
+        generateTicketForms();
+    }
 });

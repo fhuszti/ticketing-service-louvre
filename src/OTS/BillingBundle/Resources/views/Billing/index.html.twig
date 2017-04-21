@@ -19,27 +19,26 @@
     {% endfor %}
 
     <h1 id="title">Book online</h1>
-    <h2>Step : {{ flow.getCurrentStepNumber() }}</h2>
     <hr />
 
     <div class="row">
+        <p id="step_checker">{{ flow.getCurrentStepNumber() }}</p>
         <div>
             {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
         </div>
-            {{ form_start(orderForm, {
-                    'action': path(app.request.attributes.get('_route'),
-                    app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
-                })
-            }}
-                {{ form_errors(orderForm) }}
+        {{ form_start(orderForm, {
+                'action': path(app.request.attributes.get('_route'),
+                app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
+            })
+        }}
+            {{ form_errors(orderForm) }}
 
-                {{ form_row(orderForm.date) }}
-                <input type="hidden" id="ots_billingbundle_ticketorder_php_date" value="" name='ots_billingbundle_ticketorder[date]' />
+            <input type="hidden" id="ots_billingbundle_ticketorder_php_date" value="" name='ots_billingbundle_ticketorder[date]' />
 
-                {{ form_rest(orderForm) }}
+            {{ form_rest(orderForm) }}
 
-                {% include '@CraueFormFlow/FormFlow/buttons.html.twig' %}
-            {{ form_end(orderForm) }}
+            {% include '@CraueFormFlow/FormFlow/buttons.html.twig' %}
+        {{ form_end(orderForm) }}
     </div>
 {% endblock %}
 
