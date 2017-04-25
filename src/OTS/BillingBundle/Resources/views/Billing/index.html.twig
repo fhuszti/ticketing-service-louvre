@@ -28,13 +28,76 @@
         {{ form_start(orderForm, {
                 'action': path(app.request.attributes.get('_route'),
                 app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
-            })
-        }}
-            {{ form_errors(orderForm) }}
+        }) }}
+            {% if form_errors(orderForm) %}
+                    <div class="alert alert-warning">
+                        {{ form_errors(orderForm) }}
+                    </div>
+                {% endif %}
 
             <input type="hidden" id="ots_billingbundle_ticketorder_php_date" value="" name='ots_billingbundle_ticketorder[date]' />
 
-            {{ form_rest(orderForm) }}
+            {% if orderForm.date is defined %}
+                <div class="col-xs-12 col-sm-4 form-group">
+                    <div class="col-xs-12">
+                        {{ form_label(orderForm.date, '', {
+                            'attr': {'class': 'control-label'}
+                        }) }}
+                    </div>
+
+                    {% if form_errors(orderForm.date) %}
+                        <div class="alert alert-warning">
+                            {{ form_errors(orderForm.date) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(orderForm.date, {
+                        'attr': {'class': 'form-control'}
+                    }) }}
+                </div>
+            {% endif %}
+
+            {% if orderForm.type is defined %}
+                <div class="col-xs-12 col-sm-4 form-group">
+                    <div class="col-xs-12">
+                        {{ form_label(orderForm.type, '', {
+                            'attr': {'class': 'control-label'}
+                        }) }}
+                    </div>
+
+                    {% if form_errors(orderForm.type) %}
+                        <div class="alert alert-warning">
+                            {{ form_errors(orderForm.type) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(orderForm.type) }}
+                </div>
+            {% endif %}
+
+            {% if orderForm.nbTickets is defined and flow.getCurrentStep() == 1 %}
+                <div class="col-xs-12 col-sm-4 form-group">
+                    <div class="col-xs-12">
+                        {{ form_label(orderForm.nbTickets, '', {
+                            'attr': {'class': 'control-label'}
+                        }) }}
+                    </div>
+
+                    {% if form_errors(orderForm.nbTickets) %}
+                        <div class="alert alert-warning">
+                            {{ form_errors(orderForm.nbTickets) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(orderForm.nbTickets, {
+                        'attr': {'class': 'form-control'}
+                    }) }}
+                </div>
+            {% endif %}
+
+            <div class="row">
+                {{ form_rest(orderForm) }}
+            </div>
 
             {% include '@CraueFormFlow/FormFlow/buttons.html.twig' %}
         {{ form_end(orderForm) }}
