@@ -22,9 +22,9 @@
     <hr />
 
     <div class="row">
-        <p id="step_checker">{{ flow.getCurrentStepNumber() }}</p>
+        <p id="step_checker" class="hidden">{{ flow.getCurrentStepNumber() }}</p>
         <div>
-            {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
+            {% include 'OTSBillingBundle:Billing:stepList_content.html.twig' %}
         </div>
         {{ form_start(orderForm, {
                 'action': path(app.request.attributes.get('_route'),

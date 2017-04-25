@@ -10,15 +10,15 @@ class TicketOrderFlow extends FormFlow {
 	protected function loadStepsConfig() {
 		return array(
 			array(
-				'label' => 'Order',
+				'label' => '1. Order',
 				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 			array(
-				'label' => 'Informations',
+				'label' => '2. Informations',
 				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 			array(
-				'label' => 'Payment',
+				'label' => '3. Payment',
 			),
 		);
 	}

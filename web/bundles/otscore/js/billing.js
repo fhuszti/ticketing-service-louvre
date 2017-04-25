@@ -1,6 +1,4 @@
 $(function() {
-    var step_checker = $('#step_checker').text();
-
     //create one ticket form
     function addTicketForm(collectionHolder) {
         //get data-prototype
@@ -58,7 +56,8 @@ $(function() {
 
     setupDatepicker();
 
-    if (step_checker === '2') {
+    //generate ticket forms at step 2 only
+    if ($('#step_checker').text() === '2') {
         generateTicketForms();
     }
 });

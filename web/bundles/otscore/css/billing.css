@@ -5,10 +5,35 @@
 	color: #331107;
 }
 
+.hidden {
+	display: none;
+}
+
+.nav-pills {
+	text-align: center;
+}
+.nav-pills>li {
+	color: #331107;
+	background-color: #eee;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+}
 .nav-pills>li>a {
 	color: #331107;
+	padding-top: 0;
+	padding-bottom: 0;
 }
-.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+.nav-pills>li>a:hover, .nav-pills>li>a:focus {
+	background-color: inherit;
+}
+.nav-pills>li.craue_formflow_done_step, .nav-pills>li.craue_formflow_first_remaining_step {
+	background-color: #fff;
+}
+.nav-pills>li.craue_formflow_done_step:hover, .nav-pills>li.craue_formflow_done_step:focus, .nav-pills>li.craue_formflow_first_remaining_step:hover, .nav-pills>li.craue_formflow_first_remaining_step:focus {
+	background-color: #eee;
+}
+.nav-pills>li.craue_formflow_current_step, .nav-pills>li.craue_formflow_current_step:hover, .nav-pills>li.craue_formflow_current_step:focus {
 	color: #eee;
 	background-color: inherit;
 	background-image: radial-gradient(circle at bottom, #222, #331107);
