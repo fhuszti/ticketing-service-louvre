@@ -66,7 +66,8 @@ class TicketOrderType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'OTS\BillingBundle\Entity\TicketOrder',
-            'nbTickets' => false
+            'nbTickets' => false,
+            'allow_extra_fields' => true
         ));
     }
 

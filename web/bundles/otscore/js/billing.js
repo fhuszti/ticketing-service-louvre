@@ -57,7 +57,7 @@ $(function() {
     setupDatepicker();
 
     //generate ticket forms at step 2 only
-    if ($('#step_checker').text() === '2') {
+    if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
         generateTicketForms();
     }
 });
