@@ -1,39 +1,8 @@
 $(function() {
-    //create one ticket form
-    function addTicketForm(collectionHolder) {
-        //get data-prototype
-        var prototype = collectionHolder.data('prototype');
-        //get current index
-        var index = collectionHolder.data('index');
-
-        //replace __name__ variables in the prototype by current index
-        var newForm = prototype.replace(/__name__label__/g, 'Ticket n°'+(index+1))
-                               .replace(/__name__/g, index);
-
-        //increment the index for next time
-        collectionHolder.data('index', index + 1);
-
-        collectionHolder.append($('<div></div>').append(newForm));
-    }
-
-    //dynamically creates ticket forms on number of tickets change
-    function generateTicketForms() {
-        var i,
-            collectionHolder = $('#ots_billingbundle_ticketorder_tickets'),
-            nbTickets = $('#ots_billingbundle_ticketorder_nbTickets').val();
-        
-        collectionHolder.data('index', 0);
-
-        for(i = 0; i < nbTickets; i++) {
-            addTicketForm(collectionHolder);
-        }
-    }
-
-    function formatDateIsoToShort(date) {
-        var dateParts = date.split('-');
-
-        return dateParts[1]+'/'+dateParts[2]+'/'+dateParts[0];
-    }
+    /**
+     * DATEPICKER DATES DISABLING
+     * --------------------------
+     */
 
     //disable some dates in datepicker
     function disableDates(date) {
@@ -44,6 +13,17 @@ $(function() {
 
         return [noTuesday && noSunday && disabledDates.indexOf(stringDate) == -1, ''];
     }
+
+    /**
+     * --------------------------
+     */
+    
+
+
+    /**
+     * FULL-DAY RADIO OPTION MANAGEMENT
+     * --------------------------------
+     */
 
     //disable the full day radio option
     function disableFullDayRadio() {
@@ -135,8 +115,83 @@ $(function() {
         }
     }
 
+    /**
+     * --------------------------------
+     */
+    
+
+
+    /**
+     * CALCULATOR
+     * ------------------------------
+     */
+
+    function calculator() {
+        var numbers = $('.calc_number'),
+            del = $('.calc_del'),
+            input = $('#ots_billingbundle_ticketorder_nbTickets');
+
+        numbers.on('click', function() {
+            var newValue = input.val() + $(this).text();
+            input.val(newValue);
+        });
+        del.on('click', function() {
+            var newValue = input.val().slice(0, -1);
+            input.val(newValue);
+        });
+    }
+
+    /**
+     * --------------------------------
+     */
+
+    
+
+    /**
+     * STEP 2 TICKET FORMS MANAGEMENT
+     * ------------------------------
+     */
+
+    //create one ticket form
+    function addTicketForm(collectionHolder) {
+        //get data-prototype
+        var prototype = collectionHolder.data('prototype');
+        //get current index
+        var index = collectionHolder.data('index');
+
+        //replace __name__ variables in the prototype by current index
+        var newForm = prototype.replace(/__name__label__/g, 'Ticket n°'+(index+1))
+                               .replace(/__name__/g, index);
+
+        //increment the index for next time
+        collectionHolder.data('index', index + 1);
+
+        collectionHolder.append($('<div></div>').append(newForm));
+    }
+
+    //dynamically creates ticket forms on number of tickets change
+    function generateTicketForms() {
+        var i,
+            collectionHolder = $('#ots_billingbundle_ticketorder_tickets'),
+            nbTickets = $('#ots_billingbundle_ticketorder_nbTickets').val();
+        
+        collectionHolder.data('index', 0);
+
+        for(i = 0; i < nbTickets; i++) {
+            addTicketForm(collectionHolder);
+        }
+    }
+
+    /**
+     * ------------------------------
+     */
+    
+
+
     setupDatepicker();
     checkDate($('#ots_billingbundle_ticketorder_date').val());
+
+    calculator();
 
     //generate ticket forms at step 2 only
     if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
