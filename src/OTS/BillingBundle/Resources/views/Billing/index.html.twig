@@ -1,4 +1,5 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
+{% form_theme orderForm 'form/fields.html.twig' %}
 
 {% block title %}
   	Book online - {{ parent() }}
@@ -50,10 +51,10 @@
                     {% endif %}
 
                     <div class="col-xs-12" id="order_datepicker">
+                    </div>
                         {{ form_widget(orderForm.date, {
                             'attr': {'class': 'form-control'}
                         }) }}
-                    </div>
                 </div>
             {% endif %}
 

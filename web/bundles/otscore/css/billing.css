@@ -53,3 +53,22 @@ form {
 	background-image: radial-gradient(circle at bottom, #222, #331107);
 	color: #fff;
 }
+
+input[type=radio] {
+	display: none;
+}
+input[type=radio] + label {
+    width: 100%;
+    line-height: 100px;
+    text-align: center;
+    color: #331107;
+    border: 5px outset #eee;
+}
+input[type="radio"]:checked + label {
+    border: 5px inset #222;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+	color: #fff;
+}
+input[type="radio"]:disabled + label {
+	background-color: #eee;
+}
