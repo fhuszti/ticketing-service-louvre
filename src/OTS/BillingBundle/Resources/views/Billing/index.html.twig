@@ -35,8 +35,6 @@
                     </div>
                 {% endif %}
 
-            <input type="hidden" id="ots_billingbundle_ticketorder_php_date" value="" name='ots_billingbundle_ticketorder[date]' />
-
             {% if orderForm.date is defined %}
                 <div class="col-xs-12 col-sm-4 form-group">
                     <div class="col-xs-12">
@@ -51,9 +49,11 @@
                         </div>
                     {% endif %}
 
-                    {{ form_widget(orderForm.date, {
-                        'attr': {'class': 'form-control'}
-                    }) }}
+                    <div class="col-xs-12" id="order_datepicker">
+                        {{ form_widget(orderForm.date, {
+                            'attr': {'class': 'form-control'}
+                        }) }}
+                    </div>
                 </div>
             {% endif %}
 
@@ -75,7 +75,7 @@
                 </div>
             {% endif %}
 
-            {% if orderForm.nbTickets is defined and flow.getCurrentStep() == 1 %}
+            {% if orderForm.nbTickets is defined and flow.getCurrentStepNumber() == 1 %}
                 <div class="col-xs-12 col-sm-4 form-group">
                     <div class="col-xs-12">
                         {{ form_label(orderForm.nbTickets, '', {

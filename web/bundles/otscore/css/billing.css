@@ -43,3 +43,13 @@
 form {
 	padding: 30px 30px 20px;
 }
+
+#ots_billingbundle_ticketorder_date {
+	display: none;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+	border: 1px solid #222;
+	background-color: unset;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+	color: #fff;
+}

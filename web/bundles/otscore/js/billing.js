@@ -29,6 +29,12 @@ $(function() {
         }
     }
 
+    function formatDateIsoToShort(date) {
+        var dateParts = date.split('-');
+
+        return dateParts[1]+'/'+dateParts[2]+'/'+dateParts[0];
+    }
+
     //disable some dates in datepicker
     function disableDates(date) {
         var noTuesday = date.getDay() != 2,
@@ -41,17 +47,19 @@ $(function() {
 
     //initial setup datepicker
     function setupDatepicker() {
-        $("#ots_billingbundle_ticketorder_date").datepicker({
-            altField: '#ots_billingbundle_ticketorder_php_date',
+        var inputDate = $('#ots_billingbundle_ticketorder_date').val();
+
+        $("#order_datepicker").datepicker({
+            altField: '#ots_billingbundle_ticketorder_date',
             altFormat: "yy-mm-dd",
             minDate: 0,
             beforeShowDay: disableDates,
-            dateFormat: 'dd/mm/yy'
+            defaultDate: inputDate ? inputDate : null
         });
-
-        $("#ots_billingbundle_ticketorder_date").attr({
-            name: ''
-        });
+        
+        if (inputDate) {
+            $("#order_datepicker").datepicker('setDate', new Date(inputDate));
+        }
     }
 
     setupDatepicker();
