@@ -58,7 +58,7 @@ input[type=radio] {
 	display: none;
 }
 input[type=radio] + label {
-    width: 100%;
+    width: 240px;
     line-height: 100px;
     text-align: center;
     color: #331107;
@@ -71,4 +71,24 @@ input[type="radio"]:checked + label {
 }
 input[type="radio"]:disabled + label {
 	background-color: #eee;
+}
+#ots_billingbundle_ticketorder_type_1 + label {
+	margin-top: 5px;
+}
+
+#ots_billingbundle_ticketorder_nbTickets {
+	width: 240px;
+}
+#calculator {
+	width: 240px;
+	height: 195px;
+}
+.calc_number, .calc_del {
+	line-height: calc(195px/4);
+	padding: 0;
+	width: calc(240px/3);
+}
+.calc_del {
+	width: calc(240px/3*2);
+	font-size: 1.5em;
 }
