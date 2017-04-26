@@ -8,6 +8,11 @@
 .hidden {
 	display: none;
 }
+.form-control:focus {
+	border-color: #222;
+	-webkit-box-shadow: inset 0 1px 1px rgba(51,17,7,.075), 0 0 8px rgba(34,34,34,.6);
+	box-shadow: 		inset 0 1px 1px rgba(51,17,7,.075), 0 0 8px rgba(34,34,34,.6);
+}
 
 .nav-pills {
 	text-align: center;
@@ -87,8 +92,24 @@ input[type="radio"]:disabled + label {
 	line-height: calc(195px/4);
 	padding: 0;
 	width: calc(240px/3);
+    color: #331107;
 }
 .calc_del {
 	width: calc(240px/3*2);
 	font-size: 1.5em;
+}
+
+.craue_formflow_buttons {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+.craue_formflow_buttons .btn {
+	width: 100px;
+}
+.craue_formflow_buttons .btn:nth-child(3) {
+	order: 2;
+}
+.craue_formflow_buttons .btn:nth-child(2) {
+	order: 3;
 }
