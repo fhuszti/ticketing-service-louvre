@@ -237,35 +237,6 @@ $(function() {
      */
     
     /**
-     * DATEPICKER SETUP FOR STEP 2
-     * ---------------------------
-     */
-
-    function setupDatepickerStep2() {
-        var dateInputs = $("input[name$='[birthDate]']");
-        
-        for (var i = 0; i < dateInputs.length; i++) {
-            if (dateInputs[i]) {
-                $(dateInputs[i]).datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    yearRange: "-120:+0",
-                    dateFormat: "dd/mm/yy",
-                    altField: '#ots_billingbundle_ticketorder_tickets_'+i+'_php_birthDate',
-                    altFormat: "yy-mm-dd",
-                    onSelect: managePrice
-                });
-
-                $(dateInputs[i]).attr('name', '');
-            }
-        }
-    }
-
-    /**
-     * ---------------------------
-     */
-    
-    /**
      * CONVERT DATE FROM FRENCH FORMAT TO PHP FORMAT
      * ---------------------------------------------
      */
@@ -334,6 +305,36 @@ $(function() {
 
     /**
      * -------------------------------
+     */
+    
+    /**
+     * DATEPICKER SETUP FOR STEP 2
+     * ---------------------------
+     */
+
+    function setupDatepickerStep2() {
+        var dateInputs = $("input[name$='[birthDate]']");
+        
+        for (var i = 0; i < dateInputs.length; i++) {
+            if (dateInputs[i]) {
+                $(dateInputs[i]).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-120:+0",
+                    dateFormat: "dd/mm/yy",
+                    altField: '#ots_billingbundle_ticketorder_tickets_'+i+'_php_birthDate',
+                    altFormat: "yy-mm-dd",
+                    onSelect: managePrice,
+                    maxDate: 0
+                });
+
+                $(dateInputs[i]).attr('name', '');
+            }
+        }
+    }
+
+    /**
+     * ---------------------------
      */
     
     /**
