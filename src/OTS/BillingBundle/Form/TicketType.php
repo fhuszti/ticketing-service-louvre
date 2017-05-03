@@ -18,24 +18,34 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('firstName', TextType::class, array(
-                    'label' => 'First name'
+                    'label' => 'First name',
+                    'label_attr' => ['class' => 'col-xs-12 control-label'],
+                    'attr' => ['class' => 'form-control']
                 ))
                 ->add('name', TextType::class, array(
-                    'label' => 'Name'
+                    'label' => 'Name',
+                    'label_attr' => ['class' => 'col-xs-12 control-label'],
+                    'attr' => ['class' => 'form-control']
                 ))
                 ->add('country', CountryType::class, array(
                     'label' => 'Country',
                     'placeholder' => 'Choose a country...',
-                    'preferred_choices' => array('FR', 'GB', 'US', 'CN')
+                    'preferred_choices' => array('FR', 'GB', 'US', 'CN'),
+                    'label_attr' => ['class' => 'col-xs-12 control-label'],
+                    'attr' => ['class' => 'form-control']
                 ))
                 ->add('birthDate', DateType::class, array(
                     'invalid_message' => "Birth date must be either a valid DateTime object or a valid date string.",
+                    'label' => 'Birth date',
                     'widget' => 'single_text',
                     'html5' => false,
-                    'label' => 'Birth date'
+                    'label_attr' => ['class' => 'col-xs-12 control-label'],
+                    'attr' => ['class' => 'form-control']
                 ))
                 ->add('discounted', CheckboxType::class, array(
-                    'label' => 'Reduced price'
+                    'label' => 'Reduced price\nStudent, french military, museum employee or Ministry of Culture employee.\nAn ID will be required at the entrance.',
+                    'label_attr' => ['class' => 'col-xs-11 col-xs-push-1'],
+                    'attr' => ['class' => 'col-xs-1 col-xs-pull-11']
                 ));
     }
     

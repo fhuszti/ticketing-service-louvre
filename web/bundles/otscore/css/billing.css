@@ -113,3 +113,16 @@ input[type="radio"]:disabled + label {
 .craue_formflow_buttons .btn:nth-child(2) {
 	order: 3;
 }
+.btn.btn-primary {
+	border-color: #222;
+	background-color: #222;
+	background-image: radial-gradient(circle at bottom, #222, #331107); 
+}
+.btn.btn-primary:hover {
+	background-image: none;
+}
+
+div[id^="ots_billingbundle_ticketorder_tickets_"] div {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

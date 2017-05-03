@@ -1,7 +1,14 @@
 $(function() {
     /**
-     * DATEPICKER DATES DISABLING
-     * --------------------------
+     * STEP 1
+     * ----------------------
+     * ----------------------
+     */
+    
+
+    /**
+     * DATEPICKER DATES DISABLING IN STEP 1
+     * ------------------------------------
      */
 
     //disable some dates in datepicker
@@ -15,14 +22,14 @@ $(function() {
     }
 
     /**
-     * --------------------------
+     * ------------------------------------
      */
     
 
 
     /**
-     * FULL-DAY RADIO OPTION MANAGEMENT
-     * --------------------------------
+     * FULL-DAY RADIO OPTION MANAGEMENT IN STEP 1
+     * ------------------------------------------
      */
 
     //disable the full day radio option
@@ -95,8 +102,19 @@ $(function() {
         }
     }
 
+    /**
+     * ------------------------------------------
+     */
+    
+
+
+    /**
+     * DATEPICKER SETUP FOR STEP 1
+     * ---------------------------
+     */
+
     //initial setup datepicker
-    function setupDatepicker() {
+    function setupDatepickerStep1() {
         var inputDate = $('#ots_billingbundle_ticketorder_date').val();
 
         $("#order_datepicker").datepicker({
@@ -116,14 +134,14 @@ $(function() {
     }
 
     /**
-     * --------------------------------
+     * ---------------------------
      */
     
 
 
     /**
      * CALCULATOR
-     * ------------------------------
+     * ----------
      */
 
     function calculator() {
@@ -142,10 +160,26 @@ $(function() {
     }
 
     /**
-     * --------------------------------
+     * ----------
+     */
+    
+    /**
+     * ----------------------
+     * ----------------------
      */
 
     
+
+    
+
+
+
+    /**
+     * STEP 2
+     * ----------------------
+     * ----------------------
+     */
+
 
     /**
      * STEP 2 TICKET FORMS MANAGEMENT
@@ -159,14 +193,28 @@ $(function() {
         //get current index
         var index = collectionHolder.data('index');
 
-        //replace __name__ variables in the prototype by current index
+        //replace necessary parts in the prototype
         var newForm = prototype.replace(/__name__label__/g, 'Ticket n°'+(index+1))
                                .replace(/__name__/g, index);
 
         //increment the index for next time
         collectionHolder.data('index', index + 1);
 
-        collectionHolder.append($('<div></div>').append(newForm));
+        collectionHolder.append($('<div class="row"></div>')
+                            .append(newForm)
+                            .append($('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>Price : <span id="price_'+index+'">-</span></h3></div>'))
+                        )
+                        .append($('<hr />'));
+    }
+
+    //add necessary classes to a few elements of the generated forms
+    function addBootstrapClasses(container) {
+        var containerId = container.attr('id'),
+            formControlDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div'),
+            reducedPriceDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:last-child');
+            
+        formControlDivs.addClass('col-xs-12 col-sm-6');
+        reducedPriceDivs.addClass('col-sm-push-6');
     }
 
     //dynamically creates ticket forms on number of tickets change
@@ -180,21 +228,60 @@ $(function() {
         for(i = 0; i < nbTickets; i++) {
             addTicketForm(collectionHolder);
         }
+
+        addBootstrapClasses(collectionHolder);
     }
 
     /**
      * ------------------------------
      */
     
+    /**
+     * DATEPICKER SETUP FOR STEP 2
+     * ---------------------------
+     */
+
+    function setupDatepickerStep2() {
+        var dateInputs = $("input[name$='[birthDate]']");
+        
+        for (var i = 0; i < dateInputs.length; i++) {
+            if (dateInputs[i]) {
+                $(dateInputs[i]).datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-120:+0",
+                    dateFormat: "dd/mm/yy",
+                    altField: '#ots_billingbundle_ticketorder_tickets_'+i+'_php_birthDate',
+                    altFormat: "yy-mm-dd"
+                });
+
+                $(dateInputs[i]).attr('name', '');
+            }
+        }
+    }
+
+    /**
+     * ---------------------------
+     */
+    
+    /**
+     * ----------------------
+     * ----------------------
+     */
 
 
-    setupDatepicker();
-    checkDate($('#ots_billingbundle_ticketorder_date').val());
 
-    calculator();
 
+    //Everything needed for step 1
+    if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '1') {
+        setupDatepickerStep1();
+        checkDate($('#ots_billingbundle_ticketorder_date').val());
+
+        calculator();
+    }
     //generate ticket forms at step 2 only
-    if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
+    else if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
         generateTicketForms();
+        setupDatepickerStep2();
     }
 });

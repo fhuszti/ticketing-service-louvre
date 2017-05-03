@@ -31,10 +31,10 @@
                 app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
         }) }}
             {% if form_errors(orderForm) %}
-                    <div class="alert alert-warning">
-                        {{ form_errors(orderForm) }}
-                    </div>
-                {% endif %}
+                <div class="alert alert-warning">
+                    {{ form_errors(orderForm) }}
+                </div>
+            {% endif %}
 
             {% if orderForm.date is defined %}
                 <div class="col-xs-12 col-sm-6 col-md-4 form-group">
@@ -118,14 +118,30 @@
                 </div>
             {% endif %}
 
+            {% if orderForm.tickets is defined %}
+                <div class="col-xs-12 form-group">
+                    {% if form_errors(orderForm.tickets) %}
+                        <div class="alert alert-warning">
+                            {{ form_errors(orderForm.tickets) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(orderForm.tickets) }}
+
+                    {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
+                        <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="row">
                 {{ form_rest(orderForm) }}
             </div>
 
             {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
                 craue_formflow_button_class_last: 'btn btn-primary',
-                craue_formflow_button_class_back: 'btn btn-default left-btn',
-                craue_formflow_button_class_reset: 'btn btn-default centered-btn',
+                craue_formflow_button_class_back: 'btn btn-default',
+                craue_formflow_button_class_reset: 'btn btn-default',
                 craue_formflow_button_label_next: 'Next',
                 craue_formflow_button_label_finish: 'Complete',
                 craue_formflow_button_label_back: 'Back',
