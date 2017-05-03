@@ -252,7 +252,8 @@ $(function() {
                     yearRange: "-120:+0",
                     dateFormat: "dd/mm/yy",
                     altField: '#ots_billingbundle_ticketorder_tickets_'+i+'_php_birthDate',
-                    altFormat: "yy-mm-dd"
+                    altFormat: "yy-mm-dd",
+                    onSelect: managePrice
                 });
 
                 $(dateInputs[i]).attr('name', '');
@@ -262,6 +263,77 @@ $(function() {
 
     /**
      * ---------------------------
+     */
+    
+    /**
+     * CONVERT DATE FROM FRENCH FORMAT TO PHP FORMAT
+     * ---------------------------------------------
+     */
+    
+     function convertDateFrenchToPhp(date) {
+        var parts = date.split('/');
+
+        return parts[2]+'-'+parts[1]+'-'+parts[0];
+     }
+
+    /**
+     * ---------------------------------------------
+     */
+    
+    /**
+     * GET AGE GIVEN DATE
+     * ------------------
+     */
+    
+     function getPriceFromDate(date) {
+        var currentDateString = getTodayDate(),
+            currentDate = new Date(currentDateString),
+            birthdateString = convertDateFrenchToPhp(date),
+            birthdate = new Date(birthdateString),
+            normalRateDate = new Date(currentDate.getFullYear() - 12, currentDate.getMonth(), currentDate.getDate() < 10 ? '0'+currentDate.getDate() : currentDate.getDate()),
+            childRateDate = new Date(currentDate.getFullYear() - 4, currentDate.getMonth(), currentDate.getDate() < 10 ? '0'+currentDate.getDate() : currentDate.getDate()),
+            seniorRateDate = new Date(currentDate.getFullYear() - 60, currentDate.getMonth(), currentDate.getDate() < 10 ? '0'+currentDate.getDate() : currentDate.getDate());
+        
+        //Don't know why but birthdate would be created with hours = 2 for some reason
+        birthdate.setHours(0);
+        
+        //if below 4 years old
+        if (birthdate > childRateDate) {
+            return 0;
+        }
+        //if between 4 and 12 years old
+        else if (birthdate > normalRateDate) {
+            return 8;
+        }
+        //if between 12 and 60 years old
+        else if (birthdate > seniorRateDate) {
+            return 16;
+        }
+        //more than 60 years old
+        else {
+            return 12;
+        }
+     }
+
+    /**
+     * ------------------
+     */
+    
+    /**
+     * DYNAMICALLY CHANGE TICKET PRICE
+     */
+    
+     function managePrice(dateText) {
+        var price = getPriceFromDate(dateText),
+            splitFieldId = $(this).attr('id').split('_'),
+            currentIteration = splitFieldId[splitFieldId.length - 2],
+            priceSpan = $('#price_'+currentIteration);
+        
+        priceSpan.text(price+'€');
+     }
+
+    /**
+     * -------------------------------
      */
     
     /**
