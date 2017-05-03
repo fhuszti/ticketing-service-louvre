@@ -43,9 +43,12 @@ class TicketType extends AbstractType
                     'attr' => ['class' => 'form-control']
                 ))
                 ->add('discounted', CheckboxType::class, array(
-                    'label' => 'Reduced price\nStudent, french military, museum employee or Ministry of Culture employee.\nAn ID will be required at the entrance.',
+                    'label' => 'Reduced price
+                                Student, french military, museum employee or Ministry of Culture employee.
+                                An ID will be required at the entrance.',
                     'label_attr' => ['class' => 'col-xs-11 col-xs-push-1'],
-                    'attr' => ['class' => 'col-xs-1 col-xs-pull-11']
+                    'attr' => ['class' => 'col-xs-1 col-xs-pull-11'],
+                    'required' => false
                 ));
     }
     

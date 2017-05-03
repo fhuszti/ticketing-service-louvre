@@ -99,6 +99,10 @@ input[type="radio"]:disabled + label {
 	font-size: 1.5em;
 }
 
+label[for$='discounted'] {
+	white-space: pre-line;
+}
+
 .craue_formflow_buttons {
 	display: flex;
 	justify-content: space-between;
