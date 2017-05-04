@@ -237,29 +237,20 @@ $(function() {
      */
     
     /**
-     * CONVERT DATE FROM FRENCH FORMAT TO PHP FORMAT
-     * ---------------------------------------------
+     * STEP 2 DATE AND PRICE MANAGEMENT
+     * --------------------------------
      */
-    
-     function convertDateFrenchToPhp(date) {
+
+    function convertDateFrenchToPhp(date) {
         var parts = date.split('/');
 
         return parts[2]+'-'+parts[1]+'-'+parts[0];
      }
 
-    /**
-     * ---------------------------------------------
-     */
-    
-    /**
-     * GET AGE GIVEN DATE
-     * ------------------
-     */
-    
-     function getPriceFromDate(date) {
+     function getUsefulDates(birthdayDate) {
         var currentDateString = getTodayDate(),
             currentDate = new Date(currentDateString),
-            birthdateString = convertDateFrenchToPhp(date),
+            birthdateString = convertDateFrenchToPhp(birthdayDate),
             birthdate = new Date(birthdateString),
             normalRateDate = new Date(currentDate.getFullYear() - 12, currentDate.getMonth(), currentDate.getDate() < 10 ? '0'+currentDate.getDate() : currentDate.getDate()),
             childRateDate = new Date(currentDate.getFullYear() - 4, currentDate.getMonth(), currentDate.getDate() < 10 ? '0'+currentDate.getDate() : currentDate.getDate()),
@@ -267,17 +258,30 @@ $(function() {
         
         //Don't know why but birthdate would be created with hours = 2 for some reason
         birthdate.setHours(0);
+
+        var dates = [];
+        dates['current'] = currentDate;
+        dates['birthday'] = birthdate;
+        dates['normalRate'] = normalRateDate;
+        dates['childRate'] = childRateDate;
+        dates['seniorRate'] = seniorRateDate;
+
+        return dates;
+     }
+
+    function getPriceFromDate(birthdayDate) {
+        var dates = getUsefulDates(birthdayDate);
         
         //if below 4 years old
-        if (birthdate > childRateDate) {
+        if (dates.birthday > dates.childRate) {
             return 0;
         }
         //if between 4 and 12 years old
-        else if (birthdate > normalRateDate) {
+        else if (dates.birthday > dates.normalRate) {
             return 8;
         }
         //if between 12 and 60 years old
-        else if (birthdate > seniorRateDate) {
+        else if (dates.birthday > dates.seniorRate) {
             return 16;
         }
         //more than 60 years old
@@ -286,25 +290,66 @@ $(function() {
         }
      }
 
-    /**
-     * ------------------
-     */
-    
-    /**
-     * DYNAMICALLY CHANGE TICKET PRICE
-     */
-    
-     function managePrice(dateText) {
+    function managePriceOnDateChange(dateText, currentIndex) {
         var price = getPriceFromDate(dateText),
-            splitFieldId = $(this).attr('id').split('_'),
-            currentIteration = splitFieldId[splitFieldId.length - 2],
-            priceSpan = $('#price_'+currentIteration);
+            priceSpan = $('#price_'+currentIndex);
         
         priceSpan.text(price+'€');
      }
 
+     function manageSpecialRateCheckboxOnDateChange(birthdayDate, currentIndex) {
+        var dates = getUsefulDates(birthdayDate),
+            checkbox = $('#ots_billingbundle_ticketorder_tickets_'+currentIndex+'_discounted');
+
+        //if below 12 years old
+        if (dates.birthday > dates.normalRate) {
+            //disable the 'Special Rate' option
+            checkbox.prop('checked', false);
+            checkbox.prop('disabled', true);
+        }
+        else {
+            //enable the 'Special Rate' option
+            checkbox.prop('disabled', false);
+        }
+     }
+
+    function checkOnDateChange(dateText, datepickerInst, dateFieldElement = '') {
+        var splitFieldId = dateFieldElement === '' ? $(this).attr('id').split('_') : dateFieldElement.attr('id').split('_'),
+            currentIndex = splitFieldId[splitFieldId.length - 2];
+
+        managePriceOnDateChange(dateText, currentIndex);
+
+        manageSpecialRateCheckboxOnDateChange(dateText, currentIndex);
+    }
+
+    function managePriceOnSpecialRateChange(specialRate, checkboxElement) {
+        var splitFieldId = checkboxElement.attr('id').split('_'),
+            currentIteration = splitFieldId[splitFieldId.length - 2],
+            dateText = $('#ots_billingbundle_ticketorder_tickets_'+currentIteration+'_birthDate').val(),
+            price = specialRate ? 10 : (dateText === '' ? 0 : getPriceFromDate(dateText)),
+            priceSpan = $('#price_'+currentIteration);
+        
+        priceSpan.text(price+'€');
+    }
+
+    function managePriceSpecialRate() {
+        var specialRateCheckboxes = $("input[name$='[discounted]']");
+
+        //click event instead of change because might be manually unchecked by javascript too
+        specialRateCheckboxes.on('click', function() {
+            var checkboxElement = $(this);
+
+            if (this.checked) {
+                managePriceOnSpecialRateChange(true, checkboxElement);
+            }
+            else {
+                managePriceOnSpecialRateChange(false, checkboxElement);
+            }
+        });
+    }
+
     /**
-     * -------------------------------
+     * --------------------------------
      */
     
     /**
@@ -324,8 +369,14 @@ $(function() {
                     dateFormat: "dd/mm/yy",
                     altField: '#ots_billingbundle_ticketorder_tickets_'+i+'_php_birthDate',
                     altFormat: "yy-mm-dd",
-                    onSelect: managePrice,
+                    onSelect: checkOnDateChange,
                     maxDate: 0
+                });
+
+                //so date changes are checked even when done manually
+                $(dateInputs[i]).on('change', function() {
+                    console.log('ok');
+                    checkOnDateChange($(this).val(), '', $(this));
                 });
 
                 $(dateInputs[i]).attr('name', '');
@@ -356,5 +407,7 @@ $(function() {
     else if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
         generateTicketForms();
         setupDatepickerStep2();
+
+        managePriceSpecialRate();
     }
 });
