@@ -295,6 +295,8 @@ $(function() {
             priceSpan = $('#price_'+currentIndex);
         
         priceSpan.text(price+'€');
+
+        updateTotalPrice();
      }
 
      function manageSpecialRateCheckboxOnDateChange(birthdayDate, currentIndex) {
@@ -330,6 +332,8 @@ $(function() {
             priceSpan = $('#price_'+currentIteration);
         
         priceSpan.text(price+'€');
+
+        updateTotalPrice();
     }
 
     function managePriceSpecialRate() {
@@ -346,6 +350,24 @@ $(function() {
                 managePriceOnSpecialRateChange(false, checkboxElement);
             }
         });
+    }
+
+    function updateTotalPrice() {
+        var priceSpans = $('span[id^="price_"]'),
+            totalPriceSpan = $('#total_price'),
+            totalPrice = 0,
+            cleanPrice;
+
+        for (var i = 0; i < priceSpans.length; i++) {
+            if (priceSpans[i]) {
+                //the price is either 0 is ticket price is default, or it's text() with no € sign at the end
+                cleanPrice = $(priceSpans[i]).text() === '-' ? 0 : parseInt($(priceSpans[i]).text().slice(0, -1));
+
+                totalPrice += cleanPrice;
+            }
+        }
+
+        totalPriceSpan.text(totalPrice+'€');
     }
 
     /**
@@ -375,7 +397,6 @@ $(function() {
 
                 //so date changes are checked even when done manually
                 $(dateInputs[i]).on('change', function() {
-                    console.log('ok');
                     checkOnDateChange($(this).val(), '', $(this));
                 });
 

@@ -131,6 +131,8 @@
                     {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
                         <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
                     {% endfor %}
+
+                    <h2>Total Price : <span id="total_price">-</span></h2>
                 </div>
             {% endif %}
 
