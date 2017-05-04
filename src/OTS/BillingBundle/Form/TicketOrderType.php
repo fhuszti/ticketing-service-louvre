@@ -49,9 +49,13 @@ class TicketOrderType extends AbstractType
                             'allow_delete' =>    true,
                             'by_reference' =>    false
                         ))
-                //hidden field to get the number of tickets requested in step 2
+                //hidden field to get the number of tickets requested in step 1
                         ->add('nbTickets', HiddenType::class, array(
                             'data' => $options['nbTickets']
+                        ))
+                //hidden field to get the type of tickets requested in step 1
+                        ->add('type', HiddenType::class, array(
+                            'data' => $options['ticketType']
                         ));
                 break;
         }
@@ -67,6 +71,7 @@ class TicketOrderType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'OTS\BillingBundle\Entity\TicketOrder',
             'nbTickets' => false,
+            'ticketType' => false,
             'allow_extra_fields' => true
         ));
     }

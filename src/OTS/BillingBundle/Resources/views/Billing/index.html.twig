@@ -58,7 +58,7 @@
                 </div>
             {% endif %}
 
-            {% if orderForm.type is defined %}
+            {% if orderForm.type is defined and flow.getCurrentStepNumber() == 1 %}
                 <div class="col-xs-12 col-sm-6 col-md-4 form-group">
                     <div class="col-xs-12">
                         {{ form_label(orderForm.type, '', {
@@ -139,6 +139,19 @@
             <div class="row">
                 {{ form_rest(orderForm) }}
             </div>
+
+            {% if flow.currentStepNumber == 1 %}
+                <ul class="text-block">
+                    <li>
+                        "Half-day" tickets cost half the price of "Full-day" tickets, but only let you enter the museum after 2pm.
+                    </li>
+                    <li>
+                        Open everyday (except tuesday) from 9am to 6pm.<br />
+                        Open until 9.45pm on wednesday and friday.<br />
+                        Closed on the 1st of May, the 1st of November and the 25th of december.
+                    </li>
+                </ul>
+            {% endif %}
 
             {% if flow.currentStepNumber == 3 %}
                 <form action="/your-server-side-code" method="POST">

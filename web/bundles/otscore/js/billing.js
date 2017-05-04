@@ -292,7 +292,12 @@ $(function() {
 
     function managePriceOnDateChange(dateText, currentIndex) {
         var price = getPriceFromDate(dateText),
-            priceSpan = $('#price_'+currentIndex);
+            priceSpan = $('#price_'+currentIndex),
+            ticketTypeField = $('#ots_billingbundle_ticketorder_type');
+
+        //divide price by 2 if ticket type chosen is half-day
+        if (ticketTypeField.val() === '')
+            price = price * 0.5;
         
         priceSpan.text(price+'€');
 
@@ -329,7 +334,12 @@ $(function() {
             currentIteration = splitFieldId[splitFieldId.length - 2],
             dateText = $('#ots_billingbundle_ticketorder_tickets_'+currentIteration+'_birthDate').val(),
             price = specialRate ? 10 : (dateText === '' ? 0 : getPriceFromDate(dateText)),
-            priceSpan = $('#price_'+currentIteration);
+            priceSpan = $('#price_'+currentIteration),
+            ticketTypeField = $('#ots_billingbundle_ticketorder_type');
+
+        //divide price by 2 if ticket type chosen is half-day
+        if (ticketTypeField.val() === '')
+            price = price * 0.5;
         
         priceSpan.text(price+'€');
 

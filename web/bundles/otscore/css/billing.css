@@ -80,6 +80,9 @@ input[type="radio"]:disabled + label {
 #ots_billingbundle_ticketorder_type_1 + label {
 	margin-top: 5px;
 }
+.text-block {
+	margin: 20px 0 30px;
+}
 
 #ots_billingbundle_ticketorder_nbTickets {
 	width: 240px;

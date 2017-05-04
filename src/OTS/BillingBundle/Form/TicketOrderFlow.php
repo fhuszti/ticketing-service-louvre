@@ -19,6 +19,7 @@ class TicketOrderFlow extends FormFlow {
 			),
 			array(
 				'label' => '3. Payment',
+				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 		);
 	}
@@ -30,6 +31,7 @@ class TicketOrderFlow extends FormFlow {
 
 		if ($step === 2) {
 			$options['nbTickets'] = $formData->getNbTickets();
+			$options['ticketType'] = $formData->getType();
 		}
 
 		return $options;
