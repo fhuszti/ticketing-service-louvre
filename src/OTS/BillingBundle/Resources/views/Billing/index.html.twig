@@ -36,104 +36,140 @@
                 </div>
             {% endif %}
 
-            {% if orderForm.date is defined %}
-                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
-                    <div class="col-xs-12">
-                        {{ form_label(orderForm.date, '', {
-                            'attr': {'class': 'control-label'}
-                        }) }}
-                    </div>
-
-                    {% if form_errors(orderForm.date) %}
-                        <div class="alert alert-warning">
-                            {{ form_errors(orderForm.date) }}
+            {% if flow.getCurrentStepNumber() == 1 %}
+                {% if orderForm.date is defined %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.date, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
                         </div>
-                    {% endif %}
 
-                    <div class="col-xs-12" id="order_datepicker">
+                        {% if form_errors(orderForm.date) %}
+                            <div class="alert alert-warning">
+                                {{ form_errors(orderForm.date) }}
+                            </div>
+                        {% endif %}
+
+                        <div class="col-xs-12" id="order_datepicker">
+                        </div>
+                            {{ form_widget(orderForm.date, {
+                                'attr': {'class': 'form-control'}
+                            }) }}
                     </div>
-                        {{ form_widget(orderForm.date, {
+                {% endif %}
+
+                {% if orderForm.type is defined %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.type, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
+                        </div>
+
+                        {% if form_errors(orderForm.type) %}
+                            <div class="alert alert-warning">
+                                {{ form_errors(orderForm.type) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(orderForm.type) }}
+                    </div>
+                {% endif %}
+
+                {% if orderForm.nbTickets is defined %}
+                    <div class="col-xs-12 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.nbTickets, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
+                        </div>
+
+                        {% if form_errors(orderForm.nbTickets) %}
+                            <div class="alert alert-warning">
+                                {{ form_errors(orderForm.nbTickets) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(orderForm.nbTickets, {
                             'attr': {'class': 'form-control'}
                         }) }}
-                </div>
-            {% endif %}
 
-            {% if orderForm.type is defined and flow.getCurrentStepNumber() == 1 %}
-                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
-                    <div class="col-xs-12">
-                        {{ form_label(orderForm.type, '', {
-                            'attr': {'class': 'control-label'}
-                        }) }}
+                        <table id="calculator">
+                            <tr>
+                                <td><span class="btn btn-default calc_number">1</span></td>
+                                <td><span class="btn btn-default calc_number">2</span></td>
+                                <td><span class="btn btn-default calc_number">3</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">4</span></td>
+                                <td><span class="btn btn-default calc_number">5</span></td>
+                                <td><span class="btn btn-default calc_number">6</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">7</span></td>
+                                <td><span class="btn btn-default calc_number">8</span></td>
+                                <td><span class="btn btn-default calc_number">9</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">0</span></td>
+                                <td colspan="2"><span class="btn btn-default calc_del"><span class="glyphicon glyphicon-arrow-left"></span></span></td>
+                            </tr>
+                        </table>
                     </div>
-
-                    {% if form_errors(orderForm.type) %}
-                        <div class="alert alert-warning">
-                            {{ form_errors(orderForm.type) }}
-                        </div>
-                    {% endif %}
-
-                    {{ form_widget(orderForm.type) }}
-                </div>
+                {% endif %}
             {% endif %}
 
-            {% if orderForm.nbTickets is defined and flow.getCurrentStepNumber() == 1 %}
-                <div class="col-xs-12 col-md-4 form-group">
-                    <div class="col-xs-12">
-                        {{ form_label(orderForm.nbTickets, '', {
-                            'attr': {'class': 'control-label'}
-                        }) }}
+            {% if flow.getCurrentStepNumber() == 2 %}
+                {% if orderForm.tickets is defined %}
+                    <div class="col-xs-12 form-group">
+                        {% if form_errors(orderForm.tickets) %}
+                            <div class="alert alert-warning">
+                                {{ form_errors(orderForm.tickets) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(orderForm.tickets) }}
+
+                        {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
+                            <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
+                        {% endfor %}
+
+                        <h2>Total Price : <span id="total_price">-</span></h2>
                     </div>
-
-                    {% if form_errors(orderForm.nbTickets) %}
-                        <div class="alert alert-warning">
-                            {{ form_errors(orderForm.nbTickets) }}
-                        </div>
-                    {% endif %}
-
-                    {{ form_widget(orderForm.nbTickets, {
-                        'attr': {'class': 'form-control'}
-                    }) }}
-
-                    <table id="calculator">
-                        <tr>
-                            <td><span class="btn btn-default calc_number">1</span></td>
-                            <td><span class="btn btn-default calc_number">2</span></td>
-                            <td><span class="btn btn-default calc_number">3</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="btn btn-default calc_number">4</span></td>
-                            <td><span class="btn btn-default calc_number">5</span></td>
-                            <td><span class="btn btn-default calc_number">6</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="btn btn-default calc_number">7</span></td>
-                            <td><span class="btn btn-default calc_number">8</span></td>
-                            <td><span class="btn btn-default calc_number">9</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="btn btn-default calc_number">0</span></td>
-                            <td colspan="2"><span class="btn btn-default calc_del"><span class="glyphicon glyphicon-arrow-left"></span></span></td>
-                        </tr>
-                    </table>
-                </div>
+                {% endif %}
             {% endif %}
 
-            {% if orderForm.tickets is defined %}
-                <div class="col-xs-12 form-group">
-                    {% if form_errors(orderForm.tickets) %}
-                        <div class="alert alert-warning">
-                            {{ form_errors(orderForm.tickets) }}
-                        </div>
-                    {% endif %}
-
-                    {{ form_widget(orderForm.tickets) }}
-
-                    {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
-                        <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
-                    {% endfor %}
-
-                    <h2>Total Price : <span id="total_price">-</span></h2>
+            {% if flow.currentStepNumber == 3 %}
+                <div class="row well">
+                    <div class="col-xs-12 col-sm-6">
+                        <h4 class="col-xs-12">
+                            Date: <span id="recap_date"></span>
+                        </h4>
+                        <h4 class="col-xs-12">
+                            Ticket type: <span id="recap_type"></span>
+                        </h4>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <h4 class="col-xs-12">
+                            Tickets count: <span id="recap_nbTickets"></span>
+                        </h4>
+                        <h4 class="col-xs-12">
+                            Total price: <span id="recap_price"></span>
+                        </h4>
+                    </div>
                 </div>
+
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_hoXdqVAmVW3pIQOWqanoshlw"
+                    data-amount="{{ orderForm.price.vars.value * 100 }}"
+                    data-name="Musée du Louvre"
+                    data-description="{{ orderForm.nbTickets.vars.value }} ticket(s)"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-currency="eur"
+                    data-allow-remember-me="false">
+                </script>
             {% endif %}
 
             <div class="row">
@@ -151,21 +187,6 @@
                         Closed on the 1st of May, the 1st of November and the 25th of december.
                     </li>
                 </ul>
-            {% endif %}
-
-            {% if flow.currentStepNumber == 3 %}
-                <form action="/your-server-side-code" method="POST">
-                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="pk_test_hoXdqVAmVW3pIQOWqanoshlw"
-                            data-amount="2000"
-                            data-name="Demo Site"
-                            data-description="2 widgets"
-                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                            data-locale="auto"
-                            data-zip-code="true"
-                            data-currency="eur">
-                    </script>
-                </form>
             {% endif %}
 
             {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {

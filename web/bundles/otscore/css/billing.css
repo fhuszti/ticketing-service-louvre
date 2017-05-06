@@ -133,3 +133,8 @@ div[id^="ots_billingbundle_ticketorder_tickets_"] div {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+form .stripe-button-el {
+	display: block;
+	margin: 30px auto 50px;
+}

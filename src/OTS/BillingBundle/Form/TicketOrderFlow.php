@@ -30,8 +30,16 @@ class TicketOrderFlow extends FormFlow {
 		$formData = $this->getFormData();
 
 		if ($step === 2) {
+			$options['date'] = $formData->getDate()->format('Y-m-d');
 			$options['nbTickets'] = $formData->getNbTickets();
-			$options['ticketType'] = $formData->getType();
+			$options['type'] = $formData->getType();
+		}
+
+		if ($step === 3) {
+			$options['date'] = $formData->getDate();
+			$options['nbTickets'] = $formData->getNbTickets();
+			$options['type'] = $formData->getType();
+			$options['price'] = $formData->getPrice();
 		}
 
 		return $options;

@@ -59,6 +59,14 @@ class TicketOrder
      */
     private $tickets;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="price", type="smallint")
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $price;
+
 
 
     /**
@@ -187,5 +195,29 @@ class TicketOrder
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return TicketOrder
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

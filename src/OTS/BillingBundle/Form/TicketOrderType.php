@@ -49,13 +49,36 @@ class TicketOrderType extends AbstractType
                             'allow_delete' =>    true,
                             'by_reference' =>    false
                         ))
+                        ->add('date', HiddenType::class, array(
+                            'data' => $options['date']
+                        ))
                 //hidden field to get the number of tickets requested in step 1
                         ->add('nbTickets', HiddenType::class, array(
                             'data' => $options['nbTickets']
                         ))
                 //hidden field to get the type of tickets requested in step 1
                         ->add('type', HiddenType::class, array(
-                            'data' => $options['ticketType']
+                            'data' => $options['type']
+                        ))
+                //to remember the price for display in step 3, will be populated with jquery
+                        ->add('price', HiddenType::class, array(
+                            'invalid_message' => "The price of the order must be a valid integer greater than 0.",
+                            'attr' =>      array('min' => 0)
+                        ));
+                break;
+            case 3:
+                //we add every field to offer a recap on the payment step
+                $builder->add('date', HiddenType::class, array(
+                            'data' => $options['date']
+                        ))
+                        ->add('nbTickets', HiddenType::class, array(
+                            'data' => $options['nbTickets']
+                        ))
+                        ->add('type', HiddenType::class, array(
+                            'data' => $options['type']
+                        ))
+                        ->add('price', HiddenType::class, array(
+                            'data' => $options['price']
                         ));
                 break;
         }
@@ -70,9 +93,11 @@ class TicketOrderType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'OTS\BillingBundle\Entity\TicketOrder',
+            'allow_extra_fields' => true,
+            'date' => false,
             'nbTickets' => false,
-            'ticketType' => false,
-            'allow_extra_fields' => true
+            'type' => false,
+            'price' => false
         ));
     }
 

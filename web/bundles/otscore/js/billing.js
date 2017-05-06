@@ -378,6 +378,7 @@ $(function() {
         }
 
         totalPriceSpan.text(totalPrice+'€');
+        $('#ots_billingbundle_ticketorder_price').val(totalPrice);
     }
 
     /**
@@ -423,22 +424,73 @@ $(function() {
      * ----------------------
      * ----------------------
      */
+    
 
 
 
+
+
+
+    /**
+     * STEP 2
+     * ----------------------
+     * ----------------------
+     */
+
+     /**
+     * FILL RECAP VALUES FOR STEP 3
+     * ----------------------------
+     */
+
+    function convertDatePhpToFrench(date) {
+        var parts = date.split('-');
+
+        return parts[2]+'/'+parts[1]+'/'+parts[0];
+     }
+
+    function fillRecap() {
+        var date = convertDatePhpToFrench( $('#ots_billingbundle_ticketorder_date').val() );
+        $('#recap_date').text(date);
+        
+        var type = $('#ots_billingbundle_ticketorder_type').val() === '1' ? "Full-day" : "Half-day";
+        $('#recap_type').text(type);
+        
+        $('#recap_nbTickets').text( $('#ots_billingbundle_ticketorder_nbTickets').val() );
+        
+        $('#recap_price').text( $('#ots_billingbundle_ticketorder_price').val()+'€' );
+     }
+
+    /**
+     * ----------------------------
+     */
+    
+    /**
+     * ----------------------
+     * ----------------------
+     */
+    
+
+
+
+
+     var stepInput = $('#ots_billingbundle_ticketorder_flow_ticketOrder_step');
 
     //Everything needed for step 1
-    if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '1') {
+    if (stepInput.val() === '1') {
         setupDatepickerStep1();
         checkDate($('#ots_billingbundle_ticketorder_date').val());
 
         calculator();
     }
     //generate ticket forms at step 2 only
-    else if ($('#ots_billingbundle_ticketorder_flow_ticketOrder_step').val() === '2') {
+    else if (stepInput.val() === '2') {
         generateTicketForms();
         setupDatepickerStep2();
 
         managePriceSpecialRate();
+    }
+    //step 3 only
+    else if (stepInput.val() === '3') {
+        fillRecap();
     }
 });
