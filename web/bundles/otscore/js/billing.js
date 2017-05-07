@@ -11,14 +11,30 @@ $(function() {
      * ------------------------------------
      */
 
-    //disable some dates in datepicker
-    function disableDates(date) {
-        var noTuesday = date.getDay() != 2,
+    //check if a given date is valid
+    function isDateValid(date) {
+        var noTuesday = date.getDay() != 1,
             noSunday = date.getDay() != 0,
             disabledDates = ['01-05', '01-11', '25-12'],
             stringDate = $.datepicker.formatDate('dd-mm', date);
 
-        return [noTuesday && noSunday && disabledDates.indexOf(stringDate) == -1, ''];
+        return noTuesday && noSunday && disabledDates.indexOf(stringDate) == -1;
+    }
+
+    //disable some dates in datepicker
+    function disableDates(date) {
+        return [isDateValid(date), ''];
+    }
+
+    //get the default date if today isn't enabled
+    function getDefaultDate() {
+        var date = new Date();
+        
+        while ( !isDateValid(date) ) {
+            date.setDate( date.getDate() + 1 );
+        }
+        
+        return date;
     }
 
     /**
@@ -123,7 +139,7 @@ $(function() {
             minDate: 0,
             beforeShowDay: disableDates,
             onSelect: checkDate,
-            defaultDate: inputDate ? inputDate : null,
+            defaultDate: getDefaultDate(),
             dateFormat: 'yy-mm-dd'
         });
         

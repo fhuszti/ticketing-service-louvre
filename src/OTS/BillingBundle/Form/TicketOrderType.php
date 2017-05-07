@@ -49,8 +49,11 @@ class TicketOrderType extends AbstractType
                             'allow_delete' =>    true,
                             'by_reference' =>    false
                         ))
-                        ->add('date', HiddenType::class, array(
-                            'data' => $options['date']
+                        ->add('date', DateType::class, array(
+                            'data' => $options['date'],
+                            'label_attr' => array('class' => 'hidden-label'),
+                            'widget' =>          'single_text',
+                            'html5' =>           false,
                         ))
                 //hidden field to get the number of tickets requested in step 1
                         ->add('nbTickets', HiddenType::class, array(
@@ -68,8 +71,11 @@ class TicketOrderType extends AbstractType
                 break;
             case 3:
                 //we add every field to offer a recap on the payment step
-                $builder->add('date', HiddenType::class, array(
-                            'data' => $options['date']
+                $builder->add('date', DateType::class, array(
+                            'data' => $options['date'],
+                            'label_attr' => array('class' => 'hidden-label'),
+                            'widget' =>          'single_text',
+                            'html5' =>           false,
                         ))
                         ->add('nbTickets', HiddenType::class, array(
                             'data' => $options['nbTickets']

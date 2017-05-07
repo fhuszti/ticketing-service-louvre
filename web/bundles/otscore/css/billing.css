@@ -49,7 +49,7 @@ form {
 	padding: 30px 30px 20px;
 }
 
-#ots_billingbundle_ticketorder_date {
+#ots_billingbundle_ticketorder_date, .hidden-label {
 	display: none;
 }
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
