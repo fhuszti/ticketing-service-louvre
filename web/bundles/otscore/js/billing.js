@@ -288,10 +288,15 @@ $(function() {
         return parts[2]+'-'+parts[1]+'-'+parts[0];
     }
 
-    function formatDate(dateElmt) {
-        if (dateElmt.val().split('-').length > 1) {
-            var convertedDate = convertDatePhpToFrench(dateElmt.val());
+    function formatDate(dateElmt, index) {
+        var dateString = dateElmt.val();
 
+        if (dateString.split('-').length > 1) {
+            var convertedDate = convertDatePhpToFrench(dateString),
+                phpDateElmt = $('#ots_billingbundle_ticketorder_tickets_'+index+'_php_birthDate');
+
+            phpDateElmt.val(dateString);
+            checkOnDateChange(dateString, '', dateElmt);
             dateElmt.val(convertedDate);
         }
     }
@@ -461,7 +466,7 @@ $(function() {
                     checkOnDateChange($(this).val(), '', $(this));
                 });
 
-                formatDate( $(dateInputs[i]) );
+                formatDate( $(dateInputs[i]), i );
 
                 $(dateInputs[i]).attr('name', '');
             }
