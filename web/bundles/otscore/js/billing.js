@@ -223,6 +223,24 @@ $(function() {
                         .append($('<hr />'));
     }
 
+    //apply a design to the form generated via php if step 2 has already been validated
+    function designTicketForm(collectionHolder) {
+        var containerId = collectionHolder.attr('id'),
+            index = collectionHolder.data('index'),
+            indexUp = index + 1,
+            rowDiv = $( '#'+containerId+'>div:nth-of-type('+indexUp+')' );
+
+        rowDiv.addClass('row');
+        rowDiv.children().wrapAll('<div />');
+        rowDiv.children('div').children('label').text( 'Ticket n°'+(indexUp) );
+        rowDiv.append( $('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>Price : <span id="price_'+index+'">-</span></h3></div>') );
+
+        rowDiv.after( $('<hr />') );
+
+        //increment the index for next time
+        collectionHolder.data('index', indexUp);
+    }
+
     //add necessary classes to a few elements of the generated forms
     function addBootstrapClasses(container) {
         var containerId = container.attr('id'),
@@ -233,18 +251,25 @@ $(function() {
         reducedPriceDivs.addClass('col-sm-push-6');
     }
 
-    //dynamically creates ticket forms on number of tickets change
+    //dynamically creates ticket forms on first time at step 2
     function generateTicketForms() {
-        var i,
+        var i, j,
             collectionHolder = $('#ots_billingbundle_ticketorder_tickets'),
             nbTickets = $('#ots_billingbundle_ticketorder_nbTickets').val();
         
         collectionHolder.data('index', 0);
 
-        for(i = 0; i < nbTickets; i++) {
-            addTicketForm(collectionHolder);
+        if ( $('#ots_billingbundle_ticketorder_tickets_0').length <= 0 ) {
+            for(i = 0; i < nbTickets; i++) {
+                addTicketForm(collectionHolder);
+            }
         }
-
+        else {
+            for(j = 0; j < nbTickets; j++) {
+                designTicketForm(collectionHolder);
+            }
+        }
+        
         addBootstrapClasses(collectionHolder);
     }
 
