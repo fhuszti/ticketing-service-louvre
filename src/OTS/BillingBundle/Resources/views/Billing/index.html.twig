@@ -26,10 +26,7 @@
         <div>
             {% include 'OTSBillingBundle:Billing:stepList_content.html.twig' %}
         </div>
-        {{ form_start(orderForm, {
-                'action': path(app.request.attributes.get('_route'),
-                app.request.query.all | craue_removeDynamicStepNavigationParameters(flow))
-        }) }}
+        {{ form_start(orderForm) }}
             {% if form_errors(orderForm) %}
                 <div class="alert alert-warning">
                     {{ form_errors(orderForm) }}
