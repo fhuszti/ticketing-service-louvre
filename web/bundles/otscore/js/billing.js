@@ -286,9 +286,18 @@ $(function() {
         var parts = date.split('/');
 
         return parts[2]+'-'+parts[1]+'-'+parts[0];
-     }
+    }
 
-     function getUsefulDates(birthdayDate) {
+    function formatDate(dateElmt) {
+        if (dateElmt.val().split('-').length > 1) {
+            var convertedDate = convertDatePhpToFrench(dateElmt.val());
+
+            dateElmt.val(convertedDate);
+        }
+    }
+
+    //returns an array of dates used to calculate prices dynamically (12yo date threshold, senior date threshold...)
+    function getUsefulDates(birthdayDate) {
         var currentDateString = getTodayDate(),
             currentDate = new Date(currentDateString),
             birthdateString = convertDateFrenchToPhp(birthdayDate),
@@ -308,7 +317,7 @@ $(function() {
         dates['seniorRate'] = seniorRateDate;
 
         return dates;
-     }
+    }
 
     function getPriceFromDate(birthdayDate) {
         var dates = getUsefulDates(birthdayDate);
@@ -432,7 +441,7 @@ $(function() {
      */
 
     function setupDatepickerStep2() {
-        var dateInputs = $("input[name$='[birthDate]']");
+        var dateInputs = $("input[name$='[birthDate]']:not([id$='_php_birthDate'])");
         
         for (var i = 0; i < dateInputs.length; i++) {
             if (dateInputs[i]) {
@@ -451,6 +460,8 @@ $(function() {
                 $(dateInputs[i]).on('change', function() {
                     checkOnDateChange($(this).val(), '', $(this));
                 });
+
+                formatDate( $(dateInputs[i]) );
 
                 $(dateInputs[i]).attr('name', '');
             }
@@ -473,7 +484,7 @@ $(function() {
 
 
     /**
-     * STEP 2
+     * STEP 3
      * ----------------------
      * ----------------------
      */
