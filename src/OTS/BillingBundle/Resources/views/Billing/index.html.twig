@@ -157,16 +157,11 @@
                     </div>
                 </div>
 
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_test_hoXdqVAmVW3pIQOWqanoshlw"
-                    data-amount="{{ orderForm.price.vars.value * 100 }}"
-                    data-name="Musée du Louvre"
-                    data-description="{{ orderForm.nbTickets.vars.value }} ticket(s)"
-                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                    data-locale="auto"
-                    data-currency="eur"
-                    data-allow-remember-me="false">
-                </script>
+                <script src="https://checkout.stripe.com/checkout.js"></script>
+
+                <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}">
+                    Pay with Card
+                </button>
             {% endif %}
 
             <div class="row">
@@ -202,7 +197,8 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        'bundles/otscore/js/billing.js' %}
+        'bundles/otscore/js/billing.js'
+        'bundles/otscore/js/stripe-checkout.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

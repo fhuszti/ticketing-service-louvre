@@ -134,7 +134,7 @@ div[id^="ots_billingbundle_ticketorder_tickets_"] div {
 	margin-bottom: 10px;
 }
 
-form .stripe-button-el {
+form #btn-stripe-checkout {
 	display: block;
 	margin: 30px auto 50px;
 }
