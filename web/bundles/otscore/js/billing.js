@@ -13,7 +13,7 @@ $(function() {
 
     //check if a given date is valid
     function isDateValid(date) {
-        var noTuesday = date.getDay() != 1,
+        var noTuesday = date.getDay() != 2,
             noSunday = date.getDay() != 0,
             disabledDates = ['01-05', '01-11', '25-12'],
             stringDate = $.datepicker.formatDate('dd-mm', date);
