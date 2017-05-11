@@ -2,3 +2,8 @@ ots_billing_home:
     path:     /
     defaults: 
         _controller: OTSBillingBundle:Billing:index
+
+ots_billing_thanks:
+    path:     /
+    defaults: 
+        _controller: OTSBillingBundle:Billing:index

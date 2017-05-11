@@ -50,7 +50,7 @@ class BillingController extends Controller
         }
     }
 
-    public function checkTotalPrice($tickets) {
+    public function checkTotalPrice($tickets, $order) {
     	//we check the price and birthdate of each ticket
 		$totalPrice = 0;
 
@@ -58,6 +58,9 @@ class BillingController extends Controller
 			//price 
 			$ticketPrice = $this->checkTicketPrice($ticket);
 			if ($ticket->getDiscounted())
+				$ticketPrice = 10;
+			//if it's a Half-Day ticket
+			if (!$order->getType())
 				$ticketPrice *= 0.5;
 
 			$ticket->setPrice($ticketPrice);
@@ -114,7 +117,7 @@ class BillingController extends Controller
 				if ( is_null($orderType) )
 					$order->setType(false);
 
-				$totalPrice = $this->checkTotalPrice( $order->getTickets() );
+				$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
 				//if it's free, problem
 				if ($totalPrice === 0) {
 					$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');

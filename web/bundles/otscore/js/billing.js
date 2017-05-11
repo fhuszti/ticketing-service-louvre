@@ -345,12 +345,15 @@ $(function() {
         }
      }
 
-    function managePriceOnDateChange(dateText, currentIndex) {
+    function managePriceOnDateChange(dateText, currentIndex, specialRate) {
         var price = getPriceFromDate(dateText),
             priceSpan = $('#price_'+currentIndex),
             priceElmt = $('#ots_billingbundle_ticketorder_tickets_'+currentIndex+'_price'),
-            ticketTypeField = $('#ots_billingbundle_ticketorder_type');
+            ticketTypeField = $('#ots_billingbundle_ticketorder_type'),
+            discountedInput = $('#ots_billingbundle_ticketorder_tickets_'+currentIndex+'_discounted');
 
+        if (discountedInput.prop('checked'))
+            price = 10;
         //divide price by 2 if ticket type chosen is half-day
         if (ticketTypeField.val() === '')
             price = price * 0.5;
@@ -377,7 +380,7 @@ $(function() {
         }
      }
 
-    function checkOnDateChange(dateText, datepickerInst, dateFieldElement = '') {
+    function checkOnDateChange(dateText, datepickerInst, dateFieldElement = '' ) {
         var splitFieldId = dateFieldElement === '' ? $(this).attr('id').split('_') : dateFieldElement.attr('id').split('_'),
             currentIndex = splitFieldId[splitFieldId.length - 2];
 
@@ -457,7 +460,8 @@ $(function() {
      */
 
     function setupDatepickerStep2() {
-        var dateInputs = $("input[name$='[birthDate]']:not([id$='_php_birthDate'])");
+        var dateInputs = $("input[name$='[birthDate]']:not([id$='_php_birthDate'])"),
+            discountInputs = $("input[name$='[discounted]']");
         
         for (var i = 0; i < dateInputs.length; i++) {
             if (dateInputs[i]) {
@@ -473,8 +477,8 @@ $(function() {
                 });
 
                 //so date changes are checked even when done manually
-                $(dateInputs[i]).on('change', function() {
-                    checkOnDateChange($(this).val(), '', $(this));
+                 $(dateInputs[i]).on('change', function() {
+                    checkOnDateChange( $(this).val(), '', $(this) );
                 });
 
                 formatDate( $(dateInputs[i]), i );
