@@ -63,7 +63,10 @@ class TicketOrder
      * @var int
      *
      * @ORM\Column(name="price", type="smallint")
-     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\GreaterThanOrEqual(
+     *     value=1,
+     *     message="The price of the order must be equal to or over 1."
+     * )
      */
     private $price;
 

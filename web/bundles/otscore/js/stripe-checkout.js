@@ -13,21 +13,6 @@ $(function() {
 
 		    	//then we send the form
 		    	$('form[name="ots_billingbundle_ticketorder"]').submit();
-
-		    	/*$.ajax({
-	            	method:  'POST',
-	                url:     btn.data('url'),
-	                timeout: 5000,
-	                data: {
-	                	'tokenId': token.id
-	                },
-	                success: function(urlFromController) {
-
-	                },
-	                error:   function() {
-	                    $('<div class="alert alert-danger col-xs-12">There was an error during checlout. You have not been charged.<br />Please try again later.</div>').insertBefore();
-	                }
-	            });*/
 		  	}
 		});
 	

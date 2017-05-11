@@ -50,23 +50,24 @@ class TicketOrderType extends AbstractType
                             'by_reference' =>    false
                         ))
                         ->add('date', DateType::class, array(
-                            'data' => $options['date'],
+                            'data' =>            $options['date'],
                             'label_attr' => array('class' => 'hidden-label'),
                             'widget' =>          'single_text',
                             'html5' =>           false,
                         ))
                 //hidden field to get the number of tickets requested in step 1
                         ->add('nbTickets', HiddenType::class, array(
-                            'data' => $options['nbTickets']
+                            'data' =>            $options['nbTickets']
                         ))
                 //hidden field to get the type of tickets requested in step 1
                         ->add('type', HiddenType::class, array(
-                            'data' => $options['type']
+                            'data' =>            $options['type']
                         ))
                 //to remember the price for display in step 3, will be populated with jquery
-                        ->add('price', HiddenType::class, array(
-                            'invalid_message' => "The price of the order must be a valid integer greater than 0.",
-                            'attr' =>      array('min' => 0)
+                        ->add('price', IntegerType::class, array(
+                            'invalid_message' => "The price of the order must be a valid integer greater than 1.",
+                            'label_attr' => array('class' => 'hidden-label'),
+                            'attr' =>      array('min' => 1, 'class' => 'hidden')
                         ));
                 break;
             case 3:
