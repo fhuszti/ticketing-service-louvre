@@ -1,41 +1,53 @@
 $(function() {
-	var btn = $('#btn-stripe-checkout');
+	function setupStripeCheckout() {
+		var btn = $('#btn-stripe-checkout');
+	
+		var handler = StripeCheckout.configure({
+		  	key:    'pk_test_hoXdqVAmVW3pIQOWqanoshlw',
+		  	image:  'https://stripe.com/img/documentation/checkout/marketplace.png',
+		  	locale: 'auto',
+		  	allowRememberMe: false,
+		  	token:  function(token) {
+		    	//we fill the checkout token hidden field of the form with the token id so it's passed to back-end too
+		    	$('#ots_billingbundle_ticketorder_checkoutToken').val(token.id);
 
-	var handler = StripeCheckout.configure({
-	  	key:    'pk_test_hoXdqVAmVW3pIQOWqanoshlw',
-	  	image:  'https://stripe.com/img/documentation/checkout/marketplace.png',
-	  	locale: 'auto',
-	  	allowRememberMe: false,
-	  	token:  function(token) {
-	    	// You can access the token ID with `token.id`.
-	    	// Get the token ID to your server-side code for use.
-	  	}
-	});
+		    	//then we send the form
+		    	$('form[name="ots_billingbundle_ticketorder"]').submit();
 
-	btn.on('click', function(e) {
-		e.preventDefault();
+		    	/*$.ajax({
+	            	method:  'POST',
+	                url:     btn.data('url'),
+	                timeout: 5000,
+	                data: {
+	                	'tokenId': token.id
+	                },
+	                success: function(urlFromController) {
 
-		// Open Checkout with further options:
-		handler.open({
-			name: 'Musée du Louvre',
-		    description: btn.data('nbtickets')+" ticket(s)",
-		    currency: 'eur',
-		    amount: btn.data('amount')
+	                },
+	                error:   function() {
+	                    $('<div class="alert alert-danger col-xs-12">There was an error during checlout. You have not been charged.<br />Please try again later.</div>').insertBefore();
+	                }
+	            });*/
+		  	}
 		});
-	});
+	
+		btn.on('click', function(e) {
+			e.preventDefault();
+	
+			// Open Checkout with further options:
+			handler.open({
+				name: 'Musée du Louvre',
+			    description: btn.data('nbtickets')+" ticket(s)",
+			    currency: 'eur',
+			    amount: btn.data('amount')
+			});
+		});
+	
+		// Close Checkout on page navigation:
+		$(window).on('popstate', function() {
+			handler.close();
+		});
+	}
 
-	// Close Checkout on page navigation:
-	$(window).on('popstate', function() {
-		handler.close();
-	});
+	setupStripeCheckout();
 });
-
-/*class="stripe-button"
-                    data-key="pk_test_hoXdqVAmVW3pIQOWqanoshlw"
-                    data-amount="{{ orderForm.price.vars.value * 100 }}"
-                    data-name="Musée du Louvre"
-                    data-description="{{ orderForm.nbTickets.vars.value }} ticket(s)"
-                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                    data-locale="auto"
-                    data-currency="eur"
-                    data-allow-remember-me="false"*/

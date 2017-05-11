@@ -24,20 +24,20 @@ class TicketOrder
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="date", type="datetime")
-     * @Assert\DateTime(message="Order date must be either a valid DateTime object or a valid date string.")
+     * @ORM\Column(name="date", type="date")
+     * @Assert\Date(message="Order date must be either a valid DateTime object or a valid date string.")
      */
     private $date;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="type", type="boolean.")
+     * @ORM\Column(name="type", type="boolean")
      * @Assert\Type(
      *     type="bool",
-     *     message="Order type must be a boolean"
+     *     message="Order type must be a boolean."
      * )
      */
     private $type;
@@ -46,18 +46,26 @@ class TicketOrder
      * @var int
      *
      * @ORM\Column(name="nb_tickets", type="smallint")
-     * @Assert\GreaterThanOrEqual(
+     * @Assert\GreaterThan(
      *     value=0,
-     *     message="Number of tikets must be equal to or over 0."
+     *     message="Number of tikets must be greater than 0."
      * )
      */
     private $nbTickets;
 
     /**
-     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order", cascade={"persist"})
      * @Assert\Valid()
      */
     private $tickets;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="price", type="smallint")
+     * @Assert\GreaterThanOrEqual(0)
+     */
+    private $price;
 
 
 
@@ -187,5 +195,29 @@ class TicketOrder
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     *
+     * @return TicketOrder
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

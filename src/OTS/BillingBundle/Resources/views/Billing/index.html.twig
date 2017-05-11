@@ -159,7 +159,7 @@
 
                 <script src="https://checkout.stripe.com/checkout.js"></script>
 
-                <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}">
+                <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}" data-url="{{ path('ots_billing_home') }}">
                     Pay with Card
                 </button>
             {% endif %}
@@ -197,9 +197,17 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts
-        'bundles/otscore/js/billing.js'
-        'bundles/otscore/js/stripe-checkout.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    
+    {% if flow.currentStepNumber == 3 %}
+        {% javascripts
+            'bundles/otscore/js/billing.js'
+            'bundles/otscore/js/stripe-checkout.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% else %}
+        {% javascripts
+            'bundles/otscore/js/billing.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
 {% endblock %}

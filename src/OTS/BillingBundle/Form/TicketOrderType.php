@@ -85,6 +85,9 @@ class TicketOrderType extends AbstractType
                         ))
                         ->add('price', HiddenType::class, array(
                             'data' => $options['price']
+                        ))
+                        ->add('checkoutToken', HiddenType::class, array(
+                            'mapped' => false
                         ));
                 break;
         }

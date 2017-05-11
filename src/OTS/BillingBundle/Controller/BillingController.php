@@ -50,13 +50,13 @@ class BillingController extends Controller
 				$form = $flow->createForm();
 			} else {
 				// flow finished
-				/*$em = $this->getDoctrine()->getManager();
-				$em->persist($formData);
-				$em->flush();*/
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($order);
+				$em->flush();
 
 				$flow->reset(); // remove step data from the session
 
-				return $this->redirect($this->generateUrl('home')); // redirect when done
+				return $this->redirect($this->generateUrl('ots_billing_home')); // redirect when done
 			}
 		}
 

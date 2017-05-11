@@ -245,7 +245,7 @@ $(function() {
     function addBootstrapClasses(container) {
         var containerId = container.attr('id'),
             formControlDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div'),
-            reducedPriceDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:last-child');
+            reducedPriceDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:nth-last-child(2)');
             
         formControlDivs.addClass('col-xs-12 col-sm-6');
         reducedPriceDivs.addClass('col-sm-push-6');
@@ -348,6 +348,7 @@ $(function() {
     function managePriceOnDateChange(dateText, currentIndex) {
         var price = getPriceFromDate(dateText),
             priceSpan = $('#price_'+currentIndex),
+            priceElmt = $('#ots_billingbundle_ticketorder_tickets_'+currentIndex+'_price'),
             ticketTypeField = $('#ots_billingbundle_ticketorder_type');
 
         //divide price by 2 if ticket type chosen is half-day
@@ -355,6 +356,7 @@ $(function() {
             price = price * 0.5;
         
         priceSpan.text(price+'€');
+        priceElmt.val(price);
 
         updateTotalPrice();
      }
@@ -390,6 +392,7 @@ $(function() {
             dateText = $('#ots_billingbundle_ticketorder_tickets_'+currentIteration+'_birthDate').val(),
             price = specialRate ? 10 : (dateText === '' ? 0 : getPriceFromDate(dateText)),
             priceSpan = $('#price_'+currentIteration),
+            priceElmt = $('#ots_billingbundle_ticketorder_tickets_'+currentIteration+'_price'),
             ticketTypeField = $('#ots_billingbundle_ticketorder_type');
 
         //divide price by 2 if ticket type chosen is half-day
@@ -397,12 +400,20 @@ $(function() {
             price = price * 0.5;
         
         priceSpan.text(price+'€');
+        priceElmt.val(price);
 
         updateTotalPrice();
     }
 
     function managePriceSpecialRate() {
-        var specialRateCheckboxes = $("input[name$='[discounted]']");
+        var i,
+            specialRateCheckboxes = $("input[name$='[discounted]']");
+
+        //display reduced price when user is coming back to step 2 after checking a box previously
+        for (i = 0; i < specialRateCheckboxes.length; i++) {
+            if (specialRateCheckboxes[i] && specialRateCheckboxes[i].checked)
+                managePriceOnSpecialRateChange( true, $(specialRateCheckboxes[i]) );
+        }
 
         //click event instead of change because might be manually unchecked by javascript too
         specialRateCheckboxes.on('click', function() {

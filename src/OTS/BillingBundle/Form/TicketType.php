@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class TicketType extends AbstractType
 {
@@ -48,8 +49,11 @@ class TicketType extends AbstractType
                                 An ID will be required at the entrance.',
                     'label_attr' => ['class' => 'col-xs-11 col-xs-push-1'],
                     'attr' => ['class' => 'col-xs-1 col-xs-pull-11'],
-                    'required' => false,
-                    'disabled' => true
+                    'required' => false
+                ))
+                ->add('price', HiddenType::class, array(
+                    'invalid_message' => "The price of the order must be a valid integer greater than 0.",
+                    'attr' =>      array('min' => 0)
                 ));
     }
     
