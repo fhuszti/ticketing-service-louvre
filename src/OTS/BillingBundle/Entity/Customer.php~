@@ -170,28 +170,4 @@ class Customer
     {
         return $this->orders;
     }
-
-    /**
-     * Set stripeId
-     *
-     * @param string $stripeId
-     *
-     * @return Customer
-     */
-    public function setStripeId($stripeId)
-    {
-        $this->stripe_id = $stripeId;
-
-        return $this;
-    }
-
-    /**
-     * Get stripeId
-     *
-     * @return string
-     */
-    public function getStripeId()
-    {
-        return $this->stripe_id;
-    }
 }

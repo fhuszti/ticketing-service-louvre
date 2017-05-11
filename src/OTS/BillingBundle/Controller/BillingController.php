@@ -8,6 +8,8 @@ use OTS\BillingBundle\Form\TicketOrderType;
 use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Form\TicketType;
 use OTS\BillingBundle\Entity\Ticket;
+use OTS\BillingBundle\Entity\Customer;
+use OTS\BillingBundle\Entity\Charge;
 
 class BillingController extends Controller
 {
@@ -96,6 +98,40 @@ class BillingController extends Controller
     	);
     }
 
+    public function manageEntities($order, $checkout, $request, $form, $flow) {
+    	$customer = new Customer();
+    	$customer->setStripeId($checkout['customer']->id);
+    	$customer->setEmail($checkout['customer']->email);
+
+    	$charge = new Charge();
+    	$charge->setAmount($checkout['charge']->amount);
+    	$charge->setCurrency($checkout['charge']->currency);
+
+    	//Now we put the entities all together
+    	$customer->addCharge($charge);
+    	$order->setCustomer($customer);
+    	var_dump($order->getTickets());
+    	var_dump($charge);
+    	$order->setCharge($charge);
+
+    	//and we check if everything is ok on $order
+    	//as the underlying entity has a relation with every other entities
+    	$validator = $this->get('validator');
+	    $errors = $validator->validate($order);
+	    if (count($errors) > 0) {
+	        $errorsString = (string) $errors;
+
+	        $request->getSession()->getFlashBag()->add('error', $errorsString);
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+	    }
+    }
+
     public function indexAction(Request $request)
     {
     	$order = new TicketOrder();
@@ -118,7 +154,7 @@ class BillingController extends Controller
 					$order->setType(false);
 
 				$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
-				
+
 				//if it's free, problem
 				if ($totalPrice === 0) {
 					$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
@@ -135,6 +171,9 @@ class BillingController extends Controller
 
 				//we charge the customer
 				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice() );
+
+				//generate and manage necessary entities before persisting
+				$this->manageEntities($order, $checkout, $request, $form, $flow);
 
 				// flow finished
 				$em = $this->getDoctrine()->getManager();

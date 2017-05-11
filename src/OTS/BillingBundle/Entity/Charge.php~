@@ -151,7 +151,7 @@ class Charge
      *
      * @return Charge
      */
-    public function setOrder(TicketOrder $order)
+    public function setOrder(TicketOrder $order = null)
     {
         $this->order = $order;
 

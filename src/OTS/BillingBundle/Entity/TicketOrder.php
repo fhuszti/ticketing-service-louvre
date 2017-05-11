@@ -4,6 +4,9 @@ namespace OTS\BillingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use OTS\BillingBundle\Entity\Ticket;
+use OTS\BillingBundle\Entity\Customer;
+use OTS\BillingBundle\Entity\Charge;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -54,12 +57,6 @@ class TicketOrder
     private $nbTickets;
 
     /**
-     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order", cascade={"persist"})
-     * @Assert\Valid()
-     */
-    private $tickets;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="price", type="smallint")
@@ -69,6 +66,25 @@ class TicketOrder
      * )
      */
     private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $tickets;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OTS\BillingBundle\Entity\Customer", inversedBy="orders", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
+     */
+    private $customer;
+
+    /**
+     * @ORM\OneToOne(targetEntity="OTS\BillingBundle\Entity\Charge", inversedBy="order", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $charge;
 
 
 
@@ -171,7 +187,7 @@ class TicketOrder
      *
      * @return TicketOrder
      */
-    public function addTicket(\OTS\BillingBundle\Entity\Ticket $ticket)
+    public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
 
@@ -185,7 +201,7 @@ class TicketOrder
      *
      * @param \OTS\BillingBundle\Entity\Ticket $ticket
      */
-    public function removeTicket(\OTS\BillingBundle\Entity\Ticket $ticket)
+    public function removeTicket(Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }
@@ -222,5 +238,57 @@ class TicketOrder
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param \OTS\BillingBundle\Entity\Customer $customer
+     *
+     * @return TicketOrder
+     */
+    public function setCustomer(Customer $customer)
+    {
+        $this->customer = $customer;
+
+        $customer->addOrder($this);
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \OTS\BillingBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Set charge
+     *
+     * @param \OTS\BillingBundle\Entity\Charge $charge
+     *
+     * @return TicketOrder
+     */
+    public function setCharge(Charge $charge)
+    {
+        $this->charge = $charge;
+
+        $charge->setOrder($this);
+
+        return $this;
+    }
+
+    /**
+     * Get charge
+     *
+     * @return \OTS\BillingBundle\Entity\Charge
+     */
+    public function getCharge()
+    {
+        return $this->charge;
     }
 }
