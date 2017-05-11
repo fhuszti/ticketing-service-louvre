@@ -244,8 +244,8 @@ $(function() {
     //add necessary classes to a few elements of the generated forms
     function addBootstrapClasses(container) {
         var containerId = container.attr('id'),
-            formControlDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div'),
-            reducedPriceDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:nth-last-child(2)');
+            formControlDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:not([class*="alert alert-danger"])'),
+            reducedPriceDivs = $('div[id^="ots_billingbundle_ticketorder_tickets_"] div:nth-child(5)');
             
         formControlDivs.addClass('col-xs-12 col-sm-6');
         reducedPriceDivs.addClass('col-sm-push-6');
