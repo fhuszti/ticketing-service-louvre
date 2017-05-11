@@ -49,11 +49,18 @@ class BillingController extends Controller
 				// form for the next step
 				$form = $flow->createForm();
 			} else {
+				$orderType = $order->getType();
+				if ( is_null($orderType) )
+					$order->setType(false);
+
 				// flow finished
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($order);
 				$em->flush();
-
+/*echo $form->get('checkoutToken')->getData();
+echo '<pre>';
+var_dump($order);
+echo '</pre>';*/
 				$flow->reset(); // remove step data from the session
 
 				return $this->redirect($this->generateUrl('ots_billing_home')); // redirect when done
