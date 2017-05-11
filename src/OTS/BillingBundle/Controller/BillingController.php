@@ -118,6 +118,7 @@ class BillingController extends Controller
 					$order->setType(false);
 
 				$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
+				
 				//if it's free, problem
 				if ($totalPrice === 0) {
 					$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');

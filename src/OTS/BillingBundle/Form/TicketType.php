@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Intl\Intl;
 
 class TicketType extends AbstractType
 {
@@ -41,11 +42,11 @@ class TicketType extends AbstractType
                     'widget' => 'single_text',
                     'html5' => false,
                     'label_attr' => ['class' => 'col-xs-12 control-label'],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control',  'autocomplete' => "off"]
                 ))
                 ->add('discounted', CheckboxType::class, array(
                     'label' => 'Reduced price
-                                Student, french military, museum employee or Ministry of Culture employee.
+                                French student, french military, museum employee or Ministry of Culture employee.
                                 An ID will be required at the entrance.',
                     'label_attr' => ['class' => 'col-xs-11 col-xs-push-1'],
                     'attr' => ['class' => 'col-xs-1 col-xs-pull-11'],
