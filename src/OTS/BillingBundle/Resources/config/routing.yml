@@ -4,6 +4,6 @@ ots_billing_home:
         _controller: OTSBillingBundle:Billing:index
 
 ots_billing_thanks:
-    path:     /
+    path:     /confirmation
     defaults: 
-        _controller: OTSBillingBundle:Billing:index
+        _controller: OTSBillingBundle:Billing:confirmation

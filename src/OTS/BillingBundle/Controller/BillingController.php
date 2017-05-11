@@ -142,7 +142,7 @@ class BillingController extends Controller
 
 				$flow->reset(); // remove step data from the session
 
-				return $this->redirect($this->generateUrl('ots_billing_home')); // redirect when done
+				return $this->redirect($this->generateUrl('ots_billing_thanks')); // redirect when done
 			}
 		}
 
@@ -150,5 +150,18 @@ class BillingController extends Controller
         	'orderForm' => $form->createView(),
         	'flow' => $flow,
         ));
+    }
+
+
+
+
+
+
+
+
+
+    public function confirmationAction()
+    {
+        return $this->render('OTSBillingBundle:Billing:confirmation.html.twig');
     }
 }

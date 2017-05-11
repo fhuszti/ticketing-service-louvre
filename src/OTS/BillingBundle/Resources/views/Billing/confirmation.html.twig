@@ -1,0 +1,39 @@
+{% extends "OTSCoreBundle::layout.html.twig" %}
+
+{% block title %}
+  	Thank you! - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{% for message in app.session.flashbag.get('info') %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <h1 id="title">Thank you for booking!</h1>
+    <hr />
+
+    <p>
+        An email containing your tickets has been sent to the email address you entered.<br />
+        Please print them and show them at the entrance of the Museum along with an ID card for everyone in your group.
+    </p>
+{% endblock %}
