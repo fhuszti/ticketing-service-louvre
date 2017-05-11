@@ -162,6 +162,30 @@
                 <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}" data-url="{{ path('ots_billing_home') }}">
                     Pay with Card
                 </button>
+
+                <div class="col-xs-12 alert alert-warning">
+                    <p>
+                        You can safely try out the payment as this is a test environment, nothing will actually be charged.
+                    </p>
+
+                    <p>
+                        Upon clicking on the payment button above, you'll be asked a few more informations to simulate a payment :
+                    </p>
+                    <ul>
+                        <li>
+                            Enter your own email address if you want to check out the fake tickets generated with your order, or any fake address if you're not interested. It still has to be a valid email address format though. Something like <span class="highlight">abcde@fgh.ijk</span> will do
+                        </li>
+                        <li>
+                            Use <span class="highlight">4242 4242 4242 4242</span> as the card number
+                        </li>
+                        <li>
+                            Fill the expiration date field with any date in the future, e.g. <span class="highlight">12/22</span>
+                        </li>
+                        <li>
+                            Enter any three-figures number in the CVV field, e.g. <span class="highlight">123</span>
+                        </li>
+                    </ul>
+                </div>
             {% endif %}
 
             <div class="row">
