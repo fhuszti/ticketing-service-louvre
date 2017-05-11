@@ -1,5 +1,5 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
-{% form_theme orderForm 'form/fields.html.twig' %}
+{% form_theme orderForm 'form/fields.html.twig' 'form/form_errors.html.twig' %}
 
 {% block title %}
   	Book online - {{ parent() }}
@@ -28,9 +28,7 @@
         </div>
         {{ form_start(orderForm) }}
             {% if form_errors(orderForm) %}
-                <div class="alert alert-warning">
-                    {{ form_errors(orderForm) }}
-                </div>
+                {{ form_errors(orderForm) }}
             {% endif %}
 
             {% if flow.getCurrentStepNumber() == 1 %}
@@ -43,9 +41,7 @@
                         </div>
 
                         {% if form_errors(orderForm.date) %}
-                            <div class="alert alert-warning">
-                                {{ form_errors(orderForm.date) }}
-                            </div>
+                            {{ form_errors(orderForm.date) }}
                         {% endif %}
 
                         <div class="col-xs-12" id="order_datepicker">
@@ -65,9 +61,7 @@
                         </div>
 
                         {% if form_errors(orderForm.type) %}
-                            <div class="alert alert-warning">
-                                {{ form_errors(orderForm.type) }}
-                            </div>
+                            {{ form_errors(orderForm.type) }}
                         {% endif %}
 
                         {{ form_widget(orderForm.type) }}
@@ -83,9 +77,7 @@
                         </div>
 
                         {% if form_errors(orderForm.nbTickets) %}
-                            <div class="alert alert-warning">
-                                {{ form_errors(orderForm.nbTickets) }}
-                            </div>
+                            {{ form_errors(orderForm.nbTickets) }}
                         {% endif %}
 
                         {{ form_widget(orderForm.nbTickets, {
@@ -121,9 +113,7 @@
                 {% if orderForm.tickets is defined %}
                     <div class="col-xs-12 form-group">
                         {% if form_errors(orderForm.tickets) %}
-                            <div class="alert alert-warning">
-                                {{ form_errors(orderForm.tickets) }}
-                            </div>
+                            {{ form_errors(orderForm.tickets) }}
                         {% endif %}
 
                         {{ form_widget(orderForm.tickets) }}
