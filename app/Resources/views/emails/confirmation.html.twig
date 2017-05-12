@@ -1,0 +1,67 @@
+<div style="width:100%;height:60px;background-color:#222;display:flex;justify-content:space-around;">
+	<div style="margin-top:5px;width:25%;padding-left:10px;">
+		<a href="{{ path('ots_core_home') }}" title="Musée du Louvre">
+            <img src="{{ imgUrl }}" alt="Logo - Musée du Louvre" />
+		</a>
+	</div>
+	<div style="width:75%;text-align:right;">
+		<h2 style="color:#eee;padding-right:10px;padding-top:5px;">Musée du Louvre</h2>
+	</div>
+</div>
+
+<h3>Thank you for booking online!</h3>
+
+<p>
+	Please print this mail and show it at the entrance of the museum, along with all necessary ID cards.
+</p>
+
+<p>
+	<b>Reference Code: 1u23DfGrr23Et4</b>
+</p>
+
+<div style="background-color:#f5f5f5;border:1px solid #e3e3e3;border-radius:4px;width:95%;margin:auto;display:flex;justify-content:space-around;padding:0 10px;text-align:center;">
+	<div style="width:50%;">
+		<p>
+			Date: {{ order.date|date("d/m/Y") }}
+		</p>
+		<p>
+			Ticket type: {% if order.type %}Full-day{% else %}Half-day{% endif %}
+		</p>
+	</div>
+	<div style="width:50%;">
+		<p>
+			Tickets count: {{ order.nbTickets }}
+		</p>
+		<p>
+			Total price: {{ order.price }}€
+		</p>
+	</div>
+</div>
+
+{% for ticket in order.tickets %}
+	<div style="width:95%;margin:auto;display:flex;justify-content:space-around;">
+		<div style="width:50%;padding-left:10px;">
+			<p>
+				<b>First name:</b> {{ ticket.firstName }}
+			</p>
+			<p>
+				<b>Country:</b> {{ ticket.country }}
+			</p>
+			<p>
+				<b>Price:</b> {{ ticket.price }}€
+			</p>
+		</div>
+		<div style="width:50%;padding-left:10px;">
+			<p>
+				<b>Name:</b> {{ ticket.name }}
+			</p>
+			<p>
+				<b>Birthdate:</b> {{ ticket.birthDate|date("d/m/Y") }}
+			</p>
+			<p>
+				<b>{% if ticket.discounted %}Reduced rate{% elseif ticket.price == 12 or ticket.price == 6 %}Senior rate{% elseif ticket.price == 8 or ticket.price == 4 %}Child rate{% elseif ticket.price == 0 %}Toddler rate{% else %}Normal rate{% endif %}</b>
+			</p>
+		</div>
+	</div>
+	<hr />
+{% endfor %}

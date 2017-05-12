@@ -2,3 +2,16 @@ services:
     ots_billing.form.flow.ticketOrder:
         class: OTS\BillingBundle\Form\TicketOrderFlow
         parent: craue.form.flow
+
+    ots_billing.mailer.checkout_notificator:
+        class: OTS\BillingBundle\Mailer\CheckoutNotificator
+        arguments:
+            - "@mailer"
+            - "@twig"
+
+    ots_billing.mailer.checkout_listener:
+        class: OTS\BillingBundle\Mailer\CheckoutListener
+        arguments:
+            - "@ots_billing.mailer.checkout_notificator"
+        tags:
+            - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }

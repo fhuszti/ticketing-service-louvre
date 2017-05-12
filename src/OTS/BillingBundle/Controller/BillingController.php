@@ -10,6 +10,8 @@ use OTS\BillingBundle\Form\TicketType;
 use OTS\BillingBundle\Entity\Ticket;
 use OTS\BillingBundle\Entity\Customer;
 use OTS\BillingBundle\Entity\Charge;
+use OTS\BillingBundle\Event\PlatformEvents;
+use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
@@ -261,6 +263,10 @@ class BillingController extends Controller
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($order);
 				$em->flush();
+
+				//we send the email with the tickets
+				$event = new SuccessfulCheckoutEvent($order);
+				$this->get('event_dispatcher')->dispatch(PlatformEvents::SUCCESSFUL_CHECKOUT, $event);
 
 				$flow->reset(); // remove step data from the session
 
