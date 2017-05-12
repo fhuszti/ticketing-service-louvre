@@ -73,7 +73,7 @@ class BillingController extends Controller
 		return $totalPrice;
     }
 
-    public function chargeCustomer($token, $price) {
+    public function chargeCustomer($token, $price, $request, $form, $flow) {
     	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
 
     	$stripeInfo = \Stripe\Token::retrieve($token);
@@ -85,12 +85,96 @@ class BillingController extends Controller
 		  	"source" => $token,
 		));
 
-		// Charge the Customer:
-		$charge = \Stripe\Charge::create(array(
-		  	"amount" => $price * 100,
-		  	"currency" => "eur",
-		  	"customer" => $customer->id
-		));
+		try {
+			// Charge the Customer:
+			$charge = \Stripe\Charge::create(array(
+			  	"amount" => $price * 100,
+			  	"currency" => "eur",
+			  	"customer" => $customer->id
+			));
+		}
+		catch(\Stripe\Error\Card $e) {
+		  	// Since it's a decline, \Stripe\Error\Card will be caught
+		  	$body = $e->getJsonBody();
+		  	$err  = $body['error'];
+
+		  	$request->getSession()->getFlashBag()->add('error', $err['message']);
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (\Stripe\Error\Api $e) {
+		  	// Stripe's servers are down!
+		  	$request->getSession()->getFlashBag()->add('error', 'Stripe servers seem to be down, please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (\Stripe\Error\InvalidRequest $e) {
+		  	// Invalid parameters were supplied to Stripe's API
+		  	$request->getSession()->getFlashBag()->add('error', 'There was an error on our part, we are working hard to fix it. Please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (\Stripe\Error\Authentication $e) {
+		  	// Authentication with Stripe's API failed
+		  	// (maybe you changed API keys recently)
+		  	$request->getSession()->getFlashBag()->add('error', 'We couldn\'t connect with Stripe\'s servers, please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (\Stripe\Error\ApiConnection $e) {
+		  	// Network communication with Stripe failed
+		  	$request->getSession()->getFlashBag()->add('error', 'There was a network error, please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (\Stripe\Error\Base $e) {
+		  	// Display a very generic error to the user, and maybe send
+		  	// yourself an email
+		  	$request->getSession()->getFlashBag()->add('error', 'There was an error processing your payment. Please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
+		catch (Exception $e) {
+		  	// Something else happened, completely unrelated to Stripe
+		  	$request->getSession()->getFlashBag()->add('error', 'There was an error processing your payment. Please try again later. You have not been charged.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+			       'orderForm' => $form->createView(),
+			       'flow' => $flow,
+			));
+		}
 
     	return array(
     		'customer' => $customer,
@@ -110,8 +194,6 @@ class BillingController extends Controller
     	//Now we put the entities all together
     	$customer->addCharge($charge);
     	$order->setCustomer($customer);
-    	var_dump($order->getTickets());
-    	var_dump($charge);
     	$order->setCharge($charge);
 
     	//and we check if everything is ok on $order
@@ -170,7 +252,7 @@ class BillingController extends Controller
 				$order->setPrice($totalPrice);
 
 				//we charge the customer
-				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice() );
+				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice(), $request, $form, $flow );
 
 				//generate and manage necessary entities before persisting
 				$this->manageEntities($order, $checkout, $request, $form, $flow);
