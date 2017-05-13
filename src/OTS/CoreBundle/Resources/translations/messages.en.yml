@@ -1,10 +1,10 @@
 ots_core:
     site:
-        title: Buy tickets - Musée du Louvre
+        title: Louvre Museum
     header:
         title:
             link_title: Back to the homepage
-            img_alt:    Logo - Musée du Louvre
+            img_alt:    Logo - Louvre Museum
         menu:
             home:
                 title:   Homepage
@@ -25,13 +25,13 @@ ots_core:
         legal:
             title:   Legal information and terms of use
             content: Legal information
-        copyright:   '&copy; Musée du Louvre - All rights reserved'
+        copyright:   '&copy; Louvre Museum - All rights reserved'
         terms:
             title:   Terms &amp; Conditions
             content: Terms &amp; Conditions
     errors:
         layout:
-            title: Oops! An Error Occurred
+            title:    Oops! An Error Occurred
             subtitle: The server returned a
         error: |
             Something is broken. We're sorry for the inconvenience.
@@ -51,7 +51,43 @@ ots_core:
             Please try again later.
     home:
         header:
-            title: 
+            title:  Online Ticketing Service
+        cover:
+            title_block:
+                title:      Online Ticketing Service, Louvre Museum
+                subtitle:   "Current exhibition: Vermeer and the masters of genre painting"
+            button: Book a ticket online
+            more:
+                link_title: Read more about our offers
+                content:    Read more
+        opening:
+            title:  Opening time
+            content: |
+                Open every day except sunday and tuesday
+                From 9am to 6pm
+                Open until 9.45pm on wednesday and friday
+                
+                Closed on the 1st of May, the 1st of November and the 25th of december
+        price:
+            normal:
+                title:   Normal rate
+                content: 12 years old and older
+                price:   16€
+            discounted:
+                title:   Discounted rate
+                content: French student, french military, museum employee or Ministry of Culture employee
+                price:   10€
+            child:
+                title:   Child rate
+                content: |
+                    From 4 to 12 years old
+                    Free for children younger than 4
+                price:   8€
+            senior:
+                title:   Senior rate
+                content: 60 years old and older
+                price:   12€
+            button: Book a ticket online
     legal:
         header:
             title: Legal information

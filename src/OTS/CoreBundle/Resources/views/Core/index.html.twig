@@ -2,7 +2,7 @@
 {% set homepage = true %}
 
 {% block title %}
-  	Home - {{ parent() }}
+  	{{ 'ots_core.home.header.title'|trans }} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -18,36 +18,43 @@
         <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
 
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('warning') %}
+        <div class="alert alert-warning">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
     <div class="row" id="cover">
         <div class="col-xs-12" id="cover-img">
         </div>
 
         <div class="title-block">
-            <h1>Online Ticketing Service, Musée du Louvre</h1>
+            <h1>{{ 'ots_core.home.cover.title_block.title'|trans }}</h1>
 
-            <h2>Current exhibition: Vermeer and the masters of genre painting</h2>
+            <h2>{{ 'ots_core.home.cover.title_block.subtitle'|trans }}</h2>
         </div>
 
         <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('ots_billing_home') }}">
-            Book a ticket online
+            {{ 'ots_core.home.cover.button'|trans }}
         </a>
 
-        <a href="#opening-time" title="Read more about our offers" class="scrollspy-link">
-            Read more
+        <a href="#opening-time" title="{{ 'ots_core.home.cover.more.link_title'|trans }}" class="scrollspy-link">
+            {{ 'ots_core.home.cover.more.content'|trans }}
         </a>
     </div>
 
     <div class="row text-center">
         <div class="col-xs-12" id="opening-time">
-            <h2>Opening time</h2>
+            <h2>{{ 'ots_core.home.opening.title'|trans }}</h2>
 
             <p class="left-centered">
-                Open every day except tuesday<br />
-                From 9am to 6pm<br />
-                Open until 9.45pm on wednesday and friday
-                <br /><br />
-                
-                Closed on the 1st of May, the 1st of November and the 25th of december
+                {{ 'ots_core.home.opening.content'|trans|nl2br }}
             </p>
         </div>
     </div>
@@ -56,56 +63,55 @@
         <div class="match-my-cols">
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
-                    <h2>Normal rate</h2>
+                    <h2>{{ 'ots_core.home.price.normal.title'|trans }}</h2>
 
                     <p>
-                        12 years old and older
+                        {{ 'ots_core.home.price.normal.content'|trans }}
                     </p>
 
-                    <h3>16€</h3>
+                    <h3>{{ 'ots_core.home.price.normal.price'|trans }}</h3>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
-                    <h2>Discounted rate</h2>
+                    <h2>{{ 'ots_core.home.price.discounted.title'|trans }}</h2>
 
                     <p>
-                        French student, french military, museum employee or Ministry of Culture employee
+                        {{ 'ots_core.home.price.discounted.content'|trans }}
                     </p>
 
-                    <h3>10€</h3>
+                    <h3>{{ 'ots_core.home.price.discounted.price'|trans }}</h3>
                 </div>
             </div>
         </div>
         <div class="match-my-cols">
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
-                    <h2>Child rate</h2>
+                    <h2>{{ 'ots_core.home.price.child.title'|trans }}</h2>
 
                     <p>
-                        From 4 to 12 years old<br />
-                        Free for children younger than 4
+                        {{ 'ots_core.home.price.child.content'|trans|nl2br }}
                     </p>
 
-                <h3>8€</h3>
+                    <h3>{{ 'ots_core.home.price.child.price'|trans }}</h3>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 price-block">
                 <div class="price-box">
-                    <h2>Senior rate</h2>
+                    <h2>{{ 'ots_core.home.price.senior.title'|trans }}</h2>
 
                     <p>
-                        60 years old and older
+                        {{ 'ots_core.home.price.senior.content'|trans|nl2br }}
                     </p>
 
-                    <h3>12€</h3>
+                    <h3>{{ 'ots_core.home.price.senior.price'|trans }}</h3>
                 </div>
             </div>
         </div>
 
        <div class="col-xs-12">
            <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('ots_billing_home') }}">
-                Book a ticket online
+                {{ 'ots_core.home.price.button'|trans }}
             </a>
         </div>
     </div>

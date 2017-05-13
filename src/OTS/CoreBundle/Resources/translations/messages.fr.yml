@@ -1,6 +1,6 @@
 ots_core:
     site:
-        title: Achat de billets - Musée du Louvre
+        title: Musée du Louvre
     header:
         title:
             link_title: Retour à la page d'accueil
@@ -13,8 +13,8 @@ ots_core:
                 title:   Horaires
                 content: Horaires
             prices:
-                title:   Prix
-                content: Prix
+                title:   Tarifs
+                content: Tarifs
             contact:
                 title:   Contact
                 content: Contact
@@ -31,7 +31,7 @@ ots_core:
             content: Termes &amp; Conditions
     errors:
         layout:
-            title: Oups ! C'est une erreur !
+            title:    Oups ! C'est une erreur !
             subtitle: Le serveur a retourné une erreur
         error: |
             Il y a eu un dysfonctionnement. Nous sommes désolé pour la gêne occasionée.
@@ -51,7 +51,43 @@ ots_core:
             Veuillez réessayer.
     home:
         header:
-            title: 
+            title:  Réservation en ligne
+        cover:
+            title_block:
+                title:      Billetterie en ligne, Musée du Louvre
+                subtitle:   "Exposition actuelle : Vermeer et les Maîtres de la peinture de genre"
+            button: Réserver en ligne
+            more:
+                link_title: Voir plus d'informations
+                content:    Plus d'informations
+        opening:
+            title:  Horaires d'ouverture
+            content: |
+                Ouvert tous les jours, sauf les mardi et dimanche
+                De 9h à 18h
+                Ouvert jusque 21h45 les mercredi et vendredi
+
+                Fermé le 1er Mai, le 1er Novembre et le 25 décembre
+        price:
+            normal:
+                title:   Tarif normal
+                content: 12 ans et plus
+                price:   16€
+            discounted:
+                title:   Tarif réduit
+                content: Étudiant, militaire, employé du musée ou du Ministère de la Culture
+                price:   10€
+            child:
+                title:   Tarif enfant
+                content: |
+                    De 4 à 12 ans
+                    Gratuit pour les enfants avant 4 ans
+                price:   8€
+            senior:
+                title:   Tarif sénior
+                content: 60 ans et plus
+                price:   12€
+            button: Réserver en ligne
     legal:
         header:
             title: Informations légales
