@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1 id="title">Oops! An Error Occurred</h1>
+    <h1 id="title">{{ 'ots_core.errors.layout.title'|trans }}</h1>
     <hr />
 
-    <h3>The server returned a "{{ status_code }} {{ status_text }}".</h3>
+    <h3>{{ 'ots_core.errors.layout.subtitle'|trans }} "{{ status_code }} {{ status_text }}".</h3>
 
     <p>
         {% block content %}

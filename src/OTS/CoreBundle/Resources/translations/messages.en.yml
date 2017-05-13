@@ -29,3 +29,23 @@ ots_core:
         terms:
             title:   Terms &amp; Conditions
             content: Terms &amp; Conditions
+    errors:
+        layout:
+            title: Oops! An Error Occurred
+            subtitle: The server returned a
+        error: |
+            Something is broken. We're sorry for the inconvenience.
+            We've been notified. If this error is on our end, we'll fix it as soon as possible. 
+        error400: |
+            Either your browser couldn't properly access the server, or your request was corrupted before reaching it.
+            Please try again later.
+        error401: |
+            You have to be logged-in to see this page.
+        error403: |
+            Access to this page is restricted.
+        error404: |
+            We couldn't find the page you're looking for.
+            Check that the URL you asked for is correct.
+        error500: |
+            The web server encountered an internal error.
+            Please try again later.

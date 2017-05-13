@@ -29,3 +29,23 @@ ots_core:
         terms:
             title:   Termes &amp; Conditions
             content: Termes &amp; Conditions
+    errors:
+        layout:
+            title: Oups ! C'est une erreur !
+            subtitle: Le serveur a retourné une erreur
+        error: |
+            Il y a eu un dysfonctionnement. Nous sommes désolé pour la gêne occasionée.
+            Nous avons reçu une notification. Si le problème est de notre côté, nous le règlerons.
+        error400: |
+            Votre navigateur n'a pas accédé correctement au serveur, ou votre requête a été corrompue en chemin.
+            Veuillez réessayer.
+        error401: |
+            Vous devez être connecté pour accéder à cette ressource.
+        error403: |
+            L'accès à cette ressource est restreint.
+        error404: |
+            La ressource demandée est introuvable.
+            Vérifiez si l'adresse (URL) que vous avez demandée est correcte.
+        error500: |
+            Le serveur a rencontré une erreur.
+            Veuillez réessayer.

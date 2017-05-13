@@ -1,6 +1,5 @@
 {% extends "OTSCoreBundle::errors_layout.html.twig" %}
 
 {% block content %}
-    Something is broken. We're sorry for the inconvenience.<br />
-    We've been notified. If this error is on our end, we'll fix it as soon as possible.
+    {{ 'ots_core.errors.error'|trans|nl2br }}
 {% endblock %}
