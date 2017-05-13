@@ -2,18 +2,20 @@
 
 namespace OTS\BillingBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use OTS\BillingBundle\Entity\Ticket;
 use OTS\BillingBundle\Entity\Customer;
 use OTS\BillingBundle\Entity\Charge;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * TicketOrder
  *
  * @ORM\Table(name="ticket_order")
  * @ORM\Entity(repositoryClass="OTS\BillingBundle\Repository\TicketOrderRepository")
+ * @UniqueEntity(fields={"reference"})
  */
 class TicketOrder
 {
@@ -66,6 +68,22 @@ class TicketOrder
      * )
      */
     private $price;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reference", type="string", length=15, unique=true)
+     * @Assert\Type(
+     *     type="string",
+     *     message="The Reference Code for the order must be a valid string."
+     * )
+     * @Assert\Length(
+     *     min=15,
+     *     max=15,
+     *     exactMessage="The Reference Code for the order has to be 15 characters long."
+     * )
+     */
+    private $reference;
 
     /**
      * @ORM\OneToMany(targetEntity="OTS\BillingBundle\Entity\Ticket", mappedBy="order", cascade={"persist", "remove"})
@@ -290,5 +308,29 @@ class TicketOrder
     public function getCharge()
     {
         return $this->charge;
+    }
+
+    /**
+     * Set reference
+     *
+     * @param string $reference
+     *
+     * @return TicketOrder
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * Get reference
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 }

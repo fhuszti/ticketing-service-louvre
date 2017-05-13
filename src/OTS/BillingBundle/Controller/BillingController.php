@@ -15,6 +15,52 @@ use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
+    //set order type to fix a bug where it'll be returned as null from the form, instead of false
+    public function manageOrderType($order) {
+    	$orderType = $order->getType();
+		
+		if ( is_null($orderType) )
+			$order->setType(false);
+    }
+
+    //set the total order price depending on visitors birthdate
+    public function manageOrderPrice($order, $request, $form, $flow) {
+    	$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
+		
+		//if it's free, problem
+		if ($totalPrice === 0) {
+			$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+				'orderForm' => $form->createView(),
+				'flow' => $flow,
+			));
+		}
+				
+		//we set the correct order price
+		$order->setPrice($totalPrice);
+    }
+
+    //generate a random reference code for the order
+	public function manageOrderReference($order) {
+		$factory = new \RandomLib\Factory;
+		$generator = $factory->getLowStrengthGenerator();
+
+		//we generate a random string and check if it's valid and unique
+		//whole order entity has to be checked so UniqueEntity constraints works
+		//order entity should be error-free at this stage so no risks of infinite loop
+		$validator = $this->get('validator');
+		do {
+		    $reference = $generator->generateString(15, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+			$order->setReference($reference);
+
+		    $errors = $validator->validate($order);
+		} while ( count($errors) > 0 );
+	}
+
     public function getUsefulDates() {
     	$currentDate = date('Y-m-d');
     	$normalRateDateTimestamp = strtotime( '-12 years' );
@@ -233,25 +279,13 @@ class BillingController extends Controller
 				$form = $flow->createForm();
 			} else {
 				//to prevent a bug where order type would be null instead of false when Half-Day option chosen
-				$orderType = $order->getType();
-				if ( is_null($orderType) )
-					$order->setType(false);
+				$this->manageOrderType($order);
 
-				$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
+				//set the total order price depending on visitors birthdate
+				$this->manageOrderPrice($order, $request, $form, $flow);
 
-				//if it's free, problem
-				if ($totalPrice === 0) {
-					$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
-
-					$form = $flow->createForm();
-
-					return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-					       'orderForm' => $form->createView(),
-					       'flow' => $flow,
-					));
-				}
-				//if not, we're good to go
-				$order->setPrice($totalPrice);
+				//generate a random reference code for the order
+				$this->manageOrderReference($order);
 
 				//we charge the customer
 				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice(), $request, $form, $flow );
