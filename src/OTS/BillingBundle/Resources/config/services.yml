@@ -9,9 +9,16 @@ services:
             - "@mailer"
             - "@twig"
 
+    ots_billing.mailer.checkout_stock_manager:
+        class: OTS\BillingBundle\Mailer\CheckoutStockManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     ots_billing.mailer.checkout_listener:
         class: OTS\BillingBundle\Mailer\CheckoutListener
         arguments:
             - "@ots_billing.mailer.checkout_notificator"
+            - "@ots_billing.mailer.checkout_stock_manager"
+            - "@service_container"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }

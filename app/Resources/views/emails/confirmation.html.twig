@@ -59,7 +59,29 @@
 				<b>Birthdate:</b> {{ ticket.birthDate|date("d/m/Y") }}
 			</p>
 			<p>
-				<b>{% if ticket.discounted %}Reduced rate{% elseif ticket.price == 12 or ticket.price == 6 %}Senior rate{% elseif ticket.price == 8 or ticket.price == 4 %}Child rate{% elseif ticket.price == 0 %}Toddler rate{% else %}Normal rate{% endif %}</b>
+				<b>
+					{% if ticket.discounted %}
+						Reduced rate
+					{% elseif ticket.price == 0 %}
+						Toddler rate
+					{% elseif order.type %}
+						{% if ticket.price == 12 %}
+							Senior rate
+						{% elseif ticket.price == 16 %}
+							Normal rate
+						{% elseif ticket.price == 8 %}
+							Child rate
+						{% endif %}
+					{% else %}
+						{% if ticket.price == 6 %}
+							Senior rate
+						{% elseif ticket.price == 8 %}
+							Normal rate
+						{% elseif ticket.price == 4 %}
+							Child rate
+						{% endif %}
+					{% endif %}
+				</b>
 			</p>
 		</div>
 	</div>

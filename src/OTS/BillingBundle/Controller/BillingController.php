@@ -10,11 +10,27 @@ use OTS\BillingBundle\Form\TicketType;
 use OTS\BillingBundle\Entity\Ticket;
 use OTS\BillingBundle\Entity\Customer;
 use OTS\BillingBundle\Entity\Charge;
+use OTS\BillingBundle\Entity\Stock;
 use OTS\BillingBundle\Event\PlatformEvents;
 use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
+    //we abort everything if there's nothing left in stock for the chosen date
+	public function checkIfStockOkForDate($order) {
+		$em = $this->get('doctrine.orm.entity_manager');
+		$existingDate = $em->getRepository('OTSBillingBundle:Stock')->findBy( array('date' => $order->getDate()) );
+
+		//if the date entry exists
+		if ( array_key_exists(0, $existingDate) ) {
+			//if there's not enough stock left to satisfy the order
+			if ( $existingDate[0]->getStockLeft() < $order->getNbTickets() )
+				return false;
+		}
+
+		return true;
+    }
+
     //set order type to fix a bug where it'll be returned as null from the form, instead of false
     public function manageOrderType($order) {
     	$orderType = $order->getType();
@@ -22,44 +38,6 @@ class BillingController extends Controller
 		if ( is_null($orderType) )
 			$order->setType(false);
     }
-
-    //set the total order price depending on visitors birthdate
-    public function manageOrderPrice($order, $request, $form, $flow) {
-    	$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
-		
-		//if it's free, problem
-		if ($totalPrice === 0) {
-			$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-				'orderForm' => $form->createView(),
-				'flow' => $flow,
-			));
-		}
-				
-		//we set the correct order price
-		$order->setPrice($totalPrice);
-    }
-
-    //generate a random reference code for the order
-	public function manageOrderReference($order) {
-		$factory = new \RandomLib\Factory;
-		$generator = $factory->getLowStrengthGenerator();
-
-		//we generate a random string and check if it's valid and unique
-		//whole order entity has to be checked so UniqueEntity constraints works
-		//order entity should be error-free at this stage so no risks of infinite loop
-		$validator = $this->get('validator');
-		do {
-		    $reference = $generator->generateString(15, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-			$order->setReference($reference);
-
-		    $errors = $validator->validate($order);
-		} while ( count($errors) > 0 );
-	}
 
     public function getUsefulDates() {
     	$currentDate = date('Y-m-d');
@@ -120,6 +98,37 @@ class BillingController extends Controller
 
 		return $totalPrice;
     }
+
+    //set the total order price depending on visitors birthdate
+    public function manageOrderPrice($order, $request, $form, $flow) {
+    	$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
+		
+		//if it's free, problem
+		if ($totalPrice === 0) {
+			$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
+
+			$form = $flow->createForm();
+
+			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+				'orderForm' => $form->createView(),
+				'flow' => $flow,
+			));
+		}
+				
+		//we set the correct order price
+		$order->setPrice($totalPrice);
+    }
+
+    //generate a random reference code for the order
+	public function manageOrderReference($order) {
+		$factory = new \RandomLib\Factory;
+		$generator = $factory->getLowStrengthGenerator();
+
+		//we generate a random string and set it as the order reference
+		$reference = $generator->generateString(15, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
+		$order->setReference($reference);
+	}
 
     public function chargeCustomer($token, $price, $request, $form, $flow) {
     	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
@@ -278,6 +287,18 @@ class BillingController extends Controller
 				// form for the next step
 				$form = $flow->createForm();
 			} else {
+				//we abort everything if there's not enough left in stock for the chosen date
+				if ( !$this->checkIfStockOkForDate($order) ) {
+					$request->getSession()->getFlashBag()->add('error', 'There are not enough tickets left in stock for the chosen visit date. We apologize for the inconvenience. Please select a new visit date in step 1.');
+
+					$form = $flow->createForm();
+
+					return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+						'orderForm' => $form->createView(),
+						'flow' => $flow,
+					));
+				}
+
 				//to prevent a bug where order type would be null instead of false when Half-Day option chosen
 				$this->manageOrderType($order);
 
@@ -296,11 +317,13 @@ class BillingController extends Controller
 				// flow finished
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($order);
-				$em->flush();
 
-				//we send the email with the tickets
+				//we dispatch the event associated with a successful checkout
 				$event = new SuccessfulCheckoutEvent($order);
 				$this->get('event_dispatcher')->dispatch(PlatformEvents::SUCCESSFUL_CHECKOUT, $event);
+
+				//we don't forget to flush
+				$em->flush();
 
 				$flow->reset(); // remove step data from the session
 
