@@ -1,7 +1,7 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
 
 {% block title %}
-  	Legal information and Terms of Use - {{ parent() }}
+  	{{ 'ots_core.legal.header.title'|trans|raw }} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -17,7 +17,7 @@
         <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
 
-    <h1 id="title">Legal information and Terms of Use</h1>
+    <h1 id="title">{{ 'ots_core.legal.body.title'|trans|raw }}</h1>
     <hr />
 
     <p>

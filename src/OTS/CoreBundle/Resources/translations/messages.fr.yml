@@ -49,3 +49,16 @@ ots_core:
         error500: |
             Le serveur a rencontré une erreur.
             Veuillez réessayer.
+    home:
+        header:
+            title: 
+    legal:
+        header:
+            title: Informations légales
+        body:
+            title: Informations légales et Termes d'Utilisation
+    terms:
+        header:
+            title: Termes &amp; Conditions
+        body:
+            title: Termes &amp; Conditions

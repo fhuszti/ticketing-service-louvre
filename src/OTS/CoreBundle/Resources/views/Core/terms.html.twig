@@ -1,7 +1,7 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
 
 {% block title %}
-  	Terms & Conditions - {{ parent() }}
+  	{{ 'ots_core.terms.header.title'|trans|raw }} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -17,7 +17,7 @@
         <div class="alert alert-info">{{ message }}</div>
     {% endfor %}
 
-    <h1 id="title">Terms & Conditions</h1>
+    <h1 id="title">{{ 'ots_core.terms.body.title'|trans|raw }}</h1>
     <hr />
 
     <p>

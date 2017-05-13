@@ -49,3 +49,16 @@ ots_core:
         error500: |
             The web server encountered an internal error.
             Please try again later.
+    home:
+        header:
+            title: 
+    legal:
+        header:
+            title: Legal information
+        body:
+            title: Legal information and Terms of Use
+    terms:
+        header:
+            title: Terms &amp; Conditions
+        body:
+            title: Terms &amp; Conditions
