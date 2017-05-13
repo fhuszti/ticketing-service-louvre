@@ -1,7 +1,11 @@
-core:
+ots_core:
     resource: "@OTSCoreBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /{_locale}/
+    requirements:
+        _locale: en|fr
 
 ots_billing:
     resource: "@OTSBillingBundle/Resources/config/routing.yml"
-    prefix:   /booking
+    prefix:   /{_locale}/booking
+    requirements:
+        _locale: en|fr

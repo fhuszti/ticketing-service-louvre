@@ -4,7 +4,11 @@
 	  	<meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	  	<title>{% block title %}Buy tickets - Musée du Louvre{% endblock %}</title>
+	  	<title>
+	  		{% block title %}
+	  			{{ 'ots_core.site.title'|trans }}
+	  		{% endblock %}
+	  	</title>
 
 	  	{% block stylesheets %}
 		  	{% stylesheets filter='cssrewrite'
@@ -24,9 +28,9 @@
 		    <header class="navbar navbar-default navbar-fixed-top" id="header">
 		      	<div class="container">
 		      		<div class="navbar-header">
-                    	<a href="{{ path('ots_core_home') }}" title="Back to the homepage" class="navbar-brand">
+                    	<a href="{{ path('ots_core_home') }}" title="{{ 'ots_core.header.title.link_title'|trans }}" class="navbar-brand">
                         	{% image 'http://assets.fhuszti.com/louvre/logo.png' %}
-    							<img src="{{ asset_url }}" alt="Logo - Musée du Louvre" />
+    							<img src="{{ asset_url }}" alt="{{ 'ots_core.header.title.img_alt'|trans }}" />
 							{% endimage %}
 						</a>
 
@@ -42,28 +46,28 @@
 	                        <!-- actual menu list -->
 	                        <ul class="nav navbar-nav navbar-right">
 	                            <li>
-	                                <a href="{% if homepage is defined %}#cover{% else %}{{ path('ots_core_home') }}{% endif %}" title="Homepage" class="scrollspy-link">
-	                                    Home
+	                                <a href="{% if homepage is defined %}#cover{% else %}{{ path('ots_core_home') }}{% endif %}" title="{{ 'ots_core.header.menu.home.title'|trans }}" class="scrollspy-link">
+	                                    {{ 'ots_core.header.menu.home.content'|trans }}
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#opening-time" title="Opening time" class="scrollspy-link">
-	                                    Opening time
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#opening-time" title="{{ 'ots_core.header.menu.opening.title'|trans }}" class="scrollspy-link">
+	                                    {{ 'ots_core.header.menu.opening.content'|trans }}
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#prices" title="Prices" class="scrollspy-link">
-	                                    Prices
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#prices" title="{{ 'ots_core.header.menu.prices.title'|trans }}" class="scrollspy-link">
+	                                    {{ 'ots_core.header.menu.prices.content'|trans }}
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#contact" title="Contact" class="scrollspy-link">
-	                                    Contact
+	                                <a href="{% if homepage is not defined %}{{ path('ots_core_home') }}{% endif %}#contact" title="{{ 'ots_core.header.menu.contact.title'|trans }}" class="scrollspy-link">
+	                                    {{ 'ots_core.header.menu.contact.content'|trans }}
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="{{ path('ots_billing_home') }}" title="Book online">
-	                                    Book online
+	                                <a href="{{ path('ots_billing_home') }}" title="{{ 'ots_core.header.menu.book.title'|trans }}">
+	                                    {{ 'ots_core.header.menu.book.content'|trans }}
 	                                </a>
 	                            </li>
 	                        </ul>
@@ -79,16 +83,16 @@
 
 		    <footer class="row" id="footer">
 		      	<div class="col-xs-12 col-sm-4">
-		      		<a href="{{ path('ots_core_legal') }}" title="Legal information and terms of use">
-		      			Legal information
+		      		<a href="{{ path('ots_core_legal') }}" title="{{ 'ots_core.footer.legal.title'|trans }}">
+		      			{{ 'ots_core.footer.legal.content'|trans }}
 		      		</a>
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
-		      		&copy; Musée du Louvre - All rights reserved
+		      		{{ 'ots_core.footer.copyright'|trans|raw }}
 		      	</div>
 		      	<div class="col-xs-12 col-sm-4">
-		      		<a href="{{ path('ots_core_terms') }}" title="Terms &amp; Conditions">
-		      			Terms &amp; Conditions
+		      		<a href="{{ path('ots_core_terms') }}" title="{{ 'ots_core.footer.terms.title'|trans|raw }}">
+		      			{{ 'ots_core.footer.terms.content'|trans|raw }}
 		      		</a>
 		      	</div>
 		    </footer>

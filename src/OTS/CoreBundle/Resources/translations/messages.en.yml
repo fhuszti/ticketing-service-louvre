@@ -1,0 +1,31 @@
+ots_core:
+    site:
+        title: Buy tickets - Musée du Louvre
+    header:
+        title:
+            link_title: Back to the homepage
+            img_alt:    Logo - Musée du Louvre
+        menu:
+            home:
+                title:   Homepage
+                content: Home
+            opening:
+                title:   Opening time
+                content: Opening time
+            prices:
+                title:   Prices
+                content: Prices
+            contact:
+                title:   Contact
+                content: Contact
+            book:
+                title:   Book online
+                content: Book online
+    footer:
+        legal:
+            title:   Legal information and terms of use
+            content: Legal information
+        copyright:   '&copy; Musée du Louvre - All rights reserved'
+        terms:
+            title:   Terms &amp; Conditions
+            content: Terms &amp; Conditions

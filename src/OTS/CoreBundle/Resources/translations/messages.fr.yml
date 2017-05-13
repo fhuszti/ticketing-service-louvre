@@ -1,0 +1,31 @@
+ots_core:
+    site:
+        title: Achat de billets - Musée du Louvre
+    header:
+        title:
+            link_title: Retour à la page d'accueil
+            img_alt:    Logo - Musée du Louvre
+        menu:
+            home:
+                title:   Page d'accueil
+                content: Accueil
+            opening:
+                title:   Horaires
+                content: Horaires
+            prices:
+                title:   Prix
+                content: Prix
+            contact:
+                title:   Contact
+                content: Contact
+            book:
+                title:   Réserver en ligne
+                content: Réserver en ligne
+    footer:
+        legal:
+            title:   Informations légales et Termes d'Utilisation
+            content: Informations légales
+        copyright:   '&copy; Musée du Louvre - Tous droits réservés'
+        terms:
+            title:   Termes &amp; Conditions
+            content: Termes &amp; Conditions
