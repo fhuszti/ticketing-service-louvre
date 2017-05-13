@@ -1,0 +1,25 @@
+{% extends "OTSCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ status_code }} {{ status_text }} - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite'
+        'bundles/otscore/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <h1 id="title">Oops! An Error Occurred</h1>
+    <hr />
+
+    <h3>The server returned a "{{ status_code }} {{ status_text }}".</h3>
+
+    <p>
+        {% block content %}
+        {% endblock %}
+    </p>
+{% endblock %}
