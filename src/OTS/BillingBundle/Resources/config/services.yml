@@ -2,6 +2,8 @@ services:
     ots_billing.form.flow.ticketOrder:
         class: OTS\BillingBundle\Form\TicketOrderFlow
         parent: craue.form.flow
+        arguments:
+            - "@service_container"
 
     ots_billing.mailer.checkout_notificator:
         class: OTS\BillingBundle\Mailer\CheckoutNotificator

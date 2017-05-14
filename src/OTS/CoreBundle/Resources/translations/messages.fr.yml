@@ -134,3 +134,18 @@ ots_billing:
             content: |
                 Les billets vous ont été envoyés à l'adresse email que vous avez indiqué.
                 Veuillez les imprimer et les montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.
+    controller:
+        order_price:
+            error: Vous ne pouvez pas payer 0€.
+        charge:
+            api: Les serveurs de Stripe ont quelques soucis, veuillez réessayer. Le paiement n'a pas été effectué.
+            invalid_request: Il y a eu un problème de notre côté, nous travaillons déjà à le résoudre. Veuillez essayer. Le paiement n'a pas été effectué.
+            authentication: Nous n'avons pas pu nous connecter aux serveurs de Stripe, veuillez réessayer. Le paiement n'a pas été effectué.
+            api_connection: Une erreur réseau est survenue, veuillez réessayer. Le paiement n'a pas été effectué.
+            base: Une erreur est survenue lors du paiement. Veuillez réessayer. Le paiement n'a pas été effectué.
+        action:
+            error: Il n'y a plus assez de billets disponibles à la date choisie. Nous nous excusons pour la gêne occasionée. Veuillez changer votre date de visite.
+    flow:
+        order: 1. Commande
+        info: 2. Informations
+        payment: 3. Paiement

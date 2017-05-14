@@ -101,11 +101,14 @@ class BillingController extends Controller
 
     //set the total order price depending on visitors birthdate
     public function manageOrderPrice($order, $request, $form, $flow) {
+    	$translator = $this->get('translator');
+    	$error = $translator->trans('ots_billing.controller.order_price.error');
+
     	$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
 		
 		//if it's free, problem
 		if ($totalPrice === 0) {
-			$request->getSession()->getFlashBag()->add('error', 'You can\'t pay 0€.');
+			$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -131,6 +134,8 @@ class BillingController extends Controller
 	}
 
     public function chargeCustomer($token, $price, $request, $form, $flow) {
+    	$translator = $this->get('translator');
+
     	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
 
     	$stripeInfo = \Stripe\Token::retrieve($token);
@@ -165,8 +170,10 @@ class BillingController extends Controller
 			));
 		}
 		catch (\Stripe\Error\Api $e) {
+		  	$error = $translator->trans('ots_billing.controller.charge.api');
+
 		  	// Stripe's servers are down!
-		  	$request->getSession()->getFlashBag()->add('error', 'Stripe servers seem to be down, please try again later. You have not been charged.');
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -176,8 +183,10 @@ class BillingController extends Controller
 			));
 		}
 		catch (\Stripe\Error\InvalidRequest $e) {
+		  	$error = $translator->trans('ots_billing.controller.charge.invalid_request');
+
 		  	// Invalid parameters were supplied to Stripe's API
-		  	$request->getSession()->getFlashBag()->add('error', 'There was an error on our part, we are working hard to fix it. Please try again later. You have not been charged.');
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -187,9 +196,11 @@ class BillingController extends Controller
 			));
 		}
 		catch (\Stripe\Error\Authentication $e) {
+		  	$error = $translator->trans('ots_billing.controller.charge.authentication');
+
 		  	// Authentication with Stripe's API failed
 		  	// (maybe you changed API keys recently)
-		  	$request->getSession()->getFlashBag()->add('error', 'We couldn\'t connect with Stripe\'s servers, please try again later. You have not been charged.');
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -199,8 +210,10 @@ class BillingController extends Controller
 			));
 		}
 		catch (\Stripe\Error\ApiConnection $e) {
+		  	$error = $translator->trans('ots_billing.controller.charge.api_connection');
+
 		  	// Network communication with Stripe failed
-		  	$request->getSession()->getFlashBag()->add('error', 'There was a network error, please try again later. You have not been charged.');
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -210,9 +223,10 @@ class BillingController extends Controller
 			));
 		}
 		catch (\Stripe\Error\Base $e) {
-		  	// Display a very generic error to the user, and maybe send
-		  	// yourself an email
-		  	$request->getSession()->getFlashBag()->add('error', 'There was an error processing your payment. Please try again later. You have not been charged.');
+		  	$error = $translator->trans('ots_billing.controller.charge.base');
+
+		  	// Display a very generic error to the user
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -222,8 +236,10 @@ class BillingController extends Controller
 			));
 		}
 		catch (Exception $e) {
+		  	$error = $translator->trans('ots_billing.controller.charge.base');
+
 		  	// Something else happened, completely unrelated to Stripe
-		  	$request->getSession()->getFlashBag()->add('error', 'There was an error processing your payment. Please try again later. You have not been charged.');
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 			$form = $flow->createForm();
 
@@ -289,7 +305,9 @@ class BillingController extends Controller
 			} else {
 				//we abort everything if there's not enough left in stock for the chosen date
 				if ( !$this->checkIfStockOkForDate($order) ) {
-					$request->getSession()->getFlashBag()->add('error', 'There are not enough tickets left in stock for the chosen visit date. We apologize for the inconvenience. Please select a new visit date in step 1.');
+					$error = $translator->trans('ots_billing.controller.action.error');
+
+		  	$request->getSession()->getFlashBag()->add('error', $error);
 
 					$form = $flow->createForm();
 

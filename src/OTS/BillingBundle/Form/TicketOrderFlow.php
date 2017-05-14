@@ -3,20 +3,32 @@ namespace OTS\BillingBundle\Form;
 
 use Craue\FormFlowBundle\Form\FormFlow;
 use Craue\FormFlowBundle\Form\FormFlowInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TicketOrderFlow extends FormFlow {
+	protected $container;
+
+	public function __construct(ContainerInterface $container) {
+		$this->container = $container;
+	}
+
 	protected function loadStepsConfig() {
+		$translator = $this->container->get('translator');
+		$order = $translator->trans('ots_billing.flow.order');
+		$info = $translator->trans('ots_billing.flow.info');
+		$payment = $translator->trans('ots_billing.flow.payment');
+
 		return array(
 			array(
-				'label' => '1. Order',
+				'label' => $order,
 				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 			array(
-				'label' => '2. Informations',
+				'label' => $info,
 				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 			array(
-				'label' => '3. Payment',
+				'label' => $payment,
 				'form_type' => 'OTS\BillingBundle\Form\TicketOrderType',
 			),
 		);
