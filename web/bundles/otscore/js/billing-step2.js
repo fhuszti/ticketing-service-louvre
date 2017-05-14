@@ -47,14 +47,27 @@ $(function() {
 	
 	function addTranslations() {
 		Translator.add(
-		    'ots_billing.stripe.name',
-		    'Louvre Museum',
+		    'ots_billing.step2.ticket.label',
+		    'Ticket n°%index%',
 		    'messages',
 		    'en'
 		);
 		Translator.add(
-		    'ots_billing.stripe.name',
-		    'Musée du Louvre',
+		    'ots_billing.step2.ticket.label',
+		    'Billet n°%index%',
+		    'messages',
+		    'fr'
+		);
+
+		Translator.add(
+		    'ots_billing.step2.price.label',
+		    'Price:',
+		    'messages',
+		    'en'
+		);
+		Translator.add(
+		    'ots_billing.step2.price.label',
+		    'Prix :',
 		    'messages',
 		    'fr'
 		);
@@ -79,18 +92,19 @@ $(function() {
         //get data-prototype
         var prototype = collectionHolder.data('prototype');
         //get current index
-        var index = collectionHolder.data('index');
+        var index = collectionHolder.data('index'),
+        	indexUp = index + 1;
 
         //replace necessary parts in the prototype
-        var newForm = prototype.replace(/__name__label__/g, 'Ticket n°'+(index+1))
+        var newForm = prototype.replace(/__name__label__/g, Translator.trans('ots_billing.step2.ticket.label', { "index": indexUp }))
                                .replace(/__name__/g, index);
 
         //increment the index for next time
-        collectionHolder.data('index', index + 1);
+        collectionHolder.data('index', indexUp);
 
         collectionHolder.append($('<div class="row"></div>')
                             .append(newForm)
-                            .append($('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>Price : <span id="price_'+index+'">-</span></h3></div>'))
+                            .append($('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>'+Translator.trans('ots_billing.step2.price.label')+' <span id="price_'+index+'">-</span></h3></div>'))
                         )
                         .append($('<hr />'));
     }
@@ -104,8 +118,8 @@ $(function() {
 
         rowDiv.addClass('row');
         rowDiv.children().wrapAll('<div />');
-        rowDiv.children('div').children('label').text( 'Ticket n°'+(indexUp) );
-        rowDiv.append( $('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>Price : <span id="price_'+index+'">-</span></h3></div>') );
+        rowDiv.children('div').children('label').text( Translator.trans('ots_billing.step2.ticket.label', { "index": indexUp }) );
+        rowDiv.append( $('<div class="col-xs-12 col-sm-6 col-sm-pull-6"><h3>'+Translator.trans('ots_billing.step2.price.label')+' <span id="price_'+index+'">-</span></h3></div>') );
 
         rowDiv.after( $('<hr />') );
 
