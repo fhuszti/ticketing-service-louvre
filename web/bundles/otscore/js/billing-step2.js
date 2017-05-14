@@ -37,6 +37,32 @@ $(function() {
 	/**
 	 * ----------------
 	 */
+	
+
+
+	/**
+	 * TRANSLATIONS
+	 * ------------
+	 */
+	
+	function addTranslations() {
+		Translator.add(
+		    'ots_billing.stripe.name',
+		    'Louvre Museum',
+		    'messages',
+		    'en'
+		);
+		Translator.add(
+		    'ots_billing.stripe.name',
+		    'Musée du Louvre',
+		    'messages',
+		    'fr'
+		);
+	}
+
+	/**
+	 * ------------
+	 */
 
 
 
@@ -331,6 +357,8 @@ $(function() {
 
 
 
+
+    addTranslations();
 
     generateTicketForms();
     setupDatepickerStep2();

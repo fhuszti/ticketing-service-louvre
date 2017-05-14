@@ -25,6 +25,7 @@ $(function() {
 	/**
 	 * ----------------
 	 */
+	
 
 
 
@@ -185,7 +186,7 @@ $(function() {
 
 
 
-
+    
     setupDatepickerStep1();
     checkDate($('#ots_billingbundle_ticketorder_date').val());
 

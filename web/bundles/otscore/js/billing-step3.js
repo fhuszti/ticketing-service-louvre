@@ -13,6 +13,45 @@ $(function() {
 	/**
 	 * ----------------
 	 */
+	
+
+
+	/**
+	 * TRANSLATIONS
+	 * ------------
+	 */
+	
+	function addTranslations() {
+		Translator.add(
+		    'ots_billing.step3.full',
+		    'Full-day',
+		    'messages',
+		    'en'
+		);
+		Translator.add(
+		    'ots_billing.step3.full',
+		    'Journée complète',
+		    'messages',
+		    'fr'
+		);
+
+		Translator.add(
+		    'ots_billing.step3.half',
+		    'Half-day',
+		    'messages',
+		    'en'
+		);
+		Translator.add(
+		    'ots_billing.step3.half',
+		    'Demi-journée',
+		    'messages',
+		    'fr'
+		);
+	}
+
+	/**
+	 * ------------
+	 */
 
 
 
@@ -28,7 +67,7 @@ $(function() {
         var date = convertDatePhpToFrench( $('#ots_billingbundle_ticketorder_date').val() );
         $('#recap_date').text(date);
         
-        var type = $('#ots_billingbundle_ticketorder_type').val() === '1' ? "Full-day" : "Half-day";
+        var type = $('#ots_billingbundle_ticketorder_type').val() === '1' ? Translator.trans('ots_billing.step3.full') : Translator.trans('ots_billing.step3.half');
         $('#recap_type').text(type);
         
         $('#recap_nbTickets').text( $('#ots_billingbundle_ticketorder_nbTickets').val() );
@@ -40,5 +79,9 @@ $(function() {
 
 
 
-     fillRecap();
+
+
+     addTranslations();
+
+    fillRecap();
 });
