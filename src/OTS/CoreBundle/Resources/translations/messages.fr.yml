@@ -1,6 +1,22 @@
 ots_core:
     site:
-        title: Musée du Louvre
+        title:        Musée du Louvre
+        date:         "Date :"
+        type:         "Type de billet :"
+        count:        "Nombre de billets :"
+        total_price:  "Prix total :"
+        first_name:   "Prénom :"
+        name:         "Nom :"
+        country:      "Pays :"
+        price:        "Prix :"
+        birthdate:    "Date de Naissance :"
+        full_day:     Journée complète
+        half_day:     Demi-journée
+        reduced_rate: Tarif réduit
+        toddler_rate: Tarif bébé
+        senior_rate:  Tarif sénior
+        normal_rate:  Tarif normal
+        child_rate:   Tarif enfant
     header:
         title:
             link_title: Retour à la page d'accueil
@@ -104,10 +120,6 @@ ots_billing:
             title: Réserver en ligne
         body:
             title: Réservation en ligne
-            date: "Date :"
-            type: "Type de billet :"
-            count: "Nombre de billets :"
-            total_price: "Prix total :"
         step1:
             opening_help:
                 - |
@@ -128,24 +140,30 @@ ots_billing:
                 - Entrez n'importe quel triolet de chiffres dans le champ CVV, comme <span class="highlight">123</span>
     confirmation:
         header:
-            title: Merci !
+            title:  Merci !
         body:
-            title: Merci pour votre réservation !
+            title:  Merci pour votre réservation !
             content: |
                 Les billets vous ont été envoyés à l'adresse email que vous avez indiqué.
                 Veuillez les imprimer et les montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.
     controller:
         order_price:
-            error: Vous ne pouvez pas payer 0€.
+            error:  Vous ne pouvez pas payer 0€.
         charge:
-            api: Les serveurs de Stripe ont quelques soucis, veuillez réessayer. Le paiement n'a pas été effectué.
+            api:    Les serveurs de Stripe ont quelques soucis, veuillez réessayer. Le paiement n'a pas été effectué.
             invalid_request: Il y a eu un problème de notre côté, nous travaillons déjà à le résoudre. Veuillez essayer. Le paiement n'a pas été effectué.
-            authentication: Nous n'avons pas pu nous connecter aux serveurs de Stripe, veuillez réessayer. Le paiement n'a pas été effectué.
-            api_connection: Une erreur réseau est survenue, veuillez réessayer. Le paiement n'a pas été effectué.
-            base: Une erreur est survenue lors du paiement. Veuillez réessayer. Le paiement n'a pas été effectué.
+            authentication:  Nous n'avons pas pu nous connecter aux serveurs de Stripe, veuillez réessayer. Le paiement n'a pas été effectué.
+            api_connection:  Une erreur réseau est survenue, veuillez réessayer. Le paiement n'a pas été effectué.
+            base:   Une erreur est survenue lors du paiement. Veuillez réessayer. Le paiement n'a pas été effectué.
         action:
-            error: Il n'y a plus assez de billets disponibles à la date choisie. Nous nous excusons pour la gêne occasionée. Veuillez changer votre date de visite.
+            error:  Il n'y a plus assez de billets disponibles à la date choisie. Nous nous excusons pour la gêne occasionée. Veuillez changer votre date de visite.
     flow:
-        order: 1. Commande
-        info: 2. Informations
+        order:   1. Commande
+        info:    2. Informations
         payment: 3. Paiement
+    mail:
+        subject: Merci d'avoir réservé en ligne - Musée du Louvre
+        body:
+            title: Merci pour votre réservation en ligne !
+            info: Veuillez imprimer ce mail afin de le montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.
+            reference: "Code Référence :"

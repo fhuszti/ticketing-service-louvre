@@ -1,6 +1,22 @@
 ots_core:
     site:
-        title: Louvre Museum
+        title:        Louvre Museum
+        date:         "Date:"
+        type:         "Ticket type:"
+        count:        "Tickets count:"
+        total_price:  "Total Price:"
+        first_name:   "First name:"
+        name:         "Name:"
+        country:      "Country:"
+        price:        "Price:"
+        birthdate:    "Birthdate:"
+        full_day:     Full-day
+        half_day:     Half-day
+        reduced_rate: Reduced rate
+        toddler_rate: Toddler rate
+        senior_rate:  Senior rate
+        normal_rate:  Normal rate
+        child_rate:   Child rate
     header:
         title:
             link_title: Back to the homepage
@@ -104,10 +120,6 @@ ots_billing:
             title: Book online
         body:
             title: Book online
-            date: "Date:"
-            type: "Ticket type:"
-            count: "Tickets count:"
-            total_price: "Total Price:"
         step1:
             opening_help:
                 - |
@@ -128,24 +140,30 @@ ots_billing:
                 - Enter any three-figures number in the CVV field, e.g. <span class="highlight">123</span>
     confirmation:
         header:
-            title: Thank you!
+            title:  Thank you!
         body:
-            title: Thank you for booking!
+            title:  Thank you for booking!
             content: |
                 An email containing your tickets has been sent to the email address you entered.
                 Please print them and show them at the entrance of the Museum along with an ID card for everyone in your group.
     controller:
         order_price:
-            error: You can't pay 0€.
+            error:  You can't pay 0€.
         charge:
-            api: Stripe servers seem to be down, please try again. You have not been charged.
+            api:    Stripe servers seem to be down, please try again. You have not been charged.
             invalid_request: There was an error on our part, we are working hard to fix it. Please try again. You have not been charged.
-            authentication: We couldn't connect with Stripe's servers, please try again. You have not been charged.
-            api_connection: There was a network error, please try again. You have not been charged.
-            base: There was an error processing your payment. Please try again. You have not been charged.
+            authentication:  We couldn't connect with Stripe's servers, please try again. You have not been charged.
+            api_connection:  There was a network error, please try again. You have not been charged.
+            base:   There was an error processing your payment. Please try again. You have not been charged.
         action:
-            error: There are not enough tickets left in stock for the chosen visit date. We apologize for the inconvenience. Please select a new visit date in step 1.
+            error:  There are not enough tickets left in stock for the chosen visit date. We apologize for the inconvenience. Please select a new visit date in step 1.
     flow:
-        order: 1. Order
-        info: 2. Informations
+        order:   1. Order
+        info:    2. Informations
         payment: 3. Payment
+    mail:
+        subject: Thank you for booking online - Louvre Museum
+        body:
+            title: Thank you for booking online!
+            info: Please print this mail and show it at the entrance of the museum, along with all necessary ID cards.
+            reference: "Reference Code:"

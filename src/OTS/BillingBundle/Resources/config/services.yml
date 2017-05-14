@@ -10,6 +10,7 @@ services:
         arguments:
             - "@mailer"
             - "@twig"
+            - "@service_container"
 
     ots_billing.mailer.checkout_stock_manager:
         class: OTS\BillingBundle\Mailer\CheckoutStockManager

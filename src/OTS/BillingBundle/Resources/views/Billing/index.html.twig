@@ -140,7 +140,7 @@
                             <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
                         {% endfor %}
 
-                        <h2>{{ 'ots_billing.billing.body.total_price'|trans }} <span id="total_price">-</span></h2>
+                        <h2>{{ 'ots_core.site.total_price'|trans }} <span id="total_price">-</span></h2>
                     </div>
                 {% endif %}
             {% endif %}
@@ -149,18 +149,18 @@
                 <div class="row well">
                     <div class="col-xs-12 col-sm-6">
                         <h4 class="col-xs-12">
-                            {{ 'ots_billing.billing.body.date'|trans }} <span id="recap_date"></span>
+                            {{ 'ots_core.site.date'|trans }} <span id="recap_date"></span>
                         </h4>
                         <h4 class="col-xs-12">
-                            {{ 'ots_billing.billing.body.type'|trans }} <span id="recap_type"></span>
+                            {{ 'ots_core.site.type'|trans }} <span id="recap_type"></span>
                         </h4>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <h4 class="col-xs-12">
-                            {{ 'ots_billing.billing.body.count'|trans }} <span id="recap_nbTickets"></span>
+                            {{ 'ots_core.site.count'|trans }} <span id="recap_nbTickets"></span>
                         </h4>
                         <h4 class="col-xs-12">
-                            {{ 'ots_billing.billing.body.total_price'|trans }} <span id="recap_price"></span>
+                            {{ 'ots_core.site.total_price'|trans }} <span id="recap_price"></span>
                         </h4>
                     </div>
                 </div>
