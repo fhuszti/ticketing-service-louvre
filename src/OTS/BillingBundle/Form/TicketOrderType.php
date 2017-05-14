@@ -30,8 +30,8 @@ class TicketOrderType extends AbstractType
                         ->add('type',      ChoiceType::class, array(
                             'label' =>           "ots_billing.ticket_order_type.type.label",
                             'choices' =>   array(
-                                'Half-day' => false,
-                                'Full-day' => true
+                                'ots_billing.ticket_order_type.type.choice.half' => false,
+                                'ots_billing.ticket_order_type.type.choice.full' => true
                             ),
                             'expanded' =>        true,
                             'multiple' =>        false,

@@ -5,6 +5,9 @@ ots_billing:
             label:   Date de la visite
         type:
             label:   Type de billet
+            choice:
+                half: Demi-journée
+                full: Journée complète
         count:
             message: Le nombre de billets de la commande doit être un nombre supérieur à 0.
             label:   Nombre de billets

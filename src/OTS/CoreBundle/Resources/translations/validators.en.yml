@@ -5,6 +5,9 @@ ots_billing:
             label:    Date of the visit
         type:
             label:    Ticket type
+            choice:
+                half: Half-day
+                full: Full-day
         count:
             message:  The number of tickets in the order must be an integer greater than 0.
             label:    Tickets count
