@@ -2,7 +2,7 @@
 {% form_theme orderForm 'form/fields.html.twig' 'form/form_errors.html.twig' %}
 
 {% block title %}
-  	Book online - {{ parent() }}
+  	{{ 'ots_billing.billing.header.title'|trans }} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1 id="title">Book online</h1>
+	<h1 id="title">{{ 'ots_billing.billing.body.title'|trans }}</h1>
     <hr />
 
     {% for message in app.session.flashbag.get('info') %}
@@ -140,7 +140,7 @@
                             <input type="hidden" id="ots_billingbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="ots_billingbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
                         {% endfor %}
 
-                        <h2>Total Price : <span id="total_price">-</span></h2>
+                        <h2>{{ 'ots_billing.billing.body.total_price'|trans }} <span id="total_price">-</span></h2>
                     </div>
                 {% endif %}
             {% endif %}
@@ -149,18 +149,18 @@
                 <div class="row well">
                     <div class="col-xs-12 col-sm-6">
                         <h4 class="col-xs-12">
-                            Date: <span id="recap_date"></span>
+                            {{ 'ots_billing.billing.body.date'|trans }} <span id="recap_date"></span>
                         </h4>
                         <h4 class="col-xs-12">
-                            Ticket type: <span id="recap_type"></span>
+                            {{ 'ots_billing.billing.body.type'|trans }} <span id="recap_type"></span>
                         </h4>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <h4 class="col-xs-12">
-                            Tickets count: <span id="recap_nbTickets"></span>
+                            {{ 'ots_billing.billing.body.count'|trans }} <span id="recap_nbTickets"></span>
                         </h4>
                         <h4 class="col-xs-12">
-                            Total price: <span id="recap_price"></span>
+                            {{ 'ots_billing.billing.body.total_price'|trans }} <span id="recap_price"></span>
                         </h4>
                     </div>
                 </div>
@@ -168,30 +168,21 @@
                 <script src="https://checkout.stripe.com/checkout.js"></script>
 
                 <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}" data-url="{{ path('ots_billing_home') }}">
-                    Pay with Card
+                    {{ 'ots_billing.billing.step3.button'|trans }}
                 </button>
 
                 <div class="col-xs-12 alert alert-warning">
-                    <p>
-                        You can safely try out the payment as this is a test environment, nothing will actually be charged.
-                    </p>
-
-                    <p>
-                        Upon clicking on the payment button above, you'll be asked a few more informations to simulate a payment :
-                    </p>
+                    {% for i in 0..1 %}
+                        <p>
+                            {{ ('ots_billing.billing.step3.help_text.'~i)|trans }}
+                        </p>
+                    {% endfor %}
                     <ul>
-                        <li>
-                            Enter your own email address if you want to check out the fake tickets generated with your order, or any fake address if you're not interested. It still has to be a valid email address format though. Something like <span class="highlight">abcde@fgh.ijk</span> will do
-                        </li>
-                        <li>
-                            Use <span class="highlight">4242 4242 4242 4242</span> as the card number
-                        </li>
-                        <li>
-                            Fill the expiration date field with any date in the future, e.g. <span class="highlight">12/22</span>
-                        </li>
-                        <li>
-                            Enter any three-figures number in the CVV field, e.g. <span class="highlight">123</span>
-                        </li>
+                        {% for i in 0..3 %}
+                            <li>
+                                {{ ('ots_billing.billing.step3.help_list.'~i)|trans|raw }}
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             {% endif %}
@@ -203,14 +194,11 @@
             {% if flow.currentStepNumber == 1 %}
                 <div class="row alert alert-info">
                     <ul>
-                        <li>
-                            "Half-day" tickets cost half the price of "Full-day" tickets, but only let you enter the museum after 2pm.
-                        </li>
-                        <li>
-                            Open everyday (except tuesday) from 9am to 6pm.<br />
-                            Open until 9.45pm on wednesday and friday.<br />
-                            Closed on the 1st of May, the 1st of November and the 25th of december.
-                        </li>
+                        {% for i in 0..1 %}
+                            <li>
+                                {{ ('ots_billing.billing.step1.opening_help.'~i)|trans|nl2br }}
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             {% endif %}

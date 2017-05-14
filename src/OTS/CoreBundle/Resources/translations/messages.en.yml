@@ -99,6 +99,33 @@ ots_core:
         body:
             title: Terms &amp; Conditions
 ots_billing:
+    billing:
+        header:
+            title: Book online
+        body:
+            title: Book online
+            date: "Date:"
+            type: "Ticket type:"
+            count: "Tickets count:"
+            total_price: "Total Price:"
+        step1:
+            opening_help:
+                - |
+                    "Half-day" tickets cost half the price of "Full-day" tickets, but only let you enter the Museum after 2pm.
+                - |
+                    Open everyday (except sunday and tuesday) from 9am to 6pm.
+                    Open until 9.45pm on wednesday and friday.
+                    Closed on the 1st of May, the 1st of November and the 25th of december.
+        step3:
+            button: Pay with Card
+            help_text:
+                - You can safely try out the payment as this is a test environment, nothing will actually be charged.
+                - "Upon clicking on the payment button above, you'll be asked a few more informations to simulate a payment:"
+            help_list:
+                - Enter your own email address if you want to check out the fake tickets generated with your order, or any fake address if you're not interested. It still has to be a valid email address format though. Something like <span class="highlight">abcde@fgh.ijk</span> will do
+                - Use <span class="highlight">4242 4242 4242 4242</span> as the card number
+                - Fill the expiration date field with any date in the future, e.g. <span class="highlight">12/22</span>
+                - Enter any three-figures number in the CVV field, e.g. <span class="highlight">123</span>
     confirmation:
         header:
             title: Thank you!

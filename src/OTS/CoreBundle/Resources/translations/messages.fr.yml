@@ -99,6 +99,33 @@ ots_core:
         body:
             title: Termes &amp; Conditions
 ots_billing:
+    billing:
+        header:
+            title: Réserver en ligne
+        body:
+            title: Réservation en ligne
+            date: "Date :"
+            type: "Type de billet :"
+            count: "Nombre de billets :"
+            total_price: "Prix total :"
+        step1:
+            opening_help:
+                - |
+                   Les billets "Demi-journée" coûtent moitié moins cher que les billets "Journée complète", mais ne vous autorisent à rentrer dans le Musée qu'à partir de 14h.
+                - |
+                    Ouvert tous les jours (sauf les mardi et dimanche) de 9h à 18h.
+                    Ouvert jusque 21h45 les mercredi et vendredi.
+                    Fermé le 1er Mai, le 1er Novembre et le 25 décembre.
+        step3:
+            button: Régler par Carte
+            help_text:
+                - Vous pouvez essayer le système de paiement sans craintes, aucun paiement réel n'a lieu dans cet environnement de test.
+                - "Des informations supplémentaires vous seront demandées après avoir cliqué sur le bouton ci-dessus, afin de simuler une transaction :"
+            help_list:
+                - Entrez votre adresse mail si vous souhaitez recevoir les faux billets créés avec la commande, ou n'importe quelle fausse adresse si cela ne vous intéresse pas. Votre entrée doit tout de même garder un format valide d'adresse mail. Quelque chose comme <span class="highlight">abcde@fgh.ijk</span> fonctionnera
+                - Utilisez <span class="highlight">4242 4242 4242 4242</span> comme numéro de Carte Bleue
+                - Remplissez le champ de date d'expiration avec n'importe quelle date dans le futur, comme <span class="highlight">12/22</span>
+                - Entrez n'importe quel triolet de chiffres dans le champ CVV, comme <span class="highlight">123</span>
     confirmation:
         header:
             title: Merci !
