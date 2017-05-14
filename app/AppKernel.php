@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new OTS\BillingBundle\OTSBillingBundle(),
             new OTS\CoreBundle\OTSCoreBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

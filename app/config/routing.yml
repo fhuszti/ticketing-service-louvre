@@ -9,3 +9,6 @@ ots_billing:
     prefix:   /{_locale}/booking
     requirements:
         _locale: en|fr
+
+_bazinga_jstranslation:
+    resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
