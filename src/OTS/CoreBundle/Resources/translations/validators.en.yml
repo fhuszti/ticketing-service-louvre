@@ -1,0 +1,12 @@
+ots_billing:
+    ticket_order_type:
+        date:
+            message:  Visit date must be either a valid DateTime object or a valid date string.
+            label:    Date of the visit
+        type:
+            label:    Ticket type
+        count:
+            message:  The number of tickets in the order must be an integer greater than 0.
+            label:    Tickets count
+        price:
+            message:  The price of the order must be an integer greater than 1.

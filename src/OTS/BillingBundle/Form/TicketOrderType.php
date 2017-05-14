@@ -21,24 +21,27 @@ class TicketOrderType extends AbstractType
         switch ($options['flow_step']) {
             case 1:
                 $builder->add('date',      DateType::class, array(
-                            'invalid_message' => "Order date must be either a valid DateTime object or a valid date string.",
+                            'invalid_message' => "ots_billing.ticket_order_type.date.message",
                             'widget' =>          'single_text',
                             'html5' =>           false,
-                            'label' =>           'Date of the visit'
+                            'label' =>           "ots_billing.ticket_order_type.date.label",
+                            'translation_domain' => 'validators'
                         ))
                         ->add('type',      ChoiceType::class, array(
-                            'label' =>           'Ticket type',
+                            'label' =>           "ots_billing.ticket_order_type.type.label",
                             'choices' =>   array(
                                 'Half-day' => false,
                                 'Full-day' => true
                             ),
                             'expanded' =>        true,
                             'multiple' =>        false,
+                            'translation_domain' => 'validators'
                         ))
                         ->add('nbTickets', IntegerType::class, array(
-                            'invalid_message' => "The number of tickets in the order must be a valid integer greater than 0.",
-                            'label' =>           "Tickets count",
-                            'attr' =>      array('min' => 1)
+                            'invalid_message' => "ots_billing.ticket_order_type.count.message",
+                            'label' =>           "ots_billing.ticket_order_type.count.label",
+                            'attr' =>      array('min' => 1),
+                            'translation_domain' => 'validators'
                         ));
                 break;
             case 2:
@@ -65,9 +68,10 @@ class TicketOrderType extends AbstractType
                         ))
                 //to remember the price for display in step 3, will be populated with jquery
                         ->add('price', IntegerType::class, array(
-                            'invalid_message' => "The price of the order must be a valid integer greater than 1.",
+                            'invalid_message' => "ots_billing.ticket_order_type.price.message",
                             'label_attr' => array('class' => 'hidden-label'),
-                            'attr' =>      array('min' => 1, 'class' => 'hidden')
+                            'attr' =>      array('min' => 1, 'class' => 'hidden'),
+                            'translation_domain' => 'validators'
                         ));
                 break;
             case 3:
