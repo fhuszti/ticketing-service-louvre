@@ -1,95 +1,10 @@
 $(function() {
-    /**
-     * STEP 1
-     * ----------------------
-     * ----------------------
-     */
-    
+	/**
+	 * COMMON FUNCTIONS
+	 * ----------------
+	 */
 
-    /**
-     * DATEPICKER DATES DISABLING IN STEP 1
-     * ------------------------------------
-     */
-
-    //check if a given date is valid
-    function isDateValid(date) {
-        var noTuesday = date.getDay() != 2,
-            noSunday = date.getDay() != 0,
-            disabledDates = ['01-05', '01-11', '25-12'],
-            stringDate = $.datepicker.formatDate('dd-mm', date);
-
-        return noTuesday && noSunday && disabledDates.indexOf(stringDate) == -1;
-    }
-
-    //disable some dates in datepicker
-    function disableDates(date) {
-        return [isDateValid(date), ''];
-    }
-
-    //get the default date if today isn't enabled
-    function getDefaultDate() {
-        var date = new Date();
-        
-        while ( !isDateValid(date) ) {
-            date.setDate( date.getDate() + 1 );
-        }
-        
-        return date;
-    }
-
-    /**
-     * ------------------------------------
-     */
-    
-
-
-    /**
-     * FULL-DAY RADIO OPTION MANAGEMENT IN STEP 1
-     * ------------------------------------------
-     */
-
-    //disable the full day radio option
-    function disableFullDayRadio() {
-        //disable the radio option
-        $('#ots_billingbundle_ticketorder_type_1').attr('disabled', true);
-
-        //if it's already selected, switch to the other option
-        if ($('#ots_billingbundle_ticketorder_type_1').is(':checked')) {
-            $('#ots_billingbundle_ticketorder_type_1').prop('checked', false);
-            $('#ots_billingbundle_ticketorder_type_0').prop('checked', true);
-        }
-    }
-
-    //enable the full day radio option
-    function enableFullDayRadio() {
-        $('#ots_billingbundle_ticketorder_type_1').attr('disabled', false);
-    }
-
-    //get the current Paris time
-    function getCurrentParisTime() {
-        var loc = '48.860618, 2.338170', // Paris expressed as lat,lng tuple
-            targetDate = new Date(), // Current date/time of user computer
-            timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60, // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
-            apikey = 'AIzaSyDKHyrzlT9M8otV06G4pQOOK_0NgF1UKGQ';
-         
-        var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location='+loc+'&timestamp='+timestamp+'&key='+apikey;
-
-        $.getJSON(apicall, function(output) {
-            if (output.status == 'OK'){ // if API reports everything was returned successfully
-                var offsets = output.dstOffset * 1000 + output.rawOffset * 1000, // get DST and time zone offsets in milliseconds
-                    localdate = new Date(timestamp * 1000 + offsets); // Date object containing current time of Tokyo (timestamp + dstOffset + rawOffset)
-                
-                if (localdate.getHours() >= 14) {
-                    disableFullDayRadio();
-                }
-                else {
-                    enableFullDayRadio();
-                }
-            }
-        });
-    }
-
-    //get the current date in the ISO format
+	 //get the current date in the ISO format
     function getTodayDate() {
         var today = new Date();
         var dd = today.getDate();
@@ -107,97 +22,28 @@ $(function() {
         return yy+'-'+mm+'-'+dd;
     }
 
-    //check if selected date is today and if it's after 2pm
-    //if it is, disable "Full-day" ticket type option
-    function checkDate(dateText) {
-        if (dateText === getTodayDate()) {
-            getCurrentParisTime();
-        }
-        else {
-            enableFullDayRadio();
-        }
+    function convertDatePhpToFrench(date) {
+        var parts = date.split('-');
+
+        return parts[2]+'/'+parts[1]+'/'+parts[0];
     }
 
-    /**
-     * ------------------------------------------
-     */
-    
+    function convertDateFrenchToPhp(date) {
+        var parts = date.split('/');
 
-
-    /**
-     * DATEPICKER SETUP FOR STEP 1
-     * ---------------------------
-     */
-
-    //initial setup datepicker
-    function setupDatepickerStep1() {
-        var inputDate = $('#ots_billingbundle_ticketorder_date').val();
-
-        $("#order_datepicker").datepicker({
-            altField: '#ots_billingbundle_ticketorder_date',
-            altFormat: "yy-mm-dd",
-            minDate: 0,
-            beforeShowDay: disableDates,
-            onSelect: checkDate,
-            defaultDate: getDefaultDate(),
-            dateFormat: 'yy-mm-dd'
-        });
-        
-        //to still have the chosen date selected when user comes back to step 1 from later in the flow
-        if (inputDate) {
-            $("#order_datepicker").datepicker('setDate', new Date(inputDate));
-        }
+        return parts[2]+'-'+parts[1]+'-'+parts[0];
     }
 
-    /**
-     * ---------------------------
-     */
-    
-
-
-    /**
-     * CALCULATOR
-     * ----------
-     */
-
-    function calculator() {
-        var numbers = $('.calc_number'),
-            del = $('.calc_del'),
-            input = $('#ots_billingbundle_ticketorder_nbTickets');
-
-        numbers.on('click', function() {
-            var newValue = input.val() + $(this).text();
-            input.val(newValue);
-        });
-        del.on('click', function() {
-            var newValue = input.val().slice(0, -1);
-            input.val(newValue);
-        });
-    }
-
-    /**
-     * ----------
-     */
-    
-    /**
-     * ----------------------
-     * ----------------------
-     */
-
-    
-
-    
+	/**
+	 * ----------------
+	 */
 
 
 
-    /**
-     * STEP 2
-     * ----------------------
-     * ----------------------
-     */
 
 
-    /**
+
+	/**
      * STEP 2 TICKET FORMS MANAGEMENT
      * ------------------------------
      */
@@ -281,12 +127,6 @@ $(function() {
      * STEP 2 DATE AND PRICE MANAGEMENT
      * --------------------------------
      */
-
-    function convertDateFrenchToPhp(date) {
-        var parts = date.split('/');
-
-        return parts[2]+'-'+parts[1]+'-'+parts[0];
-    }
 
     function formatDate(dateElmt, index) {
         var dateString = dateElmt.val();
@@ -488,81 +328,12 @@ $(function() {
         }
     }
 
-    /**
-     * ---------------------------
-     */
-    
-    /**
-     * ----------------------
-     * ----------------------
-     */
-    
 
 
 
 
+    generateTicketForms();
+    setupDatepickerStep2();
 
-
-    /**
-     * STEP 3
-     * ----------------------
-     * ----------------------
-     */
-
-     /**
-     * FILL RECAP VALUES FOR STEP 3
-     * ----------------------------
-     */
-
-    function convertDatePhpToFrench(date) {
-        var parts = date.split('-');
-
-        return parts[2]+'/'+parts[1]+'/'+parts[0];
-     }
-
-    function fillRecap() {
-        var date = convertDatePhpToFrench( $('#ots_billingbundle_ticketorder_date').val() );
-        $('#recap_date').text(date);
-        
-        var type = $('#ots_billingbundle_ticketorder_type').val() === '1' ? "Full-day" : "Half-day";
-        $('#recap_type').text(type);
-        
-        $('#recap_nbTickets').text( $('#ots_billingbundle_ticketorder_nbTickets').val() );
-        
-        $('#recap_price').text( $('#ots_billingbundle_ticketorder_price').val()+'€' );
-     }
-
-    /**
-     * ----------------------------
-     */
-    
-    /**
-     * ----------------------
-     * ----------------------
-     */
-    
-
-
-
-
-     var stepInput = $('#ots_billingbundle_ticketorder_flow_ticketOrder_step');
-
-    //Everything needed for step 1
-    if (stepInput.val() === '1') {
-        setupDatepickerStep1();
-        checkDate($('#ots_billingbundle_ticketorder_date').val());
-
-        calculator();
-    }
-    //generate ticket forms at step 2 only
-    else if (stepInput.val() === '2') {
-        generateTicketForms();
-        setupDatepickerStep2();
-
-        managePriceSpecialRate();
-    }
-    //step 3 only
-    else if (stepInput.val() === '3') {
-        fillRecap();
-    }
+    managePriceSpecialRate();
 });

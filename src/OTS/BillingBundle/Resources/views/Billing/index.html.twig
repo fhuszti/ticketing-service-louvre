@@ -220,16 +220,23 @@
 {% block javascripts %}
     {{ parent() }}
     
-    {% if flow.currentStepNumber == 3 %}
+    {% if flow.currentStepNumber == 1 %}
         {% javascripts
-            'bundles/otscore/js/billing.js'
-            'bundles/otscore/js/stripe-checkout.js'
+            'bundles/otscore/js/billing-step1.js'
             'bundles/bazingajstranslation/js/translator.min.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
-    {% else %}
+    {% elseif flow.currentStepNumber == 2 %}
         {% javascripts
-            'bundles/otscore/js/billing.js' %}
+            'bundles/otscore/js/billing-step2.js'
+            'bundles/bazingajstranslation/js/translator.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% elseif flow.currentStepNumber == 3 %}
+        {% javascripts
+            'bundles/otscore/js/billing-step3.js'
+            'bundles/otscore/js/stripe-checkout.js'
+            'bundles/bazingajstranslation/js/translator.min.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endif %}
