@@ -98,3 +98,12 @@ ots_core:
             title: Termes &amp; Conditions
         body:
             title: Termes &amp; Conditions
+ots_billing:
+    confirmation:
+        header:
+            title: Merci !
+        body:
+            title: Merci pour votre réservation !
+            content: |
+                Les billets vous ont été envoyés à l'adresse email que vous avez indiqué.
+                Veuillez les imprimer et les montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.

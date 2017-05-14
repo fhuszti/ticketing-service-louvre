@@ -1,7 +1,7 @@
 {% extends "OTSCoreBundle::layout.html.twig" %}
 
 {% block title %}
-  	Thank you! - {{ parent() }}
+  	{{ 'ots_billing.confirmation.header.title'|trans }} - {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -29,11 +29,10 @@
         </div>
     {% endfor %}
 
-    <h1 id="title">Thank you for booking!</h1>
+    <h1 id="title">{{ 'ots_billing.confirmation.body.title'|trans }}</h1>
     <hr />
 
     <p>
-        An email containing your tickets has been sent to the email address you entered.<br />
-        Please print them and show them at the entrance of the Museum along with an ID card for everyone in your group.
+        {{ 'ots_billing.confirmation.body.content'|trans|nl2br }}
     </p>
 {% endblock %}

@@ -98,3 +98,12 @@ ots_core:
             title: Terms &amp; Conditions
         body:
             title: Terms &amp; Conditions
+ots_billing:
+    confirmation:
+        header:
+            title: Thank you!
+        body:
+            title: Thank you for booking!
+            content: |
+                An email containing your tickets has been sent to the email address you entered.
+                Please print them and show them at the entrance of the Museum along with an ID card for everyone in your group.
