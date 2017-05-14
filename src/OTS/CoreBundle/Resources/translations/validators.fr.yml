@@ -10,3 +10,21 @@ ots_billing:
             label:   Nombre de billets
         price:
             message: Le prix de la commande doit être un nombre supérieur à 1.
+    ticket_type:
+        first_name:
+            label: Prénom
+        name:
+            label: Nom
+        country:
+            label: Pays
+            placeholder: Sélectionnez un pays...
+        birth_date:
+            label: Date de naissance
+            message: La date de naissance doit être un objet de type DateTime valide ou une date valide au format string.
+        discounted:
+            label: |
+                Tarif réduit
+                Étudiant(e), militaire, employé(e) du Musée ou du Ministère de la Culture.
+                Une carte d'identité vous sera demandée à l'entrée.
+        price:
+            message: Le prix du billet doit être un nombre supérieur ou égal à 0.

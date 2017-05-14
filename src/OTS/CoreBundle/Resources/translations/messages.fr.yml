@@ -91,7 +91,7 @@ ots_core:
                 price:   16€
             discounted:
                 title:   Tarif réduit
-                content: Étudiant, militaire, employé du musée ou du Ministère de la Culture
+                content: Étudiant(e), militaire, employé(e) du Musée ou du Ministère de la Culture
                 price:   10€
             child:
                 title:   Tarif enfant

@@ -10,3 +10,21 @@ ots_billing:
             label:    Tickets count
         price:
             message:  The price of the order must be an integer greater than 1.
+    ticket_type:
+        first_name:
+            label: First name
+        name:
+            label: Name
+        country:
+            label: Country
+            placeholder: Choose a country...
+        birth_date:
+            label: Birth date
+            message: Birth date must be either a valid DateTime object or a valid date string.
+        discounted:
+            label: |
+                Reduced price
+                French student, french military, museum employee or Ministry of Culture employee.
+                An ID will be required at the entrance.
+        price:
+            message: The price of the ticket must be an integer greater than or equal to 0.

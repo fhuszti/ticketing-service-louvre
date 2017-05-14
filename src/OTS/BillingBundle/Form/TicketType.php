@@ -20,41 +20,45 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('firstName', TextType::class, array(
-                    'label' => 'First name',
+                    'label' => 'ots_billing.ticket_type.first_name.label',
                     'label_attr' => ['class' => 'col-xs-12 control-label'],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control'],
+                    'translation_domain' => 'validators'
                 ))
                 ->add('name', TextType::class, array(
-                    'label' => 'Name',
+                    'label' => 'ots_billing.ticket_type.name.label',
                     'label_attr' => ['class' => 'col-xs-12 control-label'],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control'],
+                    'translation_domain' => 'validators'
                 ))
                 ->add('country', CountryType::class, array(
-                    'label' => 'Country',
-                    'placeholder' => 'Choose a country...',
+                    'label' => 'ots_billing.ticket_type.country.label',
+                    'placeholder' => 'ots_billing.ticket_type.country.placeholder',
                     'preferred_choices' => array('FR', 'GB', 'US', 'CN'),
                     'label_attr' => ['class' => 'col-xs-12 control-label'],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control'],
+                    'translation_domain' => 'validators'
                 ))
                 ->add('birthDate', DateType::class, array(
-                    'invalid_message' => "Birth date must be either a valid DateTime object or a valid date string.",
-                    'label' => 'Birth date',
+                    'invalid_message' => "ots_billing.ticket_type.birth_date.message",
+                    'label' => 'ots_billing.ticket_type.birth_date.label',
                     'widget' => 'single_text',
                     'html5' => false,
                     'label_attr' => ['class' => 'col-xs-12 control-label'],
-                    'attr' => ['class' => 'form-control',  'autocomplete' => "off"]
+                    'attr' => ['class' => 'form-control',  'autocomplete' => "off"],
+                    'translation_domain' => 'validators'
                 ))
                 ->add('discounted', CheckboxType::class, array(
-                    'label' => 'Reduced price
-                                French student, french military, museum employee or Ministry of Culture employee.
-                                An ID will be required at the entrance.',
+                    'label' => 'ots_billing.ticket_type.discounted.label',
                     'label_attr' => ['class' => 'col-xs-11 col-xs-push-1'],
                     'attr' => ['class' => 'col-xs-1 col-xs-pull-11'],
-                    'required' => false
+                    'required' => false,
+                    'translation_domain' => 'validators'
                 ))
                 ->add('price', HiddenType::class, array(
-                    'invalid_message' => "The price of the order must be a valid integer greater than 0.",
-                    'attr' =>      array('min' => 0)
+                    'invalid_message' => "ots_billing.ticket_type.price.message",
+                    'attr' =>      array('min' => 0),
+                    'translation_domain' => 'validators'
                 ));
     }
     
