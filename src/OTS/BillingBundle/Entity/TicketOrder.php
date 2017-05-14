@@ -32,7 +32,7 @@ class TicketOrder
      * @var \Date
      *
      * @ORM\Column(name="date", type="date")
-     * @Assert\Date(message="Order date must be either a valid DateTime object or a valid date string.")
+     * @Assert\Date(message="ots_billing.constraints.order.date")
      */
     private $date;
 
@@ -42,7 +42,7 @@ class TicketOrder
      * @ORM\Column(name="type", type="boolean")
      * @Assert\Type(
      *     type="bool",
-     *     message="Order type must be a boolean."
+     *     message="ots_billing.constraints.order.type"
      * )
      */
     private $type;
@@ -53,7 +53,7 @@ class TicketOrder
      * @ORM\Column(name="nb_tickets", type="smallint")
      * @Assert\GreaterThan(
      *     value=0,
-     *     message="Number of tikets must be greater than 0."
+     *     message="ots_billing.constraints.order.count"
      * )
      */
     private $nbTickets;
@@ -64,7 +64,7 @@ class TicketOrder
      * @ORM\Column(name="price", type="smallint")
      * @Assert\GreaterThanOrEqual(
      *     value=1,
-     *     message="The price of the order must be equal to or over 1."
+     *     message="ots_billing.constraints.order.price"
      * )
      */
     private $price;
@@ -75,12 +75,12 @@ class TicketOrder
      * @ORM\Column(name="reference", type="string", length=15, unique=true)
      * @Assert\Type(
      *     type="string",
-     *     message="The Reference Code for the order must be a valid string."
+     *     message="ots_billing.constraints.order.reference.type"
      * )
      * @Assert\Length(
      *     min=15,
      *     max=15,
-     *     exactMessage="The Reference Code for the order has to be 15 characters long."
+     *     exactMessage="ots_billing.constraints.order.reference.exact"
      * )
      */
     private $reference;

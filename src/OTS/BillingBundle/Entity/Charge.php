@@ -30,7 +30,7 @@ class Charge
      * @ORM\Column(name="amount", type="integer")
      * @Assert\GreaterThanOrEqual(
      *     value=1,
-     *     message="The amount to pay for the order must be equal to or over 1."
+     *     message="ots_billing.constraints.charge.amount"
      * )
      */
     private $amount;
@@ -42,7 +42,7 @@ class Charge
      * @Assert\Length(
      *      min = 3,
      *      max = 3,
-     *      exactMessage = "The currency has to be in the three-letter long ISO format."
+     *      exactMessage = "ots_billing.constraints.charge.currency"
      * )
      */
     private $currency;

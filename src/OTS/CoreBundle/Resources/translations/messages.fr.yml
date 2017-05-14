@@ -167,3 +167,9 @@ ots_billing:
             title:     Merci pour votre réservation en ligne !
             info:      Veuillez imprimer ce mail afin de le montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.
             reference: "Code Référence :"
+ots_billing:
+    flow:
+        next:   Suivant
+        finish: Terminer
+        back:   Retour
+        reset:  Recommencer

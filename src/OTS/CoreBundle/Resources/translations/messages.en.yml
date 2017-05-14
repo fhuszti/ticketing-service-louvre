@@ -167,3 +167,9 @@ ots_billing:
             title:     Thank you for booking online!
             info:      Please print this mail and show it at the entrance of the museum, along with all necessary ID cards.
             reference: "Reference Code:"
+ots_billing:
+    flow:
+        next:   Next
+        finish: Complete
+        back:   Back
+        reset:  Reset

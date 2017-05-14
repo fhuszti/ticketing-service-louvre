@@ -203,15 +203,20 @@
                 </div>
             {% endif %}
 
+            {% set next = ('ots_billing.flow.next'|trans) %}
+            {% set reset = ('ots_billing.flow.reset'|trans) %}
+            {% set back = ('ots_billing.flow.back'|trans) %}
+            {% set finish = ('ots_billing.flow.finish'|trans) %}
+
             {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
                 craue_formflow_button_class_finish: 'hidden',
                 craue_formflow_button_class_last: 'btn btn-primary',
                 craue_formflow_button_class_back: 'btn btn-default',
                 craue_formflow_button_class_reset: 'btn btn-default',
-                craue_formflow_button_label_next: 'Next',
-                craue_formflow_button_label_finish: 'Complete',
-                craue_formflow_button_label_back: 'Back',
-                craue_formflow_button_label_reset: 'Reset',
+                craue_formflow_button_label_next: next,
+                craue_formflow_button_label_finish: finish,
+                craue_formflow_button_label_back: back,
+                craue_formflow_button_label_reset: reset
             } %}
         {{ form_end(orderForm) }}
     </div>

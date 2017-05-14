@@ -29,7 +29,7 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="stripe_id", type="string")
-     * @Assert\NotBlank(message="A customer has to have a Stripe ID associated.")
+     * @Assert\NotBlank(message="ots_billing.constraints.customer.stripe_id")
      */
     private $stripe_id;
 
@@ -38,7 +38,7 @@ class Customer
      *
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *     message = "The email address is not valid."
+     *     message = "ots_billing.constraints.customer.email"
      * )
      */
     private $email;
