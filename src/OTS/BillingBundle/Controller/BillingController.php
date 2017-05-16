@@ -287,18 +287,6 @@ class BillingController extends Controller
 	    }
     }
 
-    //returns an array containing the translation for the current locale of the form flow button labels
-    public function populateFormButtonsLabels() {
-    	$translator = $this->get('translator');
-
-    	return array(
-    		'next' => $translator->trans('ots_billing.flow.next'),
-    		'finish' => $translator->trans('ots_billing.flow.finish'),
-    		'back' => $translator->trans('ots_billing.flow.back'),
-    		'reset' => $translator->trans('ots_billing.flow.reset')
-    	);
-    }
-
     public function indexAction(Request $request)
     {
     	$order = new TicketOrder();
@@ -320,7 +308,7 @@ class BillingController extends Controller
 					$translator = $this->get('translator');
     				$error = $translator->trans('ots_billing.controller.action.error');
 
-		  	$request->getSession()->getFlashBag()->add('error', $error);
+		  			$request->getSession()->getFlashBag()->add('error', $error);
 
 					$form = $flow->createForm();
 
@@ -362,12 +350,9 @@ class BillingController extends Controller
 			}
 		}
 
-		//$buttons = $this->populateFormButtonsLabels();
-
 		return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
         	'orderForm' => $form->createView(),
-        	'flow' => $flow,
-        	//'buttons' => $buttons
+        	'flow' => $flow
         ));
     }
 

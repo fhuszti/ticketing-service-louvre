@@ -161,15 +161,13 @@ ots_billing:
         order:   1. Commande
         info:    2. Informations
         payment: 3. Paiement
+        next:    Suivant
+        finish:  Terminer
+        back:    Retour
+        reset:   Recommencer
     mail:
         subject: Merci d'avoir réservé en ligne - Musée du Louvre
         body:
             title:     Merci pour votre réservation en ligne !
             info:      Veuillez imprimer ce mail afin de le montrer à l'entrée du Musée, avec les cartes d'identités de chacun dans votre groupe.
             reference: "Code Référence :"
-ots_billing:
-    flow:
-        next:   Suivant
-        finish: Terminer
-        back:   Retour
-        reset:  Recommencer

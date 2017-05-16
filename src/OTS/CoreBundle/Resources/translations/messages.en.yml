@@ -161,15 +161,13 @@ ots_billing:
         order:   1. Order
         info:    2. Informations
         payment: 3. Payment
+        next:    Next
+        finish:  Complete
+        back:    Back
+        reset:   Reset
     mail:
         subject: Thank you for booking online - Louvre Museum
         body:
             title:     Thank you for booking online!
             info:      Please print this mail and show it at the entrance of the museum, along with all necessary ID cards.
             reference: "Reference Code:"
-ots_billing:
-    flow:
-        next:   Next
-        finish: Complete
-        back:   Back
-        reset:  Reset

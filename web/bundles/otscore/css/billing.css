@@ -114,9 +114,6 @@ label[for$='discounted'] {
 	justify-content: space-between;
 	flex-direction: row-reverse;
 }
-.craue_formflow_buttons .btn {
-	width: 100px;
-}
 .craue_formflow_buttons .btn:nth-child(3) {
 	order: 2;
 }

@@ -4,7 +4,19 @@ $(function() {
 	 * ----------------
 	 */
 
-	 //get the current date in the ISO format
+	function initLocale(){
+        if(global.locale){
+            locale = global.locale;
+        }
+        else{
+            //Set a default locale if the user's one is not managed
+            locale = "en";
+        }
+
+        return locale;
+    }
+
+    //get the current date in the ISO format
     function getTodayDate() {
         var today = new Date();
         var dd = today.getDate();
@@ -22,7 +34,7 @@ $(function() {
         return yy+'-'+mm+'-'+dd;
     }
 
-	/**
+    /**
 	 * ----------------
 	 */
 	
@@ -141,6 +153,30 @@ $(function() {
     function setupDatepickerStep1() {
         var inputDate = $('#ots_billingbundle_ticketorder_date').val();
 
+        //define fr locale if needed
+        if( initLocale() == 'fr' || initLocale() == 'fr_FR' ) {
+            //setup datepicker in french
+            $.datepicker.regional['fr'] = {
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                currentText: 'Aujourd\'hui',
+                monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+                dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+                dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+                dayNamesMin: ['D','L','M','M','J','V','S'],
+                weekHeader: 'Sem.',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''
+            };
+        
+            $.datepicker.setDefaults( $.datepicker.regional['fr'] );
+        }
+
+        //define datepicker on the page
         $("#order_datepicker").datepicker({
             altField: '#ots_billingbundle_ticketorder_date',
             altFormat: "yy-mm-dd",
@@ -150,7 +186,7 @@ $(function() {
             defaultDate: getDefaultDate(),
             dateFormat: 'yy-mm-dd'
         });
-        
+
         //to still have the chosen date selected when user comes back to step 1 from later in the flow
         if (inputDate) {
             $("#order_datepicker").datepicker('setDate', new Date(inputDate));

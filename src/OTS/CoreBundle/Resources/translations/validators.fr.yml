@@ -62,7 +62,7 @@ ots_billing:
             reference:
                 type:  Le Code Référence de la commande doit être une chaîne de caractères valide.
                 exact: Le Code Référence de la commande doit être long de 15 caractères.
-    flow:
+    sdffsfsd:
         next:   Suivant
         finish: Terminer
         back:   Retour
