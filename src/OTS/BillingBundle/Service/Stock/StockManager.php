@@ -16,6 +16,17 @@ class StockManager {
 		$this->repo = $em->getRepository('OTSBillingBundle:Stock');
 	}
 
+
+
+
+
+
+
+	/**
+	 * STOCK CHECKER
+	 * -------------
+	 */
+
 	//return false if there's nothing left in stock for the chosen date, true if everything is okay
 	public function checkIfStockOkForDate(TicketOrder $order) {
 		$existingDate = $this->repo->findBy( array('date' => $order->getDate()) );
@@ -29,6 +40,21 @@ class StockManager {
 
 		return true;
     }
+
+    /**
+	 * -------------
+	 */
+
+
+
+
+
+
+
+	/**
+	 * STOCK DECREMENTATOR
+	 * -------------------
+	 */
 
 	//increments the amount of tickets sold today in the stock file
 	public function decrementStock(TicketOrder $order) {
@@ -57,4 +83,8 @@ class StockManager {
 			$stockEntity->setStockLeft($new_stock);
 		}
 	}
+
+	/**
+	 * -------------------
+	 */
 }

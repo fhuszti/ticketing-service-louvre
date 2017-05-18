@@ -2,20 +2,31 @@
 namespace OTS\BillingBundle\Service\Mailer;
 
 use OTS\BillingBundle\Entity\TicketOrder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MailerNotificator {
 	protected $mailer;
 
 	protected $twig;
 
-	protected $container;
+	protected $translator;
 
-	public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, ContainerInterface $container) {
+	public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, TranslatorInterface $translator) {
 		$this->mailer = $mailer;
 		$this->twig = $twig;
-		$this->container = $container;
+		$this->translator = $translator;
 	}
+
+
+
+
+
+
+
+	/**
+	 * MAIL SENDER
+	 * -----------
+	 */
 
 	//render an html template
 	public function renderTemplate($order, $imgUrl) {
@@ -30,8 +41,7 @@ class MailerNotificator {
 
 	//send an email to the client containing his tickets
 	public function sendTicketsByEmail(TicketOrder $order) {
-		$translator = $this->container->get('translator');
-		$subject = $translator->trans('ots_billing.mail.subject');
+		$subject = $this->translator->trans('ots_billing.mail.subject');
 
 		$cus_email = $order->getCustomer()->getEmail();
 
@@ -50,4 +60,8 @@ class MailerNotificator {
 
 		$this->mailer->send($mail);
 	}
+	
+	/**
+	 * -----------
+	 */
 }

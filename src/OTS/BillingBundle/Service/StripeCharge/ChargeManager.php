@@ -23,10 +23,17 @@ class ChargeManager {
 
 
 
+	/**
+	 * CUSTOMER MANAGEMENT
+	 * -------------------
+	 */
+
+	//return a Stripe Token object
 	public function retrieveStripeInfo($token) {
 		return \Stripe\Token::retrieve($token);
 	}
 
+	//extract the email from a Stripe Token Object and generate a new customer
 	public function generateCustomer($token) {
 		$stripeInfo = $this->retrieveStripeInfo($token);
 
@@ -39,9 +46,24 @@ class ChargeManager {
 		);
 	}
 
+	/**
+	 * -------------------
+	 */
+
+
+
+
+
+
+
+	/**
+	 * CHARGE MANAGEMENT
+	 * -----------------
+	 */
+
 	public function chargeCustomer($cus_id, $price, $form, $flow) {
     	try {
-	    	// Charge the Customer:
+	    	// Charge the Customer
 			$charge = \Stripe\Charge::create(array(
 			  	"amount" => $price * 100,
 			  	"currency" => "eur",
@@ -145,5 +167,7 @@ class ChargeManager {
 		}
     }
 
-    
+    /**
+	 * -----------------
+	 */
 }

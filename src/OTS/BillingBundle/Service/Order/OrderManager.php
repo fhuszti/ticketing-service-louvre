@@ -17,8 +17,15 @@ class OrderManager {
 		$this->request = $requestStack->getCurrentRequest();
 	}
 
+
+
+
+
+    
+
 	/**
 	 * ORDER TYPE
+     * ----------
 	 */
 
 	//set order type to fix a bug where it'll be returned as null from the form, instead of false

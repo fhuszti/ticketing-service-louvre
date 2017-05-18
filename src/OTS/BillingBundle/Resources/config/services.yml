@@ -27,13 +27,12 @@ services:
         arguments:
             - "@mailer"
             - "@twig"
-            - "@service_container"
+            - "@translator"
 
     ots_billing.listener.checkout_listener:
         class: OTS\BillingBundle\Listener\CheckoutListener
         arguments:
             - "@ots_billing.mailer.mailer_notificator"
             - "@ots_billing.stock.stock_manager"
-            - "@service_container"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }
