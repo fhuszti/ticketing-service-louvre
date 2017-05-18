@@ -2,13 +2,16 @@ ots_core_home:
     path:     /
     defaults: 
         _controller: OTSCoreBundle:Core:index
+    methods:  [GET]
 
 ots_core_legal:
-    path: /legal
+    path:     /legal
     defaults:
         _controller: OTSCoreBundle:Core:legal
+    methods:  [GET]
 
 ots_core_terms:
-    path: /terms
+    path:     /terms
     defaults:
         _controller: OTSCoreBundle:Core:terms
+    methods:  [GET]

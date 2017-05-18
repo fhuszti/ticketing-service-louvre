@@ -1,6 +1,6 @@
 <?php
 
-namespace OTS\BillingBundle\Form;
+namespace OTS\BillingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

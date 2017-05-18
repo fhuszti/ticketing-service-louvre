@@ -3,7 +3,7 @@ services:
         class: OTS\BillingBundle\Form\TicketOrderFlow
         parent: craue.form.flow
         arguments:
-            - "@service_container"
+            - "@translator"
 
     ots_billing.entity.stock_manager:
         class: OTS\BillingBundle\Service\Entity\StockManager
