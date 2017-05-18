@@ -5,32 +5,33 @@ services:
         arguments:
             - "@service_container"
 
-    ots_billing.stock.stock_manager:
-        class: OTS\BillingBundle\Service\Stock\StockManager
+    ots_billing.entity.stock_manager:
+        class: OTS\BillingBundle\Service\Entity\StockManager
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    ots_billing.order.order_manager:
-        class: OTS\BillingBundle\Service\Billing\OrderManager
+    ots_billing.entity.customer_manager:
+        class: OTS\BillingBundle\Service\Entity\CustomerManager
+
+    ots_billing.entity.charge_manager:
+        class: OTS\BillingBundle\Service\Entity\ChargeManager
+
+    ots_billing.entity.order_manager:
+        class: OTS\BillingBundle\Service\Entity\OrderManager
         arguments:
             - "@translator"
             - "@request_stack"
+            - "@validator"
+
+    ots_billing.entity.entity_manager:
+        class: OTS\BillingBundle\Service\Entity\EntityManager
+        arguments:
+            - "@ots_billing.entity.order_manager"
 
     ots_billing.stripe.stripe_manager:
         class: OTS\BillingBundle\Service\Stripe\StripeManager
         arguments:
             - "@translator"
-            - "@request_stack"
-
-    ots_billing.stripe.stripe_manager:
-        class: OTS\BillingBundle\Service\Entity\EntitiesManager
-        arguments:
-            - "@request_stack"
-
-    ots_billing.entity.entity_manager:
-        class: OTS\BillingBundle\Service\Entity\EntityManager
-        arguments:
-            - "@validator"
             - "@request_stack"
 
     ots_billing.mailer.mailer_notificator:

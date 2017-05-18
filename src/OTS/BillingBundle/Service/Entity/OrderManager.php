@@ -1,20 +1,25 @@
 <?php
-namespace OTS\BillingBundle\Service\Order;
+namespace OTS\BillingBundle\Service\Entity;
 
 use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Entity\Ticket;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Validator;
 
 class OrderManager {
 	protected $translator;
 
 	protected $request;
 
-	public function __construct(TranslatorInterface $translator, RequestStack $requestStack) {
+    protected $validator;
+
+	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, Validator $validator) {
 		$this->translator = $translator;
 
 		$this->request = $requestStack->getCurrentRequest();
+
+        $this->validator = $validator;
 	}
 
 
@@ -116,7 +121,6 @@ class OrderManager {
 
     //set the total order price depending on visitors birthdate
     public function manageOrderPrice(TicketOrder $order, $flow) {
-    	$translator = $this->get('translator');
     	$error = $this->translator->trans('ots_billing.controller.order_price.error');
 
     	$totalPrice = $this->manageTotalPrice( $order->getTickets(), $order );
@@ -165,5 +169,65 @@ class OrderManager {
 
 	/**
      * ---------------
+     */
+    
+
+
+
+
+
+
+    /**
+     * ORDER VALIDATION
+     * -----------------------
+     */
+
+    //check whether the Order entity passed is valid
+    public function validateOrder(TicketOrder $order, $flow) {
+        $errors = $this->validator->validate($order);
+        
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            $this->request->getSession()->getFlashBag()->add('error', $errorsString);
+
+            $form = $flow->createForm();
+
+            return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+                   'orderForm' => $form->createView(),
+                   'flow' => $flow,
+            ));
+        }
+    }
+
+    /**
+     * -----------------------
+     */
+    
+
+
+
+
+
+
+    /**
+     * GENERAL
+     * -------
+     */
+
+    //call order setup methods
+    public function manageOrder(TicketOrder $order, $flow) {
+        //to prevent a bug where order type would be null instead of false when Half-Day option chosen
+        $this->manageOrderType($order);
+                
+        //set the total order price depending on visitors birthdate
+        $this->manageOrderPrice($order, $flow);
+                
+        //generate a random reference code for the order
+        $this->manageOrderReference($order);
+    }
+
+    /**
+     * -------
      */
 }

@@ -1,5 +1,5 @@
 <?php
-namespace OTS\BillingBundle\Service\Stock;
+namespace OTS\BillingBundle\Service\Entity;
 
 use OTS\BillingBundle\Entity\Stock;
 use OTS\BillingBundle\Entity\TicketOrder;

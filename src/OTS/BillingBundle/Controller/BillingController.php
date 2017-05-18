@@ -33,11 +33,13 @@ class BillingController extends Controller
 				$form = $flow->createForm();
 			} else {
 				//we get the services we're gonna use
-				$stockManager =  $this->get('ots_billing.stock.stock_manager');
-				$translator =    $this->get('translator');
-				$orderManager =  $this->get('ots_billing.order.order_manager');
-				$stripeManager = $this->get('ots_billing.stripe.stripe_manager');
-				$entityManager = $this->get('ots_billing.entity.entity_manager');
+				$stockManager =     $this->get('ots_billing.entity.stock_manager');
+				$orderManager =     $this->get('ots_billing.entity.order_manager');
+				$customerManager =  $this->get('ots_billing.entity.customer_manager');
+				$chargeManager =    $this->get('ots_billing.entity.charge_manager');
+				$entityManager =    $this->get('ots_billing.entity.entity_manager');
+				$stripeManager =    $this->get('ots_billing.stripe.stripe_manager');
+				$translator =       $this->get('translator');
 
 				//we abort everything if there's not enough left in stock for the chosen date
 				if ( !$stockManager->checkIfStockOkForDate($order) ) {
@@ -53,12 +55,8 @@ class BillingController extends Controller
 					));
 				}
 
-				//to prevent a bug where order type would be null instead of false when Half-Day option chosen
-				$orderManager->manageOrderType($order);
-				//set the total order price depending on visitors birthdate
-				$orderManager->manageOrderPrice($order, $flow);
-				//generate a random reference code for the order
-				$orderManager->manageOrderReference($order);
+				//setup order entity
+				$orderManager->manageOrder($order, $flow);
 
 				//we generate the stripe customer
 				$stripeCustomer = $stripeManager->generateCustomer( $form->get('checkoutToken')->getData() );
@@ -66,11 +64,12 @@ class BillingController extends Controller
 				$stripeCharge = $stripeManager->chargeCustomer( $customer->id, $order->getPrice(), $flow );
 
 				//create a customer entity from the stripe equivalent
-				$customer = $entityManager->generateCustomer($stripeCustomer);
+				$customer = $customerManager->generateCustomer($stripeCustomer);
 				//create a charge entity from the stripe equivalent
-				$charge = $entityManager->generateCharge($stripeCharge);
+				$charge = $chargeManager->generateCharge($stripeCharge);
+				
 				//associate entities before persisting
-				$entityManager->associateEntities($order, $customer, $charge, $flow);
+				$entityManager->prepareEntitiesForPersist($order, $customer, $charge, $flow);
 
 				// flow finished
 				$em = $this->getDoctrine()->getManager();
