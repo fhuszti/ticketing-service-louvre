@@ -13,21 +13,7 @@
 {% endblock %}
 
 {% block body %}
-	{% for message in app.session.flashbag.get('info') %}
-        <div class="alert alert-info">{{ message }}</div>
-    {% endfor %}
-
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-
-    {% for flashMessage in app.session.flashbag.get('error') %}
-        <div class="alert alert-danger">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
+	{{ include('templates/flash.html.twig') }}
 
     <h1 id="title">{{ 'ots_billing.confirmation.body.title'|trans }}</h1>
     <hr />
