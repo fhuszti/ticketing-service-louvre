@@ -10,8 +10,11 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    ots_billing.billing.order_checker:
-        class: OTS\BillingBundle\Service\Billing\OrderChecker
+    ots_billing.order.order_manager:
+        class: OTS\BillingBundle\Service\Billing\OrderManager
+        arguments:
+            - "@translator"
+            - "@request_stack"
 
     ots_billing.charge.charge_manager:
         class: OTS\BillingBundle\Service\Charge\ChargeManager

@@ -16,108 +16,6 @@ use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
-    //set order type to fix a bug where it'll be returned as null from the form, instead of false
-    public function manageOrderType($order) {
-    	$orderType = $order->getType();
-		
-		if ( is_null($orderType) )
-			$order->setType(false);
-    }
-
-    public function getUsefulDates() {
-    	$currentDate = date('Y-m-d');
-    	$normalRateDateTimestamp = strtotime( '-12 years' );
-    	$normalRateDate = date('Y-m-d', $normalRateDateTimestamp);
-    	$childRateDateTimestamp = strtotime( '-4 years' );
-    	$childRateDate = date('Y-m-d', $childRateDateTimestamp);
-    	$seniorRateDateTimestamp = strtotime( '-60 years' );
-    	$seniorRateDate = date('Y-m-d', $seniorRateDateTimestamp);
-
-    	return array(
-    		'current' => $currentDate,
-    		'normalRate' => $normalRateDate,
-    		'childRate' => $childRateDate,
-    		'seniorRate' => $seniorRateDate
-    	);
-    }
-
-    public function checkTicketPrice($ticket) {
-    	$usefulDates = $this->getUsefulDates();
-    	$birthdate = $ticket->getBirthDate()->format('Y-m-d');
-
-    	//if below 4 years old
-        if ($birthdate > $usefulDates['childRate']) {
-            return 0;
-        }
-        //if between 4 and 12 years old
-        else if ($birthdate > $usefulDates['normalRate']) {
-            return 8;
-        }
-        //if between 12 and 60 years old
-        else if ($birthdate > $usefulDates['seniorRate']) {
-            return 16;
-        }
-        //more than 60 years old
-        else {
-            return 12;
-        }
-    }
-
-    public function checkTotalPrice($tickets, $order) {
-    	//we check the price and birthdate of each ticket
-		$totalPrice = 0;
-
-		foreach( $tickets as $ticket ) {
-			//price 
-			$ticketPrice = $this->checkTicketPrice($ticket);
-			if ($ticket->getDiscounted())
-				$ticketPrice = 10;
-			//if it's a Half-Day ticket
-			if (!$order->getType())
-				$ticketPrice *= 0.5;
-
-			$ticket->setPrice($ticketPrice);
-
-			$totalPrice += $ticketPrice;
-		}
-
-		return $totalPrice;
-    }
-
-    //set the total order price depending on visitors birthdate
-    public function manageOrderPrice($order, $request, $form, $flow) {
-    	$translator = $this->get('translator');
-    	$error = $translator->trans('ots_billing.controller.order_price.error');
-
-    	$totalPrice = $this->checkTotalPrice( $order->getTickets(), $order );
-		
-		//if it's free, problem
-		if ($totalPrice === 0) {
-			$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-				'orderForm' => $form->createView(),
-				'flow' => $flow,
-			));
-		}
-				
-		//we set the correct order price
-		$order->setPrice($totalPrice);
-    }
-
-    //generate a random reference code for the order
-	public function manageOrderReference($order) {
-		$factory = new \RandomLib\Factory;
-		$generator = $factory->getLowStrengthGenerator();
-
-		//we generate a random string and set it as the order reference
-		$reference = $generator->generateString(15, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-
-		$order->setReference($reference);
-	}
-
     public function chargeCustomer($token, $price, $request, $form, $flow) {
     	$translator = $this->get('translator');
 
@@ -291,6 +189,7 @@ class BillingController extends Controller
 				//we get the services we're gonna use
 				$stockManager = $this->get('ots_billing.stock.stock_manager');
 				$translator = $this->get('translator');
+				$orderManager = $this->get('ots_billing.order.order_manager');
 
 				//we abort everything if there's not enough left in stock for the chosen date
 				if ( !$stockManager->checkIfStockOkForDate($order) ) {
@@ -307,13 +206,11 @@ class BillingController extends Controller
 				}
 
 				//to prevent a bug where order type would be null instead of false when Half-Day option chosen
-				$this->manageOrderType($order);
-
+				$orderManager->manageOrderType($order);
 				//set the total order price depending on visitors birthdate
-				$this->manageOrderPrice($order, $request, $form, $flow);
-
+				$orderManager->manageOrderPrice($order, $request, $form, $flow);
 				//generate a random reference code for the order
-				$this->manageOrderReference($order);
+				$orderManager->manageOrderReference($order);
 
 				//we charge the customer
 				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice(), $request, $form, $flow );

@@ -2,6 +2,7 @@
 namespace OTS\BillingBundle\Service\Stock;
 
 use OTS\BillingBundle\Entity\Stock;
+use OTS\BillingBundle\Entity\TicketOrder;
 use Doctrine\ORM\EntityManager;
 
 class StockManager {
@@ -16,7 +17,7 @@ class StockManager {
 	}
 
 	//return false if there's nothing left in stock for the chosen date, true if everything is okay
-	public function checkIfStockOkForDate($order) {
+	public function checkIfStockOkForDate(TicketOrder $order) {
 		$existingDate = $this->repo->findBy( array('date' => $order->getDate()) );
 
 		//if the date entry exists
@@ -30,7 +31,7 @@ class StockManager {
     }
 
 	//increments the amount of tickets sold today in the stock file
-	public function decrementStock($order) {
+	public function decrementStock(TicketOrder $order) {
 		$date = $order->getDate();
 		$nbTickets = $order->getNbTickets();
 
