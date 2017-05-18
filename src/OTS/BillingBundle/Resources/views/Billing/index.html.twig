@@ -102,7 +102,27 @@
                             'attr': {'class': 'form-control'}
                         }) }}
 
-                        {% include 'calculator.html.twig' %}
+                        <table id="calculator">
+                            <tr>
+                                <td><span class="btn btn-default calc_number">1</span></td>
+                                <td><span class="btn btn-default calc_number">2</span></td>
+                                <td><span class="btn btn-default calc_number">3</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">4</span></td>
+                                <td><span class="btn btn-default calc_number">5</span></td>
+                                <td><span class="btn btn-default calc_number">6</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">7</span></td>
+                                <td><span class="btn btn-default calc_number">8</span></td>
+                                <td><span class="btn btn-default calc_number">9</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="btn btn-default calc_number">0</span></td>
+                                <td colspan="2"><span class="btn btn-default calc_del"><span class="glyphicon glyphicon-arrow-left"></span></span></td>
+                            </tr>
+                        </table>
                     </div>
                 {% endif %}
             {% endif %}
