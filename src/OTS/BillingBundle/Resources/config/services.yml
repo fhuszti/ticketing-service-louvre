@@ -16,8 +16,8 @@ services:
             - "@translator"
             - "@request_stack"
 
-    ots_billing.stripe_charge.charge_manager:
-        class: OTS\BillingBundle\Service\StripeCharge\ChargeManager
+    ots_billing.stripe.stripe_manager:
+        class: OTS\BillingBundle\Service\Stripe\StripeManager
         arguments:
             - "@translator"
             - "@request_stack"

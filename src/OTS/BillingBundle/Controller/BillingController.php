@@ -68,7 +68,7 @@ class BillingController extends Controller
 				$stockManager = $this->get('ots_billing.stock.stock_manager');
 				$translator = $this->get('translator');
 				$orderManager = $this->get('ots_billing.order.order_manager');
-				$chargeManager = $this->get('ots_billing.stripe_charge.charge_manager');
+				$stripeManager = $this->get('ots_billing.stripe.stripe_manager');
 
 				//we abort everything if there's not enough left in stock for the chosen date
 				if ( !$stockManager->checkIfStockOkForDate($order) ) {
@@ -92,9 +92,9 @@ class BillingController extends Controller
 				$orderManager->manageOrderReference($order);
 
 				//we generate the customer
-				$customer = $chargeManager->generateCustomer( $form->get('checkoutToken')->getData() );
+				$customer = $stripeManager->generateCustomer( $form->get('checkoutToken')->getData() );
 				//we charge the customer
-				$checkout = $chargeManager->chargeCustomer( $customer->id, $order->getPrice(), $form, $flow );
+				$charge = $stripeManager->chargeCustomer( $customer->id, $order->getPrice(), $form, $flow );
 
 				//generate and manage necessary entities before persisting
 				$this->manageEntities($order, $customer, $charge, $request, $form, $flow);

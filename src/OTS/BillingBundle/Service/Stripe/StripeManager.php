@@ -1,10 +1,10 @@
 <?php
-namespace OTS\BillingBundle\Service\StripeCharge;
+namespace OTS\BillingBundle\Service\Stripe;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Exception;
 
-class ChargeManager {
+class StripeManager {
 	protected $translator;
 
 	protected $request;
