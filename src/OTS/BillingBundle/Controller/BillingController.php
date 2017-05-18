@@ -16,128 +16,6 @@ use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
-    public function chargeCustomer($token, $price, $request, $form, $flow) {
-    	$translator = $this->get('translator');
-
-		try {
-	    	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
-
-	    	$stripeInfo = \Stripe\Token::retrieve($token);
-	 		$email = $stripeInfo->email;
-
-			// Create a Customer:
-			$customer = \Stripe\Customer::create(array(
-			  	"email" => $email,
-			  	"source" => $token,
-			));
-
-			// Charge the Customer:
-			$charge = \Stripe\Charge::create(array(
-			  	"amount" => $price * 100,
-			  	"currency" => "eur",
-			  	"customer" => $customer->id
-			));
-		}
-		catch(\Stripe\Error\Card $e) {
-		  	// Since it's a decline, \Stripe\Error\Card will be caught
-		  	$body = $e->getJsonBody();
-		  	$err  = $body['error'];
-
-		  	$request->getSession()->getFlashBag()->add('error', $err['message']);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (\Stripe\Error\Api $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.api');
-
-		  	// Stripe's servers are down!
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (\Stripe\Error\InvalidRequest $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.invalid_request');
-
-		  	// Invalid parameters were supplied to Stripe's API
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (\Stripe\Error\Authentication $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.authentication');
-
-		  	// Authentication with Stripe's API failed
-		  	// (maybe you changed API keys recently)
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (\Stripe\Error\ApiConnection $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.api_connection');
-
-		  	// Network communication with Stripe failed
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (\Stripe\Error\Base $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.base');
-
-		  	// Display a very generic error to the user
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-		catch (Exception $e) {
-		  	$error = $translator->trans('ots_billing.controller.charge.base');
-
-		  	// Something else happened, completely unrelated to Stripe
-		  	$request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-			       'orderForm' => $form->createView(),
-			       'flow' => $flow,
-			));
-		}
-
-    	return array(
-    		'customer' => $customer,
-    		'charge' => $charge
-    	);
-    }
-
     public function manageEntities($order, $checkout, $request, $form, $flow) {
     	$customer = new Customer();
     	$customer->setStripeId($checkout['customer']->id);
@@ -190,6 +68,7 @@ class BillingController extends Controller
 				$stockManager = $this->get('ots_billing.stock.stock_manager');
 				$translator = $this->get('translator');
 				$orderManager = $this->get('ots_billing.order.order_manager');
+				$chargeManager = $this->get('ots_billing.stripe_charge.charge_manager');
 
 				//we abort everything if there's not enough left in stock for the chosen date
 				if ( !$stockManager->checkIfStockOkForDate($order) ) {
@@ -208,15 +87,17 @@ class BillingController extends Controller
 				//to prevent a bug where order type would be null instead of false when Half-Day option chosen
 				$orderManager->manageOrderType($order);
 				//set the total order price depending on visitors birthdate
-				$orderManager->manageOrderPrice($order, $request, $form, $flow);
+				$orderManager->manageOrderPrice($order, $form, $flow);
 				//generate a random reference code for the order
 				$orderManager->manageOrderReference($order);
 
+				//we generate the customer
+				$customer = $chargeManager->generateCustomer( $form->get('checkoutToken')->getData() );
 				//we charge the customer
-				$checkout = $this->chargeCustomer( $form->get('checkoutToken')->getData(), $order->getPrice(), $request, $form, $flow );
+				$checkout = $chargeManager->chargeCustomer( $customer->id, $order->getPrice(), $form, $flow );
 
 				//generate and manage necessary entities before persisting
-				$this->manageEntities($order, $checkout, $request, $form, $flow);
+				$this->manageEntities($order, $customer, $charge, $request, $form, $flow);
 
 				// flow finished
 				$em = $this->getDoctrine()->getManager();

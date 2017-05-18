@@ -16,8 +16,11 @@ services:
             - "@translator"
             - "@request_stack"
 
-    ots_billing.charge.charge_manager:
-        class: OTS\BillingBundle\Service\Charge\ChargeManager
+    ots_billing.stripe_charge.charge_manager:
+        class: OTS\BillingBundle\Service\StripeCharge\ChargeManager
+        arguments:
+            - "@translator"
+            - "@request_stack"
 
     ots_billing.mailer.mailer_notificator:
         class: OTS\BillingBundle\Service\Mailer\MailerNotificator
