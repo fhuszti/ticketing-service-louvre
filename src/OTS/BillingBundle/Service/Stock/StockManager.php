@@ -1,22 +1,40 @@
 <?php
-namespace OTS\BillingBundle\Mailer;
+namespace OTS\BillingBundle\Service\Stock;
 
 use OTS\BillingBundle\Entity\Stock;
 use Doctrine\ORM\EntityManager;
 
-class CheckoutStockManager {
+class StockManager {
 	protected $em;
+
+	private $repo;
 
 	public function __construct(EntityManager $em) {
 		$this->em = $em;
+
+		$this->repo = $em->getRepository('OTSBillingBundle:Stock');
 	}
+
+	//return false if there's nothing left in stock for the chosen date, true if everything is okay
+	public function checkIfStockOkForDate($order) {
+		$existingDate = $this->repo->findBy( array('date' => $order->getDate()) );
+
+		//if the date entry exists
+		if ( array_key_exists(0, $existingDate) ) {
+			//if there's not enough stock left to satisfy the order
+			if ( $existingDate[0]->getStockLeft() < $order->getNbTickets() )
+				return false;
+		}
+
+		return true;
+    }
 
 	//increments the amount of tickets sold today in the stock file
 	public function decrementStock($order) {
 		$date = $order->getDate();
 		$nbTickets = $order->getNbTickets();
 
-		$existingDate = $this->em->getRepository('OTSBillingBundle:Stock')->findBy( array('date' => $date) );
+		$existingDate = $this->repo->findBy( array('date' => $date) );
 
 		//if it's the first entry for this date
 		if ( empty($existingDate) ) {

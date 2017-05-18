@@ -5,23 +5,29 @@ services:
         arguments:
             - "@service_container"
 
-    ots_billing.mailer.checkout_notificator:
-        class: OTS\BillingBundle\Mailer\CheckoutNotificator
+    ots_billing.stock.stock_manager:
+        class: OTS\BillingBundle\Service\Stock\StockManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    ots_billing.billing.order_checker:
+        class: OTS\BillingBundle\Service\Billing\OrderChecker
+
+    ots_billing.charge.charge_manager:
+        class: OTS\BillingBundle\Service\Charge\ChargeManager
+
+    ots_billing.mailer.mailer_notificator:
+        class: OTS\BillingBundle\Service\Mailer\MailerNotificator
         arguments:
             - "@mailer"
             - "@twig"
             - "@service_container"
 
-    ots_billing.mailer.checkout_stock_manager:
-        class: OTS\BillingBundle\Mailer\CheckoutStockManager
+    ots_billing.listener.checkout_listener:
+        class: OTS\BillingBundle\Listener\CheckoutListener
         arguments:
-            - "@doctrine.orm.entity_manager"
-
-    ots_billing.mailer.checkout_listener:
-        class: OTS\BillingBundle\Mailer\CheckoutListener
-        arguments:
-            - "@ots_billing.mailer.checkout_notificator"
-            - "@ots_billing.mailer.checkout_stock_manager"
+            - "@ots_billing.mailer.mailer_notificator"
+            - "@ots_billing.stock.stock_manager"
             - "@service_container"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }

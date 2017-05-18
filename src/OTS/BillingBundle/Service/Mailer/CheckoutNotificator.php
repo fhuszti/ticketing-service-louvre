@@ -1,10 +1,10 @@
 <?php
-namespace OTS\BillingBundle\Mailer;
+namespace OTS\BillingBundle\Service\Mailer;
 
 use OTS\BillingBundle\Entity\TicketOrder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class CheckoutNotificator {
+class MailerNotificator {
 	protected $mailer;
 
 	protected $twig;

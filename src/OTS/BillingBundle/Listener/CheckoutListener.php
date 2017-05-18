@@ -1,20 +1,18 @@
 <?php
-namespace OTS\BillingBundle\Mailer;
+namespace OTS\BillingBundle\Listener;
 
 use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use OTS\BillingBundle\Service\Stock\StockManager;
+use OTS\BillingBundle\Service\Mailer\MailerNotificator;
 
 class CheckoutListener {
 	protected $notificator;
 
 	protected $stockManager;
 
-	protected $container;
-
-	public function __construct(CheckoutNotificator $notificator, CheckoutStockManager $stockManager, ContainerInterface $container) {
+	public function __construct(MailerNotificator $notificator, StockManager $stockManager) {
 		$this->notificator = $notificator;
 		$this->stockManager = $stockManager;
-		$this->container = $container;
 	}
 
 	public function processCheckoutSuccess(SuccessfulCheckoutEvent $event) {

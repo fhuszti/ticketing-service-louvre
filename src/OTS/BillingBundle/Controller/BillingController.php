@@ -16,21 +16,6 @@ use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 
 class BillingController extends Controller
 {
-    //we abort everything if there's nothing left in stock for the chosen date
-	public function checkIfStockOkForDate($order) {
-		$em = $this->get('doctrine.orm.entity_manager');
-		$existingDate = $em->getRepository('OTSBillingBundle:Stock')->findBy( array('date' => $order->getDate()) );
-
-		//if the date entry exists
-		if ( array_key_exists(0, $existingDate) ) {
-			//if there's not enough stock left to satisfy the order
-			if ( $existingDate[0]->getStockLeft() < $order->getNbTickets() )
-				return false;
-		}
-
-		return true;
-    }
-
     //set order type to fix a bug where it'll be returned as null from the form, instead of false
     public function manageOrderType($order) {
     	$orderType = $order->getType();
@@ -136,18 +121,18 @@ class BillingController extends Controller
     public function chargeCustomer($token, $price, $request, $form, $flow) {
     	$translator = $this->get('translator');
 
-    	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
-
-    	$stripeInfo = \Stripe\Token::retrieve($token);
- 		$email = $stripeInfo->email;
-
-		// Create a Customer:
-		$customer = \Stripe\Customer::create(array(
-		  	"email" => $email,
-		  	"source" => $token,
-		));
-
 		try {
+	    	\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
+
+	    	$stripeInfo = \Stripe\Token::retrieve($token);
+	 		$email = $stripeInfo->email;
+
+			// Create a Customer:
+			$customer = \Stripe\Customer::create(array(
+			  	"email" => $email,
+			  	"source" => $token,
+			));
+
 			// Charge the Customer:
 			$charge = \Stripe\Charge::create(array(
 			  	"amount" => $price * 100,
@@ -303,10 +288,13 @@ class BillingController extends Controller
 				// form for the next step
 				$form = $flow->createForm();
 			} else {
+				//we get the services we're gonna use
+				$stockManager = $this->get('ots_billing.stock.stock_manager');
+				$translator = $this->get('translator');
+
 				//we abort everything if there's not enough left in stock for the chosen date
-				if ( !$this->checkIfStockOkForDate($order) ) {
-					$translator = $this->get('translator');
-    				$error = $translator->trans('ots_billing.controller.action.error');
+				if ( !$stockManager->checkIfStockOkForDate($order) ) {
+					$error = $translator->trans('ots_billing.controller.action.error');
 
 		  			$request->getSession()->getFlashBag()->add('error', $error);
 
