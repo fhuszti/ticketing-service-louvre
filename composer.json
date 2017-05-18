@@ -1,6 +1,7 @@
 {
     "name": "durden/symfony",
     "license": "proprietary",
+    "description": "Online ticketing service for the Louvre Museum",
     "type": "project",
     "autoload": {
         "psr-4": {
