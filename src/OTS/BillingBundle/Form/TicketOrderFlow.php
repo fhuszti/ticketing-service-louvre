@@ -2,7 +2,6 @@
 namespace OTS\BillingBundle\Form;
 
 use Craue\FormFlowBundle\Form\FormFlow;
-use Craue\FormFlowBundle\Form\FormFlowInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TicketOrderFlow extends FormFlow {
