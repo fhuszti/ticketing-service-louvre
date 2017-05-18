@@ -38,7 +38,7 @@ class EntityManager {
 
     	//and we check if everything is ok on $order
     	//as the underlying entity has a relation with every other entities
-    	$orderManager->validateOrder($order, $flow);
+    	$this->orderManager->validateOrder($order, $flow);
     }
 
     /**

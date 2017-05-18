@@ -3,7 +3,7 @@ namespace OTS\BillingBundle\Service\Entity;
 
 use OTS\BillingBundle\Entity\Charge;
 
-class CustomerManager {
+class ChargeManager {
 	/**
 	 * CHARGE ENTITY CREATION
 	 * ----------------------

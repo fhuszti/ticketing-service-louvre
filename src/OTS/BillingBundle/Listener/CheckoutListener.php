@@ -2,7 +2,7 @@
 namespace OTS\BillingBundle\Listener;
 
 use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
-use OTS\BillingBundle\Service\Stock\StockManager;
+use OTS\BillingBundle\Service\Entity\StockManager;
 use OTS\BillingBundle\Service\Mailer\MailerNotificator;
 
 class CheckoutListener {

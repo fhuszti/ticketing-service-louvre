@@ -3,9 +3,10 @@ namespace OTS\BillingBundle\Service\Entity;
 
 use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Entity\Ticket;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Validator;
+use Symfony\Component\Validator\Validator\RecursiveValidator;
 
 class OrderManager {
 	protected $translator;
@@ -14,12 +15,16 @@ class OrderManager {
 
     protected $validator;
 
-	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, Validator $validator) {
+    protected $twig;
+
+	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, RecursiveValidator $validator, \Twig_Environment $twig) {
 		$this->translator = $translator;
 
 		$this->request = $requestStack->getCurrentRequest();
 
         $this->validator = $validator;
+
+        $this->twig = $twig;
 	}
 
 
@@ -98,7 +103,7 @@ class OrderManager {
     }
 
     //check the price for each ticket and return their total
-    public function manageTotalPrice(Ticket $tickets, TicketOrder $order) {
+    public function manageTotalPrice(ArrayCollection $tickets, TicketOrder $order) {
     	//we check the price and birthdate of each ticket
 		$totalPrice = 0;
 
@@ -193,7 +198,7 @@ class OrderManager {
 
             $form = $flow->createForm();
 
-            return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
                    'orderForm' => $form->createView(),
                    'flow' => $flow,
             ));

@@ -22,6 +22,7 @@ services:
             - "@translator"
             - "@request_stack"
             - "@validator"
+            - "@twig"
 
     ots_billing.entity.entity_manager:
         class: OTS\BillingBundle\Service\Entity\EntityManager
@@ -45,6 +46,6 @@ services:
         class: OTS\BillingBundle\Listener\CheckoutListener
         arguments:
             - "@ots_billing.mailer.mailer_notificator"
-            - "@ots_billing.stock.stock_manager"
+            - "@ots_billing.entity.stock_manager"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }
