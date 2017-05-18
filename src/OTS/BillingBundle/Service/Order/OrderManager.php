@@ -115,7 +115,7 @@ class OrderManager {
     }
 
     //set the total order price depending on visitors birthdate
-    public function manageOrderPrice(TicketOrder $order, $form, $flow) {
+    public function manageOrderPrice(TicketOrder $order, $flow) {
     	$translator = $this->get('translator');
     	$error = $this->translator->trans('ots_billing.controller.order_price.error');
 

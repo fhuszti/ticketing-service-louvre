@@ -3,6 +3,7 @@ namespace OTS\BillingBundle\Service\Stripe;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Exception;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class StripeManager {
 	protected $translator;
@@ -61,7 +62,7 @@ class StripeManager {
 	 * -----------------
 	 */
 
-	public function chargeCustomer($cus_id, $price, $form, $flow) {
+	public function chargeCustomer($cus_id, $price, $flow) {
     	try {
 	    	// Charge the Customer
 			$charge = \Stripe\Charge::create(array(

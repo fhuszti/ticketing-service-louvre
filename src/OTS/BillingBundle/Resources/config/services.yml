@@ -22,6 +22,17 @@ services:
             - "@translator"
             - "@request_stack"
 
+    ots_billing.stripe.stripe_manager:
+        class: OTS\BillingBundle\Service\Entity\EntitiesManager
+        arguments:
+            - "@request_stack"
+
+    ots_billing.entity.entity_manager:
+        class: OTS\BillingBundle\Service\Entity\EntityManager
+        arguments:
+            - "@validator"
+            - "@request_stack"
+
     ots_billing.mailer.mailer_notificator:
         class: OTS\BillingBundle\Service\Mailer\MailerNotificator
         arguments:
