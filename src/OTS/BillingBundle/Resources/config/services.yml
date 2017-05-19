@@ -49,3 +49,18 @@ services:
             - "@ots_billing.entity.stock_manager"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }
+    
+    ots_billing.listener.submitted_order_listener:
+        class: OTS\BillingBundle\Listener\SubmittedOrderListener
+        arguments:
+            - "@ots_billing.entity.stock_manager"
+            - "@ots_billing.entity.order_manager"
+            - "@ots_billing.entity.customer_manager"
+            - "@ots_billing.entity.charge_manager"
+            - "@ots_billing.entity.entity_manager"
+            - "@ots_billing.stripe.stripe_manager"
+            - "@translator"
+            - "@twig"
+            - "@request_stack"
+        tags:
+            - { name: kernel.event_listener, event: ots_billing.submitted_order, method: processSubmittedOrder }

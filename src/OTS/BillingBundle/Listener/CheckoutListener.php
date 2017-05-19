@@ -15,6 +15,12 @@ class CheckoutListener {
 		$this->stockManager = $stockManager;
 	}
 
+
+
+
+
+	
+
 	public function processCheckoutSuccess(SuccessfulCheckoutEvent $event) {
 		//send email confirmation to visitor (including his tickets)
 		$this->notificator->sendTicketsByEmail( $event->getOrder() );
