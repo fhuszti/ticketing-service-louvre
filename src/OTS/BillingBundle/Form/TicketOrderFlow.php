@@ -52,5 +52,4 @@ class TicketOrderFlow extends FormFlow {
 
 		return $options;
 	}
-
 }
