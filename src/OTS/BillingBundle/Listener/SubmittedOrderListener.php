@@ -9,7 +9,7 @@ use OTS\BillingBundle\Service\Entity\ChargeManager;
 use OTS\BillingBundle\Service\Entity\EntityManager;
 use OTS\BillingBundle\Service\Stripe\StripeManager;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 
 class SubmittedOrderListener {
 	protected $stockManager;
@@ -26,20 +26,17 @@ class SubmittedOrderListener {
 
 	protected $translator;
 
-	protected $twig;
+	protected $errorReturnManager;
 
-	protected $request;
-
-	public function __construct(StockManager $stockManager, OrderManager $orderManager, CustomerManager $customerManager, ChargeManager $chargeManager, EntityManager $entityManager, StripeManager $stripeManager, TranslatorInterface $translator, \Twig_Environment $twig, RequestStack $requestStack) {
-		$this->stockManager =    $stockManager;
-		$this->orderManager =    $orderManager;
-		$this->customerManager = $customerManager;
-		$this->chargeManager =   $chargeManager;
-		$this->entityManager =   $entityManager;
-		$this->stripeManager =   $stripeManager;
-		$this->translator =      $translator;
-		$this->twig =            $twig;
-		$this->request =         $requestStack->getCurrentRequest();
+	public function __construct(StockManager $stockManager, OrderManager $orderManager, CustomerManager $customerManager, ChargeManager $chargeManager, EntityManager $entityManager, StripeManager $stripeManager, TranslatorInterface $translator, ErrorReturn $errorReturnManager) {
+		$this->stockManager =       $stockManager;
+		$this->orderManager =       $orderManager;
+		$this->customerManager =    $customerManager;
+		$this->chargeManager =      $chargeManager;
+		$this->entityManager =      $entityManager;
+		$this->stripeManager =      $stripeManager;
+		$this->translator =         $translator;
+		$this->errorReturnManager = $errorReturnManager;
 	}
 
 
@@ -58,14 +55,7 @@ class SubmittedOrderListener {
 		if ( !$this->stockManager->checkIfStockOkForDate($order) ) {
 			$error = $this->translator->trans('ots_billing.controller.action.error');
 
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-				'orderForm' => $form->createView(),
-				'flow' => $flow,
-			));
+		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
 		}
 
 		//setup order entity

@@ -23,12 +23,6 @@ class SubmittedOrderEvent extends Event {
 		return $this->order;
 	}
 
-	public function setOrder(TicketOrder $order){
-		$this->order = $order;
-
-		return $this;
-	}
-
 	public function getFlow() {
 		return $this->flow;
 	}

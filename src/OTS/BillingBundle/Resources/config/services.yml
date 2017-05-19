@@ -20,9 +20,8 @@ services:
         class: OTS\BillingBundle\Service\Entity\OrderManager
         arguments:
             - "@translator"
-            - "@request_stack"
             - "@validator"
-            - "@twig"
+            - "@ots_billing.billing_form.error_return"
 
     ots_billing.entity.entity_manager:
         class: OTS\BillingBundle\Service\Entity\EntityManager
@@ -33,7 +32,7 @@ services:
         class: OTS\BillingBundle\Service\Stripe\StripeManager
         arguments:
             - "@translator"
-            - "@request_stack"
+            - "@ots_billing.billing_form.error_return"
 
     ots_billing.mailer.mailer_notificator:
         class: OTS\BillingBundle\Service\Mailer\MailerNotificator
@@ -41,6 +40,12 @@ services:
             - "@mailer"
             - "@twig"
             - "@translator"
+
+    ots_billing.billing_form.error_return:
+        class: OTS\BillingBundle\Service\BillingForm\ErrorReturn
+        arguments:
+            - "@request_stack"
+            - "@twig"
 
     ots_billing.listener.checkout_listener:
         class: OTS\BillingBundle\Listener\CheckoutListener
@@ -60,7 +65,6 @@ services:
             - "@ots_billing.entity.entity_manager"
             - "@ots_billing.stripe.stripe_manager"
             - "@translator"
-            - "@twig"
-            - "@request_stack"
+            - "@ots_billing.billing_form.error_return"
         tags:
             - { name: kernel.event_listener, event: ots_billing.submitted_order, method: processSubmittedOrder }

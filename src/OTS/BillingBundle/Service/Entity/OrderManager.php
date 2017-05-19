@@ -5,27 +5,23 @@ use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Entity\Ticket;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use OTS\BillingBundle\Form\TicketOrderFlow;
+use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 
 class OrderManager {
 	protected $translator;
 
-	protected $request;
-
     protected $validator;
 
-    protected $twig;
+	protected $errorReturnManager;
 
-	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, RecursiveValidator $validator, \Twig_Environment $twig) {
+	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, ErrorReturn $errorReturnManager) {
 		$this->translator = $translator;
-
-		$this->request = $requestStack->getCurrentRequest();
 
         $this->validator = $validator;
 
-        $this->twig = $twig;
+        $this->errorReturnManager = $errorReturnManager;
 	}
 
 
@@ -133,14 +129,7 @@ class OrderManager {
 		
 		//if it's free, problem
 		if ($totalPrice === 0) {
-			$this->request->getSession()->getFlashBag()->add('error', $error);
-
-			$form = $flow->createForm();
-
-			return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
-				'orderForm' => $form->createView(),
-				'flow' => $flow,
-			));
+			$this->errorReturnManager->returnToFormWithError($flow, $error);
 		}
 				
 		//we set the correct order price
@@ -195,14 +184,7 @@ class OrderManager {
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
-            $this->request->getSession()->getFlashBag()->add('error', $errorsString);
-
-            $form = $flow->createForm();
-
-            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-                   'orderForm' => $form->createView(),
-                   'flow' => $flow,
-            ));
+            $this->errorReturnManager->returnToFormWithError($flow, $errorsString);
         }
     }
 
