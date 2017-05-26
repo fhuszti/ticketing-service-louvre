@@ -1,5 +1,5 @@
 <?php
-namespace OTS\BillingBundle\Service\Entity;
+namespace OTS\BillingBundle\Manager;
 
 use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Entity\Ticket;
@@ -16,7 +16,7 @@ class OrderManager {
 
 	protected $errorReturnManager;
 
-	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, ErrorReturn $errorReturnManager) {
+	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, ErrorReturn $errorReturnManager = null) {
 		$this->translator = $translator;
 
         $this->validator = $validator;

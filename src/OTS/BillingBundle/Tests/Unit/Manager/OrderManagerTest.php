@@ -1,13 +1,13 @@
 <?php
-namespace OTS\BillingBundle\Tests\Unit\Service\Entity;
+namespace OTS\BillingBundle\Tests\Unit\Manager;
 
-use OTS\BillingBundle\Service\Entity\OrderManager;
+use OTS\BillingBundle\Manager\OrderManager;
 use OTS\BillingBundle\Entity\Ticket;
 use PHPUnit\Framework\TestCase;
 
 class OrderManagerTest extends TestCase {
     
-    /*public function testCheckTicketPrice() {
+    public function testCheckTicketPrice() {
         $dates = array(
         	'toddlerRate' => new \DateTime('-2 years'),
     		'childRate' =>   new \DateTime('-7 years'),
@@ -24,17 +24,21 @@ class OrderManagerTest extends TestCase {
 
 
 
-
-
-
     public function ticketAssertion($date, $expected) {
-    	$orderManager = $this->getMockBuilder("OTS\BillingBundle\Service\Entity\OrderManager")
-        					 ->disableOriginalConstructor()
-        					 ->getMock();
+    	$translator = $this->getMockBuilder('translator')
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $validator = $this->getMockBuilder('validator')
+                          ->disableOriginalConstructor()
+                          ->getMock();
+        $errorReturn = $this->getMockBuilder('ots_billing.billing_form.error_return')
+                            ->disableOriginalConstructor()
+                            ->getMock();
+        $orderManager = new OrderManager( $translator, $validator, $errorReturn );
 
         $ticket = new Ticket();
 		$ticket->setBirthDate( $date );
         
         return $this->assertEquals( $expected, $orderManager->checkTicketPrice($ticket) );
-    }*/
+    }
 }

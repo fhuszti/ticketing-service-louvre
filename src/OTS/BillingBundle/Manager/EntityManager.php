@@ -1,5 +1,5 @@
 <?php
-namespace OTS\BillingBundle\Service\Entity;
+namespace OTS\BillingBundle\Manager;
 
 use OTS\BillingBundle\Entity\Customer;
 use OTS\BillingBundle\Entity\Charge;

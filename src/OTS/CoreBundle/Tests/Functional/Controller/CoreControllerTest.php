@@ -31,4 +31,13 @@ class CoreControllerTest extends WebTestCase {
 
 	    $this->assertEquals(200, $response->getStatusCode());
 	}
+
+	public function test404() {
+		$client = static::createClient();
+
+	    $client->request('GET', '/en/sfdsf');
+	    $response = $client->getResponse();
+
+	    $this->assertEquals(404, $response->getStatusCode());
+	}
 }

@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Exception;
 use OTS\BillingBundle\Form\TicketOrderFlow;
 use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 
-class StripeManager {
+class StripeService {
 	protected $translator;
 
 	protected $errorReturnManager;

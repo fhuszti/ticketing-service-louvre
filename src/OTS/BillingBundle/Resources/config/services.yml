@@ -5,31 +5,31 @@ services:
         arguments:
             - "@translator"
 
-    ots_billing.entity.stock_manager:
-        class: OTS\BillingBundle\Service\Entity\StockManager
+    ots_billing.manager.stock_manager:
+        class: OTS\BillingBundle\Manager\StockManager
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    ots_billing.entity.customer_manager:
-        class: OTS\BillingBundle\Service\Entity\CustomerManager
+    ots_billing.manager.customer_manager:
+        class: OTS\BillingBundle\Manager\CustomerManager
 
-    ots_billing.entity.charge_manager:
-        class: OTS\BillingBundle\Service\Entity\ChargeManager
+    ots_billing.manager.charge_manager:
+        class: OTS\BillingBundle\Manager\ChargeManager
 
-    ots_billing.entity.order_manager:
-        class: OTS\BillingBundle\Service\Entity\OrderManager
+    ots_billing.manager.order_manager:
+        class: OTS\BillingBundle\Manager\OrderManager
         arguments:
             - "@translator"
             - "@validator"
             - "@ots_billing.billing_form.error_return"
 
-    ots_billing.entity.entity_manager:
-        class: OTS\BillingBundle\Service\Entity\EntityManager
+    ots_billing.manager.entity_manager:
+        class: OTS\BillingBundle\Manager\EntityManager
         arguments:
-            - "@ots_billing.entity.order_manager"
+            - "@ots_billing.manager.order_manager"
 
-    ots_billing.stripe.stripe_manager:
-        class: OTS\BillingBundle\Service\Stripe\StripeManager
+    ots_billing.stripe.stripe_service:
+        class: OTS\BillingBundle\Service\Stripe\StripeService
         arguments:
             - "@translator"
             - "@ots_billing.billing_form.error_return"
@@ -51,19 +51,19 @@ services:
         class: OTS\BillingBundle\Listener\CheckoutListener
         arguments:
             - "@ots_billing.mailer.mailer_notificator"
-            - "@ots_billing.entity.stock_manager"
+            - "@ots_billing.manager.stock_manager"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }
     
     ots_billing.listener.submitted_order_listener:
         class: OTS\BillingBundle\Listener\SubmittedOrderListener
         arguments:
-            - "@ots_billing.entity.stock_manager"
-            - "@ots_billing.entity.order_manager"
-            - "@ots_billing.entity.customer_manager"
-            - "@ots_billing.entity.charge_manager"
-            - "@ots_billing.entity.entity_manager"
-            - "@ots_billing.stripe.stripe_manager"
+            - "@ots_billing.manager.stock_manager"
+            - "@ots_billing.manager.order_manager"
+            - "@ots_billing.manager.customer_manager"
+            - "@ots_billing.manager.charge_manager"
+            - "@ots_billing.manager.entity_manager"
+            - "@ots_billing.stripe.stripe_service"
             - "@translator"
             - "@ots_billing.billing_form.error_return"
         tags:
