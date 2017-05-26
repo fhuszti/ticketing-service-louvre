@@ -3,6 +3,7 @@ namespace OTS\BillingBundle\Tests\Unit\Manager;
 
 use OTS\BillingBundle\Manager\OrderManager;
 use OTS\BillingBundle\Entity\Ticket;
+use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 use PHPUnit\Framework\TestCase;
 
 class OrderManagerTest extends TestCase {
@@ -25,15 +26,16 @@ class OrderManagerTest extends TestCase {
 
 
     public function ticketAssertion($date, $expected) {
-    	$translator = $this->getMockBuilder('translator')
+    	$translator =  $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')
                            ->disableOriginalConstructor()
                            ->getMock();
-        $validator = $this->getMockBuilder('validator')
+        $validator =   $this->getMockBuilder('Symfony\Component\Validator\Validator\RecursiveValidator')
                           ->disableOriginalConstructor()
                           ->getMock();
-        $errorReturn = $this->getMockBuilder('ots_billing.billing_form.error_return')
+        $errorReturn = $this->getMockBuilder('OTS\BillingBundle\Service\BillingForm\ErrorReturn')
                             ->disableOriginalConstructor()
                             ->getMock();
+
         $orderManager = new OrderManager( $translator, $validator, $errorReturn );
 
         $ticket = new Ticket();
