@@ -14,6 +14,7 @@ class BillingControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
+	    $this->assertContains('Book online', $response->getContent());
 
 	    // the name of our button is "Next"
 	    $form = $crawler->selectButton('Next')->form();
@@ -32,5 +33,6 @@ class BillingControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
+	    $this->assertContains('Thank you', $response->getContent());
 	}
 }

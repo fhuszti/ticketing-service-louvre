@@ -3,7 +3,6 @@ namespace OTS\BillingBundle\Tests\Unit\Manager;
 
 use OTS\BillingBundle\Manager\OrderManager;
 use OTS\BillingBundle\Entity\Ticket;
-use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 use PHPUnit\Framework\TestCase;
 
 class OrderManagerTest extends TestCase {

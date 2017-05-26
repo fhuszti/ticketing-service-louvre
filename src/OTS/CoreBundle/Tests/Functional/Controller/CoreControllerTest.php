@@ -12,6 +12,7 @@ class CoreControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
+	    $this->assertContains('Online Ticketing Service', $response->getContent());
 	}
 
 	public function testLegal() {
@@ -21,6 +22,7 @@ class CoreControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
+	    $this->assertContains('Legal information and Terms of Use', $response->getContent());
 	}
 
 	public function testTerms() {
@@ -30,6 +32,7 @@ class CoreControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
+	    $this->assertContains('Terms &amp; Conditions', $response->getContent());
 	}
 
 	public function test404() {
@@ -39,5 +42,6 @@ class CoreControllerTest extends WebTestCase {
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(404, $response->getStatusCode());
+	    $this->assertContains('404 Not Found', $response->getContent());
 	}
 }
