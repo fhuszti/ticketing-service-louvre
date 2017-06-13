@@ -4,17 +4,20 @@ namespace OTS\BillingBundle\Service\Stripe;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Exception;
 use OTS\BillingBundle\Form\TicketOrderFlow;
-use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class StripeService {
 	protected $translator;
 
-	protected $errorReturnManager;
+	protected $request;
 
-	public function __construct(TranslatorInterface $translator, ErrorReturn $errorReturnManager) {
+    protected $twig;
+
+	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, \Twig_Environment $twig) {
 		$this->translator = $translator;
 
-		$this->errorReturnManager = $errorReturnManager;
+		$this->request = $requestStack->getCurrentRequest();
+		$this->twig = $twig;
 
 		\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
 	}
@@ -79,44 +82,86 @@ class StripeService {
 		  	$body = $e->getJsonBody();
 		  	$err  = $body['error'];
 
-		  	$this->errorReturnManager->returnToFormWithError($flow, $err['message']);
+		  	$this->request->getSession()->getFlashBag()->add('error', $err['message']);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (\Stripe\Error\Api $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.api');
 
 		  	// Stripe's servers are down!
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (\Stripe\Error\InvalidRequest $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.invalid_request');
 
 		  	// Invalid parameters were supplied to Stripe's API
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (\Stripe\Error\Authentication $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.authentication');
 
 		  	// Authentication with Stripe's API failed
 		  	// (maybe you changed API keys recently)
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (\Stripe\Error\ApiConnection $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.api_connection');
 
 		  	// Network communication with Stripe failed
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (\Stripe\Error\Base $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.base');
 
 		  	// Display a very generic error to the user
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
 		catch (Exception $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.base');
 
 		  	// Something else happened, completely unrelated to Stripe
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
     }
 

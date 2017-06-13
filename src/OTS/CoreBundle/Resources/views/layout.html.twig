@@ -43,10 +43,10 @@
 
                 	<div class="collapse navbar-collapse">
 	                	<div id="lang-menu" class="navbar-text">
-						  	<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
+						  	<a href="{{ path('ots_core_home', app.request.get('_route_params')|merge({'_locale': 'en'})) }}">
 						  		EN</a>
 						  <!-- </a> tag has to stay close to EN, otherwise it creates a random space after EN, highlighted when it's underlined on hover -->
-						  	<a href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'}))}}">
+						  	<a href="{{  path('ots_core_home', app.request.get('_route_params')|merge({'_locale': 'fr'}))}}">
 						  		FR
 						  	</a>
 						</div>

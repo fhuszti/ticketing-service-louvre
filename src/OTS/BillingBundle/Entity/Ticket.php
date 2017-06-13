@@ -77,7 +77,8 @@ class Ticket
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birth_date", type="datetime")
+     * @ORM\Column(name="birth_date", type="datetime", nullable=false)
+     * @Assert\NotBlank()
      * @Assert\DateTime(message="ots_billing.constraints.ticket.birth_date")
      */
     private $birthDate;

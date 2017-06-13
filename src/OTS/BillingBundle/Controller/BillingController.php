@@ -2,6 +2,8 @@
 
 namespace OTS\BillingBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use OTS\BillingBundle\Entity\TicketOrder;
@@ -11,6 +13,10 @@ use OTS\BillingBundle\Event\SubmittedOrderEvent;
 
 class BillingController extends Controller
 {
+    /**
+	 * @Route("/{_locale}/booking/", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_home")
+     * @Method({"GET", "POST"})
+	 */
     public function indexAction(Request $request)
     {
     	$order = new TicketOrder();
@@ -64,6 +70,10 @@ class BillingController extends Controller
 
 
 
+    /**
+	 * @Route("/{_locale}/booking/confirmation", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_thanks")
+     * @Method("GET")
+	 */
     public function confirmationAction()
     {
         return $this->render('OTSBillingBundle:Billing:confirmation.html.twig');

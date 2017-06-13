@@ -14,11 +14,17 @@ class OrderManagerTest extends TestCase {
         $validator =   $this->getMockBuilder('Symfony\Component\Validator\Validator\RecursiveValidator')
                           ->disableOriginalConstructor()
                           ->getMock();
+        $requestStack =  $this->getMockBuilder('Symfony\Component\HttpFoundation\RequestStack')
+                           ->disableOriginalConstructor()
+                           ->getMock();
+        $twig =  $this->getMockBuilder('\Twig_Environment')
+                           ->disableOriginalConstructor()
+                           ->getMock();
         $errorReturn = $this->getMockBuilder('OTS\BillingBundle\Service\BillingForm\ErrorReturn')
                             ->disableOriginalConstructor()
                             ->getMock();
 
-        return new OrderManager( $translator, $validator, $errorReturn );
+        return new OrderManager( $translator, $validator, $requestStack, $twig, $errorReturn );
     }
 
     public function generateTicket($date, $discounted = false) {

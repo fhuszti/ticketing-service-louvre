@@ -1,14 +1,10 @@
 ots_core:
-    resource: "@OTSCoreBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/
-    requirements:
-        _locale: en|fr
+    resource: "@OTSCoreBundle/Controller/"
+    type:     annotation
 
 ots_billing:
-    resource: "@OTSBillingBundle/Resources/config/routing.yml"
-    prefix:   /{_locale}/booking
-    requirements:
-        _locale: en|fr
+    resource: "@OTSBillingBundle/Controller/"
+    type:     annotation
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"

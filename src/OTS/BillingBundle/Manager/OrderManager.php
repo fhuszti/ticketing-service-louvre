@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use OTS\BillingBundle\Form\TicketOrderFlow;
+use Symfony\Component\HttpFoundation\RequestStack;
 use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 
 class OrderManager {
@@ -14,14 +15,21 @@ class OrderManager {
 
     protected $validator;
 
-	protected $errorReturnManager;
+    protected $request;
 
-	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, ErrorReturn $errorReturnManager = null) {
+    protected $twig;
+
+    protected $errorReturn;
+
+	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, RequestStack $requestStack, \Twig_Environment $twig, ErrorReturn $errorReturn) {
 		$this->translator = $translator;
 
         $this->validator = $validator;
 
-        $this->errorReturnManager = $errorReturnManager;
+        $this->request = $requestStack->getCurrentRequest();
+        $this->twig = $twig;
+
+        $this->errorReturn = $errorReturn;
 	}
 
 
@@ -129,7 +137,13 @@ class OrderManager {
 		
 		//if it's free, problem
 		if ($totalPrice === 0) {
-			$this->errorReturnManager->returnToFormWithError($flow, $error);
+			$this->request->getSession()->getFlashBag()->add('error', $error);
+            $form = $flow->createForm();
+            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+                    'orderForm' => $form->createView(),
+                    'flow' => $flow,
+                )
+            );
 		}
 				
 		//we set the correct order price
@@ -184,7 +198,14 @@ class OrderManager {
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
-            $this->errorReturnManager->returnToFormWithError($flow, $errorsString);
+            return $this->errorReturn->returnToFormWithError($flow, $errorsString);
+            /*$this->request->getSession()->getFlashBag()->add('error', $error);
+            $form = $flow->createForm();
+            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+                    'orderForm' => $form->createView(),
+                    'flow' => $flow,
+                )
+            );*/
         }
     }
 

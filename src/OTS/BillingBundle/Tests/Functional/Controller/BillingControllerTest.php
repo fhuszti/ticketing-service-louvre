@@ -24,6 +24,11 @@ class BillingControllerTest extends WebTestCase {
 	    $form['ots_billingbundle_ticketorder[nbTickets]'] = '0';
 	    $crawler = $client->submit($form);
 	    $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+	    //test empty form
+	    $formTest = $crawler->selectButton('Next')->form();
+	    $crawler = $client->submit($formTest);
+	    $this->assertEquals(500, $client->getResponse()->getStatusCode());
 	}
 
 	public function testConfirmation() {

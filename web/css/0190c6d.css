@@ -52,6 +52,9 @@ form {
 #ots_billingbundle_ticketorder_date, .hidden-label {
 	display: none;
 }
+#order_datepicker {
+	padding: 0;
+}
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
 	border: 1px solid #222;
 	background-color: unset;
@@ -110,9 +113,6 @@ label[for$='discounted'] {
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row-reverse;
-}
-.craue_formflow_buttons .btn {
-	width: 100px;
 }
 .craue_formflow_buttons .btn:nth-child(3) {
 	order: 2;

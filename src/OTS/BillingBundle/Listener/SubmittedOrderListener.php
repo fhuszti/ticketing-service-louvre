@@ -9,7 +9,7 @@ use OTS\BillingBundle\Manager\ChargeManager;
 use OTS\BillingBundle\Manager\EntityManager;
 use OTS\BillingBundle\Service\Stripe\StripeService;
 use Symfony\Component\Translation\TranslatorInterface;
-use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SubmittedOrderListener {
 	protected $stockManager;
@@ -26,9 +26,11 @@ class SubmittedOrderListener {
 
 	protected $translator;
 
-	protected $errorReturnManager;
+	protected $request;
 
-	public function __construct(StockManager $stockManager, OrderManager $orderManager, CustomerManager $customerManager, ChargeManager $chargeManager, EntityManager $entityManager, StripeService $stripeService, TranslatorInterface $translator, ErrorReturn $errorReturnManager) {
+    protected $twig;
+
+	public function __construct(StockManager $stockManager, OrderManager $orderManager, CustomerManager $customerManager, ChargeManager $chargeManager, EntityManager $entityManager, StripeService $stripeService, TranslatorInterface $translator, RequestStack $requestStack, \Twig_Environment $twig) {
 		$this->stockManager =       $stockManager;
 		$this->orderManager =       $orderManager;
 		$this->customerManager =    $customerManager;
@@ -36,7 +38,9 @@ class SubmittedOrderListener {
 		$this->entityManager =      $entityManager;
 		$this->stripeService =      $stripeService;
 		$this->translator =         $translator;
-		$this->errorReturnManager = $errorReturnManager;
+
+		$this->request = $requestStack->getCurrentRequest();
+		$this->twig = $twig;
 	}
 
 
@@ -55,9 +59,18 @@ class SubmittedOrderListener {
 		if ( !$this->stockManager->checkIfStockOkForDate($order) ) {
 			$error = $this->translator->trans('ots_billing.controller.action.error');
 
-		  	$this->errorReturnManager->returnToFormWithError($flow, $error);
+		  	$this->request->getSession()->getFlashBag()->add('error', $error);
+			$form = $flow->createForm();
+			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
+					'orderForm' => $form->createView(),
+					'flow' => $flow,
+				)
+			);
 		}
-
+		echo '<pre>';
+        var_dump($order);
+        echo '</pre>';
+        exit;
 		//setup order entity
 		$this->orderManager->manageOrder($order, $flow);
 
