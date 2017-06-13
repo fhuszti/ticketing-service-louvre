@@ -1,0 +1,145 @@
+#title {
+	margin-top: 0;
+	padding-top: 30px;
+	text-align: center;
+	color: #331107;
+}
+
+.hidden {
+	display: none;
+}
+.form-control:focus {
+	border-color: #222;
+	-webkit-box-shadow: inset 0 1px 1px rgba(51,17,7,.075), 0 0 8px rgba(34,34,34,.6);
+	box-shadow: 		inset 0 1px 1px rgba(51,17,7,.075), 0 0 8px rgba(34,34,34,.6);
+}
+
+.nav-pills {
+	text-align: center;
+}
+.nav-pills>li {
+	color: #331107;
+	background-color: #eee;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+}
+.nav-pills>li>a {
+	color: #331107;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.nav-pills>li>a:hover, .nav-pills>li>a:focus {
+	background-color: inherit;
+}
+.nav-pills>li.craue_formflow_done_step, .nav-pills>li.craue_formflow_first_remaining_step {
+	background-color: #fff;
+}
+.nav-pills>li.craue_formflow_done_step:hover, .nav-pills>li.craue_formflow_done_step:focus, .nav-pills>li.craue_formflow_first_remaining_step:hover, .nav-pills>li.craue_formflow_first_remaining_step:focus {
+	background-color: #eee;
+}
+.nav-pills>li.craue_formflow_current_step, .nav-pills>li.craue_formflow_current_step:hover, .nav-pills>li.craue_formflow_current_step:focus {
+	color: #eee;
+	background-color: inherit;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+}
+
+
+form {
+	padding: 30px 30px 20px;
+}
+
+#ots_billingbundle_ticketorder_date, .hidden-label {
+	display: none;
+}
+#order_datepicker {
+	padding: 0;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+	border: 1px solid #222;
+	background-color: unset;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+	color: #fff;
+}
+
+input[type=radio] {
+	display: none;
+}
+input[type=radio] + label {
+    width: 240px;
+    line-height: 100px;
+    text-align: center;
+    color: #331107;
+    border: 5px outset #eee;
+}
+input[type="radio"]:checked + label {
+    border: 5px inset #222;
+	background-image: radial-gradient(circle at bottom, #222, #331107);
+	color: #fff;
+}
+input[type="radio"]:disabled + label {
+	background-color: #eee;
+}
+#ots_billingbundle_ticketorder_type_1 + label {
+	margin-top: 5px;
+}
+.text-block {
+	margin: 20px 0 30px;
+}
+
+#ots_billingbundle_ticketorder_nbTickets {
+	width: 240px;
+}
+#calculator {
+	width: 240px;
+	height: 195px;
+}
+.calc_number, .calc_del {
+	line-height: calc(195px/4);
+	padding: 0;
+	width: calc(240px/3);
+    color: #331107;
+}
+.calc_del {
+	width: calc(240px/3*2);
+	font-size: 1.5em;
+}
+
+label[for$='discounted'] {
+	white-space: pre-line;
+}
+
+.craue_formflow_buttons {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+.craue_formflow_buttons .btn:nth-child(3) {
+	order: 2;
+}
+.craue_formflow_buttons .btn:nth-child(2) {
+	order: 3;
+}
+
+.btn.btn-primary {
+	border-color: #222;
+	background-color: #222;
+	background-image: radial-gradient(circle at bottom, #222, #331107); 
+}
+.btn.btn-primary:hover {
+	background-image: none;
+}
+
+div[id^="ots_billingbundle_ticketorder_tickets_"] div {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+form #btn-stripe-checkout {
+	display: block;
+	margin: 30px auto 50px;
+}
+.alert-warning .highlight {
+	background-color: #f5f5f5;
+	border-radius: 3px;
+}
