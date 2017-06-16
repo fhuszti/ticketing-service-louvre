@@ -189,7 +189,7 @@ class OrderManager {
         $errors = $this->validator->validate($order, null, array('pre-charge'));
         
         if (count($errors) > 0) {
-            //then we add them all in one string for display
+            //then we add them all in an array for display
             $messages = array();
             $i = 0;
             while ( $errors->has($i) == 1 ) {
@@ -209,9 +209,16 @@ class OrderManager {
         $errors = $this->validator->validate($order);
         
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            //then we add them all in an array for display
+            $messages = array();
+            $i = 0;
+            while ( $errors->has($i) == 1 ) {
+                $messages[] = $errors->get($i)->getMessage();
+                
+                $i++;
+            }
 
-            return $errorsString;
+            return $messages;
         }
 
         return '';
