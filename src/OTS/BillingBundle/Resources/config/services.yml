@@ -23,7 +23,6 @@ services:
             - "@validator"
             - "@request_stack"
             - "@twig"
-            - "@ots_billing.billing_form.error_return"
 
     ots_billing.manager.entity_manager:
         class: OTS\BillingBundle\Manager\EntityManager
@@ -54,12 +53,6 @@ services:
             - "@ots_billing.manager.entity_manager"
             - "@ots_billing.stripe.stripe_service"
             - "@translator"
-            - "@request_stack"
-            - "@twig"
-
-    ots_billing.billing_form.error_return:
-        class: OTS\BillingBundle\Service\BillingForm\ErrorReturn
-        arguments:
             - "@request_stack"
             - "@twig"
 

@@ -8,7 +8,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use OTS\BillingBundle\Form\TicketOrderFlow;
 use Symfony\Component\HttpFoundation\RequestStack;
-use OTS\BillingBundle\Service\BillingForm\ErrorReturn;
 
 class OrderManager {
 	protected $translator;
@@ -19,17 +18,13 @@ class OrderManager {
 
     protected $twig;
 
-    protected $errorReturn;
-
-	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, RequestStack $requestStack, \Twig_Environment $twig, ErrorReturn $errorReturn) {
+	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, RequestStack $requestStack, \Twig_Environment $twig) {
 		$this->translator = $translator;
 
         $this->validator = $validator;
 
         $this->request = $requestStack->getCurrentRequest();
         $this->twig = $twig;
-
-        $this->errorReturn = $errorReturn;
 	}
 
 
@@ -49,6 +44,8 @@ class OrderManager {
 		
 		if ( is_null($orderType) )
 			$order->setType(false);
+        if ( $orderType === '1' )
+            $order->setType(true);
     }
 
     /**
@@ -137,17 +134,13 @@ class OrderManager {
 		
 		//if it's free, problem
 		if ($totalPrice === 0) {
-			$this->request->getSession()->getFlashBag()->add('error', $error);
-            $form = $flow->createForm();
-            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-                    'orderForm' => $form->createView(),
-                    'flow' => $flow,
-                )
-            );
+			return $error;
 		}
 				
 		//we set the correct order price
 		$order->setPrice($totalPrice);
+
+        return '';
     }
 
     /**
@@ -196,15 +189,16 @@ class OrderManager {
         $errors = $this->validator->validate($order, null, array('pre-charge'));
         
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            //then we add them all in one string for display
+            $messages = array();
+            $i = 0;
+            while ( $errors->has($i) == 1 ) {
+                $messages[] = $errors->get($i)->getMessage();
+                
+                $i++;
+            }
 
-            //we clean up the expression that comes up
-            //originally looks something like :
-            //Object(OTS\BillingBundle\Entity\TicketOrder).tickets[0].birthDate: Une date de naissance doit être renseignée. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)
-            $splitError = preg_split("/[([\]:]/", $errorsString, null, PREG_SPLIT_NO_EMPTY);
-            $ticketNumber = 1 + (int) $splitError[2];
-
-            return "Ticket n°".$ticketNumber." : ".$splitError[4];
+            return $messages;
         }
 
         return '';
@@ -240,16 +234,19 @@ class OrderManager {
 
     //call order setup methods
     public function manageOrder(TicketOrder $order, TicketOrderFlow $flow) {
-        //first we check if the data we got is nice and clean
+        //first we have to sanitize order type
+        //as we get either "null" or "1" and we want "false" or "true"
+        $this->manageOrderType($order);
+
+        //then we check if the data we got is nice and clean
         $error = $this->validateOrderPreCharge($order, $flow);
         if ( $error !== '' )
             return $error;
-
-        //to prevent a bug where order type would be null instead of false when Half-Day option chosen
-        $this->manageOrderType($order);
                 
         //set the total order price depending on visitors birthdate
-        $this->manageOrderPrice($order, $flow);
+        $error = $this->manageOrderPrice($order, $flow);
+        if ( $error !== '' )
+            return $error;
                 
         //generate a random reference code for the order
         $this->manageOrderReference($order);
