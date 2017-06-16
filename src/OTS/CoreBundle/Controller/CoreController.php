@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class CoreController extends Controller
 {
     /**
-     * @Route("/{_locale}/", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_home")
+     * @Route("/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_home")
      * @Method("GET")
      */
     public function indexAction()
@@ -18,7 +18,7 @@ class CoreController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/legal", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_legal")
+     * @Route("/legal/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_legal")
      * @Method("GET")
      */
     public function legalAction()
@@ -27,7 +27,7 @@ class CoreController extends Controller
     }
 
     /**
-     * @Route("/{_locale}/terms", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_terms")
+     * @Route("/terms/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_core_terms")
      * @Method("GET")
      */
     public function termsAction()

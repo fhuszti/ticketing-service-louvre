@@ -13,7 +13,7 @@ use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
 class BillingController extends Controller
 {
     /**
-	 * @Route("/{_locale}/booking/", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_home")
+	 * @Route("/booking/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_home")
      * @Method({"GET", "POST"})
 	 */
     public function indexAction(Request $request)
@@ -81,7 +81,7 @@ class BillingController extends Controller
 
 
     /**
-	 * @Route("/{_locale}/booking/confirmation", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_thanks")
+	 * @Route("/booking/confirmation/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_thanks")
      * @Method("GET")
 	 */
     public function confirmationAction()
