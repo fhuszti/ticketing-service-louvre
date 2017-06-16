@@ -8,7 +8,7 @@ class CoreControllerTest extends WebTestCase {
 	public function testIndex() {
 	    $client = static::createClient();
 
-	    $client->request('GET', '/en/');
+	    $client->request('GET', '/en');
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
@@ -18,7 +18,7 @@ class CoreControllerTest extends WebTestCase {
 	public function testLegal() {
 	    $client = static::createClient();
 
-	    $client->request('GET', '/en/legal');
+	    $client->request('GET', '/legal/en');
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
@@ -28,7 +28,7 @@ class CoreControllerTest extends WebTestCase {
 	public function testTerms() {
 	    $client = static::createClient();
 
-	    $client->request('GET', '/en/terms');
+	    $client->request('GET', '/terms/en');
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
@@ -38,7 +38,7 @@ class CoreControllerTest extends WebTestCase {
 	public function test404() {
 		$client = static::createClient();
 
-	    $client->request('GET', '/en/sfdsf');
+	    $client->request('GET', '/sfdsf');
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(404, $response->getStatusCode());
