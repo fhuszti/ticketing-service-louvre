@@ -51,7 +51,9 @@ ots_billing:
                 type:  Le pays doit être une chaîne de caractères valide.
                 min:   Le pays doit comporter au minimum 2 caractères.
                 max:   Le pays doit comporter au maximum 50 caractères.
-            birth_date: La date de naissance doit être un objet de type DateTime valide ou une date valide au format string.
+            birth_date:
+                blank: Une date de naissance doit être renseignée.
+                type: La date de naissance doit être un objet de type DateTime valide ou une date valide au format string.
             discounted: Le tarif réduit doit être un booléen.
             price: Le prix du billet doit être un nombre supérieur ou égal à 0.
         order:

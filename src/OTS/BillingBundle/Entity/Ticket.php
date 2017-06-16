@@ -29,13 +29,15 @@ class Ticket
      * @ORM\Column(name="first_name", type="string", length=255)
      * @Assert\Type(
      *     type="string",
-     *     message="ots_billing.constraints.ticket.first_name.type"
+     *     message="ots_billing.constraints.ticket.first_name.type",
+     *     groups={"pre-charge"}
      * )
      * @Assert\Length(
      *     min=2,
      *     max=50,
      *     minMessage="ots_billing.constraints.ticket.first_name.min",
-     *     maxMessage="ots_billing.constraints.ticket.first_name.max"
+     *     maxMessage="ots_billing.constraints.ticket.first_name.max",
+     *     groups={"pre-charge"}
      * )
      */
     private $firstName;
@@ -46,13 +48,15 @@ class Ticket
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\Type(
      *     type="string",
-     *     message="ots_billing.constraints.ticket.name.type"
+     *     message="ots_billing.constraints.ticket.name.type",
+     *     groups={"pre-charge"}
      * )
      * @Assert\Length(
      *     min=2,
      *     max=50,
      *     minMessage="ots_billing.constraints.ticket.name.min",
-     *     maxMessage="ots_billing.constraints.ticket.name.max"
+     *     maxMessage="ots_billing.constraints.ticket.name.max",
+     *     groups={"pre-charge"}
      * )
      */
     private $name;
@@ -63,13 +67,15 @@ class Ticket
      * @ORM\Column(name="country", type="string", length=255)
      * @Assert\Type(
      *     type="string",
-     *     message="ots_billing.constraints.ticket.country.type"
+     *     message="ots_billing.constraints.ticket.country.type",
+     *     groups={"pre-charge"}
      * )
      * @Assert\Length(
      *     min=2,
      *     max=50,
      *     minMessage="ots_billing.constraints.ticket.country.min",
-     *     maxMessage="ots_billing.constraints.ticket.country.max"
+     *     maxMessage="ots_billing.constraints.ticket.country.max",
+     *     groups={"pre-charge"}
      * )
      */
     private $country;
@@ -78,8 +84,14 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birth_date", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime(message="ots_billing.constraints.ticket.birth_date")
+     * @Assert\NotBlank(
+     *     message="ots_billing.constraints.ticket.birth_date.blank",
+     *     groups={"pre-charge"}
+     * )
+     * @Assert\DateTime(
+     *     message="ots_billing.constraints.ticket.birth_date.type",
+     *     groups={"pre-charge"}
+     * )
      */
     private $birthDate;
 
@@ -89,7 +101,8 @@ class Ticket
      * @ORM\Column(name="discounted", type="boolean")
      * @Assert\Type(
      *     type="bool",
-     *     message="ots_billing.constraints.ticket.discounted"
+     *     message="ots_billing.constraints.ticket.discounted",
+     *     groups={"pre-charge"}
      * )
      */
     private $discounted;
@@ -100,7 +113,8 @@ class Ticket
      * @ORM\Column(name="price", type="integer")
      * @Assert\GreaterThanOrEqual(
      *     value=0,
-     *     message="ots_billing.constraints.ticket.price"
+     *     message="ots_billing.constraints.ticket.price",
+     *     groups={"pre-charge"}
      * )
      */
     private $price;

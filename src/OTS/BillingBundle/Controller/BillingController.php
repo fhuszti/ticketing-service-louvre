@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use OTS\BillingBundle\Entity\TicketOrder;
 use OTS\BillingBundle\Event\PlatformEvents;
 use OTS\BillingBundle\Event\SuccessfulCheckoutEvent;
-use OTS\BillingBundle\Event\SubmittedOrderEvent;
 
 class BillingController extends Controller
 {
@@ -35,9 +34,20 @@ class BillingController extends Controller
 			} else {
 				$checkoutToken = $form->get('checkoutToken')->getData();
 
-				//we dispatch the event associated with a fully submitted form
-				$submittedEvent = new SubmittedOrderEvent($order, $flow, $checkoutToken);
-				$this->get('event_dispatcher')->dispatch(PlatformEvents::SUBMITTED_ORDER, $submittedEvent);
+				//we check if everything is alright with the order
+				$orderSubmissionHandler = $this->get( 'ots_billing.billing_form.order_submission_handler' );
+				$error = $orderSubmissionHandler->processSubmittedOrder($order, $flow, $checkoutToken);
+				//if there's any error, we add the message to the flashbag and we abort the controller action
+				if ( $error !== '' ) {
+					$request->getSession()->getFlashBag()->add('error', $error);
+				            
+		            $form = $flow->createForm();
+		            return $this->render('OTSBillingBundle:Billing:index.html.twig', array(
+		                    'orderForm' => $form->createView(),
+		                    'flow' => $flow,
+		                )
+		            );
+				}
 
 				// flow finished
 				$em = $this->getDoctrine()->getManager();

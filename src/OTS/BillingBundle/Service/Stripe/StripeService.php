@@ -82,86 +82,44 @@ class StripeService {
 		  	$body = $e->getJsonBody();
 		  	$err  = $body['error'];
 
-		  	$this->request->getSession()->getFlashBag()->add('error', $err['message']);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $err['message'];
 		}
 		catch (\Stripe\Error\Api $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.api');
 
 		  	// Stripe's servers are down!
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
 		catch (\Stripe\Error\InvalidRequest $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.invalid_request');
 
 		  	// Invalid parameters were supplied to Stripe's API
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
 		catch (\Stripe\Error\Authentication $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.authentication');
 
 		  	// Authentication with Stripe's API failed
 		  	// (maybe you changed API keys recently)
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
 		catch (\Stripe\Error\ApiConnection $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.api_connection');
 
 		  	// Network communication with Stripe failed
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
 		catch (\Stripe\Error\Base $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.base');
 
 		  	// Display a very generic error to the user
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
 		catch (Exception $e) {
 		  	$error = $this->translator->trans('ots_billing.controller.charge.base');
 
 		  	// Something else happened, completely unrelated to Stripe
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
     }
 

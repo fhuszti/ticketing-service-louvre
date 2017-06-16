@@ -1,7 +1,6 @@
 <?php
-namespace OTS\BillingBundle\Listener;
+namespace OTS\BillingBundle\Service\BillingForm;
 
-use OTS\BillingBundle\Event\SubmittedOrderEvent;
 use OTS\BillingBundle\Manager\StockManager;
 use OTS\BillingBundle\Manager\OrderManager;
 use OTS\BillingBundle\Manager\CustomerManager;
@@ -10,8 +9,10 @@ use OTS\BillingBundle\Manager\EntityManager;
 use OTS\BillingBundle\Service\Stripe\StripeService;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use OTS\BillingBundle\Entity\TicketOrder;
+use OTS\BillingBundle\Form\TicketOrderFlow;
 
-class SubmittedOrderListener {
+class OrderSubmissionHandler {
 	protected $stockManager;
 
 	protected $orderManager;
@@ -50,34 +51,26 @@ class SubmittedOrderListener {
 
 
 	//process all submitted data and charge the customer if everything is okay
-	public function processSubmittedOrder(SubmittedOrderEvent $event) {
-		$order = $event->getOrder();
-		$flow = $event->getFlow();
-		$checkoutToken = $event->getCheckoutToken();
-
+	public function processSubmittedOrder(TicketOrder $order, TicketOrderFlow $flow, $checkoutToken) {
 		//we abort everything if there's not enough left in stock for the chosen date
 		if ( !$this->stockManager->checkIfStockOkForDate($order) ) {
 			$error = $this->translator->trans('ots_billing.controller.action.error');
 
-		  	$this->request->getSession()->getFlashBag()->add('error', $error);
-			$form = $flow->createForm();
-			return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-					'orderForm' => $form->createView(),
-					'flow' => $flow,
-				)
-			);
+		  	return $error;
 		}
-		echo '<pre>';
-        var_dump($order);
-        echo '</pre>';
-        exit;
+		
 		//setup order entity
-		$this->orderManager->manageOrder($order, $flow);
+		$error = $this->orderManager->manageOrder($order, $flow);
+		if ( $error !== '' )
+			return $error;
 
 		//we generate the stripe customer
 		$stripeCustomer = $this->stripeService->generateCustomer($checkoutToken);
 		//we charge the stripe customer
 		$stripeCharge = $this->stripeService->chargeCustomer( $stripeCustomer->id, $order->getPrice(), $flow );
+		//if $stripeCharge is a string, then it means there was an error and the string is the error to display
+		if ( is_string($stripeCharge) )
+			return $stripeCharge;
 
 		//create a customer entity from the stripe equivalent
 		$customer = $this->customerManager->generateCustomer($stripeCustomer);
@@ -85,6 +78,11 @@ class SubmittedOrderListener {
 		$charge = $this->chargeManager->generateCharge($stripeCharge);
 				
 		//associate entities before persisting
-		$this->entityManager->prepareEntitiesForPersist($order, $customer, $charge, $flow);
+		$error = $this->entityManager->prepareEntitiesForPersist($order, $customer, $charge, $flow);
+		if ( $error !== '' )
+			return $error;
+
+		//if everything is fine, we return an empty string
+		return '';
 	}
 }

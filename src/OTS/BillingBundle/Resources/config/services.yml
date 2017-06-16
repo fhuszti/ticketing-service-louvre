@@ -43,6 +43,19 @@ services:
             - "@mailer"
             - "@twig"
             - "@translator"
+    
+    ots_billing.billing_form.order_submission_handler:
+        class: OTS\BillingBundle\Service\BillingForm\OrderSubmissionHandler
+        arguments:
+            - "@ots_billing.manager.stock_manager"
+            - "@ots_billing.manager.order_manager"
+            - "@ots_billing.manager.customer_manager"
+            - "@ots_billing.manager.charge_manager"
+            - "@ots_billing.manager.entity_manager"
+            - "@ots_billing.stripe.stripe_service"
+            - "@translator"
+            - "@request_stack"
+            - "@twig"
 
     ots_billing.billing_form.error_return:
         class: OTS\BillingBundle\Service\BillingForm\ErrorReturn
@@ -57,18 +70,3 @@ services:
             - "@ots_billing.manager.stock_manager"
         tags:
             - { name: kernel.event_listener, event: ots_billing.successful_checkout, method: processCheckoutSuccess }
-    
-    ots_billing.listener.submitted_order_listener:
-        class: OTS\BillingBundle\Listener\SubmittedOrderListener
-        arguments:
-            - "@ots_billing.manager.stock_manager"
-            - "@ots_billing.manager.order_manager"
-            - "@ots_billing.manager.customer_manager"
-            - "@ots_billing.manager.charge_manager"
-            - "@ots_billing.manager.entity_manager"
-            - "@ots_billing.stripe.stripe_service"
-            - "@translator"
-            - "@request_stack"
-            - "@twig"
-        tags:
-            - { name: kernel.event_listener, event: ots_billing.submitted_order, method: processSubmittedOrder }

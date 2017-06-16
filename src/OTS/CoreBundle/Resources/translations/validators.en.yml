@@ -51,7 +51,9 @@ ots_billing:
                 type:  The country must be a valid string.
                 min:   The country must have at least 2 characters.
                 max:   The country must have at most 50 characters.
-            birth_date: Birth date must be either a valid DateTime object or a valid date string.
+            birth_date:
+                blank: You have to enter a birthdate.
+                type: Birthdate must be either a valid DateTime object or a valid date string.
             discounted: The discount must be a boolean.
             price: The price of the ticket must be equal to or over 0.
         order:

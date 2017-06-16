@@ -192,21 +192,35 @@ class OrderManager {
      */
 
     //check whether the Order entity passed is valid
+    public function validateOrderPreCharge(TicketOrder $order, TicketOrderFlow $flow) {
+        $errors = $this->validator->validate($order, null, array('pre-charge'));
+        
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+
+            //we clean up the expression that comes up
+            //originally looks something like :
+            //Object(OTS\BillingBundle\Entity\TicketOrder).tickets[0].birthDate: Une date de naissance doit être renseignée. (code c1051bb4-d103-4f74-8988-acbcafc7fdc3)
+            $splitError = preg_split("/[([\]:]/", $errorsString, null, PREG_SPLIT_NO_EMPTY);
+            $ticketNumber = 1 + (int) $splitError[2];
+
+            return "Ticket n°".$ticketNumber." : ".$splitError[4];
+        }
+
+        return '';
+    }
+
+    //check whether the Order entity passed is valid
     public function validateOrder(TicketOrder $order, TicketOrderFlow $flow) {
         $errors = $this->validator->validate($order);
         
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
-            return $this->errorReturn->returnToFormWithError($flow, $errorsString);
-            /*$this->request->getSession()->getFlashBag()->add('error', $error);
-            $form = $flow->createForm();
-            return $this->twig->render('OTSBillingBundle:Billing:index.html.twig', array(
-                    'orderForm' => $form->createView(),
-                    'flow' => $flow,
-                )
-            );*/
+            return $errorsString;
         }
+
+        return '';
     }
 
     /**
@@ -226,6 +240,11 @@ class OrderManager {
 
     //call order setup methods
     public function manageOrder(TicketOrder $order, TicketOrderFlow $flow) {
+        //first we check if the data we got is nice and clean
+        $error = $this->validateOrderPreCharge($order, $flow);
+        if ( $error !== '' )
+            return $error;
+
         //to prevent a bug where order type would be null instead of false when Half-Day option chosen
         $this->manageOrderType($order);
                 
@@ -234,6 +253,8 @@ class OrderManager {
                 
         //generate a random reference code for the order
         $this->manageOrderReference($order);
+
+        return '';
     }
 
     /**

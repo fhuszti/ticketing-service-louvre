@@ -32,7 +32,10 @@ class TicketOrder
      * @var \Date
      *
      * @ORM\Column(name="date", type="date")
-     * @Assert\Date(message="ots_billing.constraints.order.date")
+     * @Assert\Date(
+     *     message="ots_billing.constraints.order.date",
+     *     groups={"pre-charge"}
+     * )
      */
     private $date;
 
@@ -42,7 +45,8 @@ class TicketOrder
      * @ORM\Column(name="type", type="boolean")
      * @Assert\Type(
      *     type="bool",
-     *     message="ots_billing.constraints.order.type"
+     *     message="ots_billing.constraints.order.type",
+     *     groups={"pre-charge"}
      * )
      */
     private $type;
@@ -53,7 +57,8 @@ class TicketOrder
      * @ORM\Column(name="nb_tickets", type="smallint")
      * @Assert\GreaterThan(
      *     value=0,
-     *     message="ots_billing.constraints.order.count"
+     *     message="ots_billing.constraints.order.count",
+     *     groups={"pre-charge"}
      * )
      */
     private $nbTickets;
@@ -64,7 +69,8 @@ class TicketOrder
      * @ORM\Column(name="price", type="smallint")
      * @Assert\GreaterThanOrEqual(
      *     value=1,
-     *     message="ots_billing.constraints.order.price"
+     *     message="ots_billing.constraints.order.price",
+     *     groups={"pre-charge"}
      * )
      */
     private $price;

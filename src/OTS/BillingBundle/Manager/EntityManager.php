@@ -38,7 +38,8 @@ class EntityManager {
 
     	//and we check if everything is ok on $order
     	//as the underlying entity has a relation with every other entities
-    	$this->orderManager->validateOrder($order, $flow);
+        // returns either an empty string if no error, or the error message to display
+    	return $this->orderManager->validateOrder($order, $flow);
     }
 
     /**
