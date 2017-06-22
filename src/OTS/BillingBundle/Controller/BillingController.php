@@ -14,6 +14,7 @@ class BillingController extends Controller
 {
     /**
 	 * @Route("/booking/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_home")
+	 * @Route("/booking/{_locale}/", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_home")
      * @Method({"GET", "POST"})
 	 */
     public function indexAction(Request $request)
@@ -90,6 +91,7 @@ class BillingController extends Controller
 
     /**
 	 * @Route("/booking/confirmation/{_locale}", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_thanks")
+	 * @Route("/booking/confirmation/{_locale}/", requirements={"_locale" = "|fr|en"}, defaults={"_locale"="fr"}, name="ots_billing_thanks")
      * @Method("GET")
 	 */
     public function confirmationAction()
