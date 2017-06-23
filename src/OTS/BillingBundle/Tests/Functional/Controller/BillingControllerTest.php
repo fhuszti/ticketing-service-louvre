@@ -8,7 +8,7 @@ class BillingControllerTest extends WebTestCase {
 	public function testIndex() {
 		$client = static::createClient();
 
-	    $crawler = $client->request('GET', '/booking/en');
+	    $crawler = $client->request('GET', '/booking/en/');
 	    //$crawler = $client->followRedirect();
 
 	    $response = $client->getResponse();
@@ -29,7 +29,7 @@ class BillingControllerTest extends WebTestCase {
 	public function testConfirmation() {
 		$client = static::createClient();
 
-	    $client->request('GET', '/booking/confirmation/en');
+	    $client->request('GET', '/booking/confirmation/en/');
 	    $response = $client->getResponse();
 
 	    $this->assertEquals(200, $response->getStatusCode());
