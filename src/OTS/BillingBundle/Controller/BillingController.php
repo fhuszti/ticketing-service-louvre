@@ -37,18 +37,19 @@ class BillingController extends Controller
 
 				//we check if everything is alright with the order
 				$orderSubmissionHandler = $this->get( 'ots_billing.billing_form.order_submission_handler' );
-				$error = $orderSubmissionHandler->processSubmittedOrder($order, $flow, $checkoutToken);
+				$error = $orderSubmissionHandler->processSubmittedOrder($order, $checkoutToken);
 				//if there's any error, we add the message to the flashbag and we abort the controller action
-				if ( $error !== '' ) {
-					//$error is an array if multiple errors where returned at the same time
-					if ( is_array($error) ) {
-						foreach ($error as $val) {
+				if ( $error[0] ) {
+					//$error[1] is an array if multiple errors where returned at the same time
+					if ( is_array($error[1]) ) {
+						foreach ($error[1] as $val) {
 							$request->getSession()->getFlashBag()->add('error', $val);
 						}
 					}
 					//else it's just a single string
-					else
+					else {
 						$request->getSession()->getFlashBag()->add('error', $error);
+					}
 				            
 		            $form = $flow->createForm();
 		            return $this->render('OTSBillingBundle:Billing:index.html.twig', array(

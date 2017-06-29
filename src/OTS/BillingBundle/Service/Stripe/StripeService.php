@@ -3,21 +3,13 @@ namespace OTS\BillingBundle\Service\Stripe;
 
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpKernel\Exception;
-use OTS\BillingBundle\Form\TicketOrderFlow;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class StripeService {
 	protected $translator;
 
-	protected $request;
-
-    protected $twig;
-
-	public function __construct(TranslatorInterface $translator, RequestStack $requestStack, \Twig_Environment $twig) {
+	public function __construct(TranslatorInterface $translator) {
 		$this->translator = $translator;
-
-		$this->request = $requestStack->getCurrentRequest();
-		$this->twig = $twig;
 
 		\Stripe\Stripe::setApiKey("sk_test_tSvs67jePf7WEqZK5dzgrZHS");
 	}
@@ -66,7 +58,7 @@ class StripeService {
 	 * -----------------
 	 */
 
-	public function chargeCustomer($cus_id, $price, TicketOrderFlow $flow) {
+	public function chargeCustomer($cus_id, $price) {
     	try {
 	    	// Charge the Customer
 			$charge = \Stripe\Charge::create(array(

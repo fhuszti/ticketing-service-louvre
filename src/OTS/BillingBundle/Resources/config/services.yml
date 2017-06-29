@@ -21,8 +21,6 @@ services:
         arguments:
             - "@translator"
             - "@validator"
-            - "@request_stack"
-            - "@twig"
 
     ots_billing.manager.entity_manager:
         class: OTS\BillingBundle\Manager\EntityManager
@@ -33,8 +31,6 @@ services:
         class: OTS\BillingBundle\Service\Stripe\StripeService
         arguments:
             - "@translator"
-            - "@request_stack"
-            - "@twig"
 
     ots_billing.mailer.mailer_notificator:
         class: OTS\BillingBundle\Service\Mailer\MailerNotificator
@@ -53,8 +49,6 @@ services:
             - "@ots_billing.manager.entity_manager"
             - "@ots_billing.stripe.stripe_service"
             - "@translator"
-            - "@request_stack"
-            - "@twig"
 
     ots_billing.listener.checkout_listener:
         class: OTS\BillingBundle\Listener\CheckoutListener

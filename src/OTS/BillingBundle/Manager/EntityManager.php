@@ -32,14 +32,14 @@ class EntityManager {
     }
 
     //manage entities association and validation
-    public function prepareEntitiesForPersist(TicketOrder $order, Customer $customer, Charge $charge, $flow) {
+    public function prepareEntitiesForPersist(TicketOrder $order, Customer $customer, Charge $charge) {
     	//we associate entites together
     	$this->associateEntities($order, $customer, $charge);
 
     	//and we check if everything is ok on $order
     	//as the underlying entity has a relation with every other entities
         // returns either an empty string if no error, or the error message to display
-    	return $this->orderManager->validateOrder($order, $flow);
+    	return $this->orderManager->validateOrder($order);
     }
 
     /**

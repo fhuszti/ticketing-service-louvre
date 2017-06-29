@@ -6,25 +6,16 @@ use OTS\BillingBundle\Entity\Ticket;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
-use OTS\BillingBundle\Form\TicketOrderFlow;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class OrderManager {
 	protected $translator;
 
     protected $validator;
 
-    protected $request;
-
-    protected $twig;
-
-	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator, RequestStack $requestStack, \Twig_Environment $twig) {
+	public function __construct(TranslatorInterface $translator, RecursiveValidator $validator) {
 		$this->translator = $translator;
 
         $this->validator = $validator;
-
-        $this->request = $requestStack->getCurrentRequest();
-        $this->twig = $twig;
 	}
 
 
@@ -127,7 +118,7 @@ class OrderManager {
     }
 
     //set the total order price depending on visitors birthdate
-    public function manageOrderPrice(TicketOrder $order, TicketOrderFlow $flow) {
+    public function manageOrderPrice(TicketOrder $order) {
     	$error = $this->translator->trans('ots_billing.controller.order_price.error');
 
     	$totalPrice = $this->manageTotalPrice( $order->getTickets(), $order );
@@ -140,7 +131,7 @@ class OrderManager {
 		//we set the correct order price
 		$order->setPrice($totalPrice);
 
-        return '';
+        return;
     }
 
     /**
@@ -185,7 +176,7 @@ class OrderManager {
      */
 
     //check whether the Order entity passed is valid
-    public function validateOrderPreCharge(TicketOrder $order, TicketOrderFlow $flow) {
+    public function validateOrderPreCharge(TicketOrder $order) {
         $errors = $this->validator->validate($order, null, array('pre-charge'));
         
         if (count($errors) > 0) {
@@ -201,11 +192,11 @@ class OrderManager {
             return $messages;
         }
 
-        return '';
+        return;
     }
 
     //check whether the Order entity passed is valid
-    public function validateOrder(TicketOrder $order, TicketOrderFlow $flow) {
+    public function validateOrder(TicketOrder $order) {
         $errors = $this->validator->validate($order);
         
         if (count($errors) > 0) {
@@ -221,7 +212,7 @@ class OrderManager {
             return $messages;
         }
 
-        return '';
+        return;
     }
 
     /**
@@ -240,25 +231,25 @@ class OrderManager {
      */
 
     //call order setup methods
-    public function manageOrder(TicketOrder $order, TicketOrderFlow $flow) {
+    public function manageOrder(TicketOrder $order) {
         //first we have to sanitize order type
         //as we get either "null" or "1" and we want "false" or "true"
         $this->manageOrderType($order);
 
         //then we check if the data we got is nice and clean
-        $error = $this->validateOrderPreCharge($order, $flow);
-        if ( $error !== '' )
+        $error = $this->validateOrderPreCharge($order);
+        if ( !is_bool($error) )
             return $error;
                 
         //set the total order price depending on visitors birthdate
-        $error = $this->manageOrderPrice($order, $flow);
-        if ( $error !== '' )
+        $error = $this->manageOrderPrice($order);
+        if ( !is_bool($error) )
             return $error;
                 
         //generate a random reference code for the order
         $this->manageOrderReference($order);
 
-        return '';
+        return;
     }
 
     /**
