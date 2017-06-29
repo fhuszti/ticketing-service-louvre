@@ -11,7 +11,7 @@
 	  	</title>
 
 	  	{% block stylesheets %}
-		  	{% stylesheets filter='cssrewrite'
+		  	{% stylesheets filter='cssrewrite, ?scssphp'
 		  		'//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'
 		  		'//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'
 		  		'//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
@@ -113,7 +113,7 @@
 	  	</div>
 
 	  	{% block javascripts %}
-	  		{% javascripts
+	  		{% javascripts filter='?jsqueeze'
 		  		'//code.jquery.com/jquery-3.2.1.min.js'
 		  		'//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
 		  		'//code.jquery.com/ui/1.12.1/jquery-ui.js' %}

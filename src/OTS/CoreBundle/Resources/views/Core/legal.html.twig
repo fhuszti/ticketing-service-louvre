@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter='cssrewrite'
+    {% stylesheets filter='cssrewrite, ?scssphp'
         'bundles/otscore/css/default-page.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
     {% endstylesheets %}

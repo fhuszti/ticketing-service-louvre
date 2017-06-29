@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {% stylesheets filter='cssrewrite'
+    {% stylesheets filter='cssrewrite, ?scssphp'
         'bundles/otscore/css/billing.css'
         '@CraueFormFlowBundle/Resources/assets/css/buttons.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
@@ -192,19 +192,19 @@
     {{ parent() }}
     
     {% if flow.currentStepNumber == 1 %}
-        {% javascripts
+        {% javascripts filter='?jsqueeze'
             'bundles/otscore/js/billing-step1.js'
             'bundles/bazingajstranslation/js/translator.min.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% elseif flow.currentStepNumber == 2 %}
-        {% javascripts
+        {% javascripts filter='?jsqueeze'
             'bundles/otscore/js/billing-step2.js'
             'bundles/bazingajstranslation/js/translator.min.js' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% elseif flow.currentStepNumber == 3 %}
-        {% javascripts
+        {% javascripts filter='?jsqueeze'
             'bundles/otscore/js/billing-step3.js'
             'bundles/otscore/js/stripe-checkout.js'
             'bundles/bazingajstranslation/js/translator.min.js' %}
