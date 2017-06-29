@@ -79,3 +79,17 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
+        jsqueeze:   ~
+        scssphp:
+          formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+    bundles:
+        - FrameworkBundle
+        - TwigBundle
+        - MonologBundle
+        - SwiftmailerBundle
+        - SensioFrameworkExtraBundle
+        - AsseticBundle
+        - OTSBillingBundle
+        - OTSCoreBundle
+        - CraueFormFlowBundle
+        - BazingaJsTranslationBundle
