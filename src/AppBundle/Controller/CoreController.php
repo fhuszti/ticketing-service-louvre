@@ -126,6 +126,7 @@ class CoreController extends Controller
 	/**
 	 * @Route("/booking/confirmation", name="core_confirmation")
      * @Route("/booking/confirmation/", name="core_confirmation")
+     * @Method("GET")
 	 */
     public function confirmationAction()
     {
