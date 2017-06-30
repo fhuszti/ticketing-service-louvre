@@ -1,0 +1,31 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite, ?scssphp'
+        'bundles/app/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <header class="row">
+        <h1 id="title">{% block error_title %}{% endblock %}</h1>
+    </header>
+
+    <hr />
+
+    <p>
+        {% block content %}
+        {% endblock %}
+    </p>
+
+    <div class="row">
+        <a href="{{ path('core_home', { '_locale': 'en' }) }}" title="{% trans into "en" %}core.header.homepage.link_title{% endtrans %}" class="btn btn-default">
+            {% trans into "en" %}core.header.logo.link_title{% endtrans %}
+        </a>
+        <a href="{{ path('core_home', { '_locale': 'fr' }) }}" title="{% trans into "fr" %}core.header.homepage.link_title{% endtrans %}" class="btn btn-default">
+            {% trans into "fr" %}core.header.logo.link_title{% endtrans %}
+        </a>
+    </div>
+{% endblock %}

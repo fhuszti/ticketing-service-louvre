@@ -1,0 +1,214 @@
+{% extends "layout.html.twig" %}
+{% form_theme orderForm 'form/fields.html.twig' 'form/form_errors.html.twig' %}
+
+{% block title %}
+  	{{ 'core.booking.header.title'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite, ?scssphp'
+        'bundles/app/css/booking.css'
+        '@CraueFormFlowBundle/Resources/assets/css/buttons.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	<h1 id="title">{{ 'core.booking.body.title'|trans }}</h1>
+    <hr />
+
+    {% include 'templates/flash.html.twig' %}
+
+    <div class="row">
+        <div>
+            {% include 'core/craueflow/stepList_content.html.twig' %}
+        </div>
+        {{ form_start(orderForm) }}
+            {% if form_errors(orderForm) %}
+                {{ form_errors(orderForm) }}
+            {% endif %}
+
+            {% if flow.getCurrentStepNumber() == 1 %}
+                {% if orderForm.date is defined %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.date, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
+                        </div>
+
+                        {% if form_errors(orderForm.date) %}
+                            {{ form_errors(orderForm.date) }}
+                        {% endif %}
+
+                        <div class="col-xs-12" id="order_datepicker">
+                        </div>
+                            {{ form_widget(orderForm.date, {
+                                'attr': {'class': 'form-control'}
+                            }) }}
+                    </div>
+                {% endif %}
+
+                {% if orderForm.type is defined %}
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.type, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
+                        </div>
+
+                        {% if form_errors(orderForm.type) %}
+                            {{ form_errors(orderForm.type) }}
+                        {% endif %}
+
+                        {{ form_widget(orderForm.type) }}
+                    </div>
+                {% endif %}
+
+                {% if orderForm.nbTickets is defined %}
+                    <div class="col-xs-12 col-md-4 form-group">
+                        <div class="col-xs-12">
+                            {{ form_label(orderForm.nbTickets, '', {
+                                'attr': {'class': 'control-label'}
+                            }) }}
+                        </div>
+
+                        {% if form_errors(orderForm.nbTickets) %}
+                            {{ form_errors(orderForm.nbTickets) }}
+                        {% endif %}
+
+                        {{ form_widget(orderForm.nbTickets, {
+                            'attr': {'class': 'form-control'}
+                        }) }}
+
+                        {% include 'templates/calculator.html.twig' %}
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if flow.getCurrentStepNumber() == 2 %}
+                {% if orderForm.tickets is defined %}
+                    <div class="col-xs-12 form-group">
+                        {% if form_errors(orderForm.tickets) %}
+                            {{ form_errors(orderForm.tickets) }}
+                        {% endif %}
+
+                        {{ form_widget(orderForm.tickets) }}
+
+                        {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
+                            <input type="hidden" id="appbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="appbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
+                        {% endfor %}
+
+                        <h2>{{ 'core.site.total_price'|trans }} <span id="total_price">-</span></h2>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            {% if flow.currentStepNumber == 3 %}
+                <div class="row well">
+                    <div class="col-xs-12 col-sm-6">
+                        <h4 class="col-xs-12">
+                            {{ 'core.site.date'|trans }} <span id="recap_date"></span>
+                        </h4>
+                        <h4 class="col-xs-12">
+                            {{ 'core.site.type'|trans }} <span id="recap_type"></span>
+                        </h4>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <h4 class="col-xs-12">
+                            {{ 'core.site.count'|trans }} <span id="recap_nbTickets"></span>
+                        </h4>
+                        <h4 class="col-xs-12">
+                            {{ 'core.site.total_price'|trans }} <span id="recap_price"></span>
+                        </h4>
+                    </div>
+                </div>
+
+                <script src="https://checkout.stripe.com/checkout.js"></script>
+
+                <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}" data-url="{{ path('core_booking') }}">
+                    {{ 'core.booking.step3.button'|trans }}
+                </button>
+
+                <div class="col-xs-12 alert alert-warning">
+                    {% for i in 0..1 %}
+                        <p>
+                            {{ ('core.booking.step3.help_text.'~i)|trans }}
+                        </p>
+                    {% endfor %}
+                    <ul>
+                        {% for i in 0..3 %}
+                            <li>
+                                {{ ('core.booking.step3.help_list.'~i)|trans|striptags('<span>')|raw }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                {{ form_rest(orderForm) }}
+            </div>
+
+            {% if flow.currentStepNumber == 1 %}
+                <div class="row alert alert-info">
+                    <ul>
+                        {% for i in 0..1 %}
+                            <li>
+                                {{ ('core.booking.step1.opening_help.'~i)|trans|nl2br }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% set next = ('core.service.flow.next')|trans %}
+            {% set reset = ('core.service.flow.reset')|trans %}
+            {% set back = ('core.service.flow.back')|trans %}
+            {% set finish = ('core.service.flow.finish')|trans %}
+
+            {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
+                craue_formflow_button_class_finish: 'hidden',
+                craue_formflow_button_class_last: 'btn btn-primary',
+                craue_formflow_button_class_back: 'btn btn-default',
+                craue_formflow_button_class_reset: 'btn btn-default',
+                craue_formflow_button_label_next: next,
+                craue_formflow_button_label_finish: finish,
+                craue_formflow_button_label_back: back,
+                craue_formflow_button_label_reset: reset
+            } %}
+        {{ form_end(orderForm) }}
+    </div>
+
+    <script>
+        global = {
+            locale: '{{ app.request.locale }}'
+        }
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    {% if flow.currentStepNumber == 1 %}
+        {% javascripts filter='?jsqueeze'
+            'bundles/app/js/booking-step1.js'
+            'bundles/bazingajstranslation/js/translator.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% elseif flow.currentStepNumber == 2 %}
+        {% javascripts filter='?jsqueeze'
+            'bundles/app/js/booking-step2.js'
+            'bundles/bazingajstranslation/js/translator.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% elseif flow.currentStepNumber == 3 %}
+        {% javascripts filter='?jsqueeze'
+            'bundles/app/js/booking-step3.js'
+            'bundles/app/js/stripe-checkout.js'
+            'bundles/bazingajstranslation/js/translator.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}

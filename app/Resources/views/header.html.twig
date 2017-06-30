@@ -1,0 +1,60 @@
+<header class="navbar navbar-default navbar-fixed-top" id="header">
+  	<div class="container">
+  		<div class="navbar-header">
+        	<a href="{{ path('core_home') }}" title="{{ 'core.header.logo.link_title'|trans }}" class="navbar-brand">
+            	{% image 'http://assets.fhuszti.tech/louvre/logo.png' %}
+					<img src="{{ asset_url }}" alt="{{ 'core.header.logo.alt'|trans }}" />
+				{% endimage %}
+			</a>
+
+        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+        	</button>
+    	</div>
+
+    	<div class="collapse navbar-collapse">
+        	{% if status_code is not defined %}
+                <div id="lang-menu" class="navbar-text">
+                    <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}" class="navbar-link">
+                        EN</a>
+                    <a href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'}))}}" class="navbar-link">
+                        FR
+                    </a>
+                </div>
+            {% endif %}
+
+            <nav role="navigation">
+                <!-- actual menu list -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% if homepage is defined %}#cover{% else %}{{ path('core_home') }}{% endif %}" title="{{ 'core.header.homepage.link_title'|trans }}" class="scrollspy-link">
+                            {{ 'core.header.homepage.title'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% if homepage is not defined %}{{ path('core_home') }}{% endif %}#opening-time" title="{{ 'core.header.opening.link_title'|trans }}" class="scrollspy-link">
+                            {{ 'core.header.opening.title'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% if homepage is not defined %}{{ path('core_home') }}{% endif %}#prices" title="{{ 'core.header.prices.link_title'|trans }}" class="scrollspy-link">
+                            {{ 'core.header.prices.title'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% if homepage is not defined %}{{ path('core_home') }}{% endif %}#contact" title="{{ 'core.header.contact.link_title'|trans }}" class="scrollspy-link">
+                            {{ 'core.header.contact.title'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('core_booking') }}" title="{{ 'core.header.book.link_title'|trans }}">
+                            {{ 'core.header.book.title'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+  	</div>
+</header>

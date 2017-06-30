@@ -1,0 +1,20 @@
+<footer class="row" id="footer">
+  	<div class="col-xs-12 col-sm-4">
+  		<a href="{{ path('core_legal') }}" title="{{ 'core.footer.legal.link_title'|trans }}">
+  			{{ 'core.footer.legal.title'|trans }}
+  		</a>
+  	</div>
+  	<div class="col-xs-12 col-sm-4">
+  		{{ 'core.footer.copyright'|trans|raw }}
+  	</div>
+  	<div class="col-xs-12 col-sm-4">
+  		<a href="{{ path('core_terms') }}" title="{{ 'core.footer.terms.link_title'|trans|raw }}">
+  			{{ 'core.footer.terms.title'|trans|raw }}
+  		</a>
+  	</div>
+  	<div class="col-xs-12">
+  		{% image 'https://insight.sensiolabs.com/projects/ff5af6f7-ea9a-499f-be19-c689bb8b7bd9/small.png' %}
+			<img src="{{ asset_url }}" alt="SensioLabsInsight - Platinum medal" />
+		{% endimage %}
+  	</div>
+</footer>

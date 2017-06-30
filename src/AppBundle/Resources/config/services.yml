@@ -1,0 +1,59 @@
+services:
+    app.form.flow.ticketOrder:
+        class: AppBundle\Form\TicketOrderFlow
+        parent: craue.form.flow
+        arguments:
+            - "@translator"
+
+    app.manager.stock_manager:
+        class: AppBundle\Manager\StockManager
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    app.manager.customer_manager:
+        class: AppBundle\Manager\CustomerManager
+
+    app.manager.charge_manager:
+        class: AppBundle\Manager\ChargeManager
+
+    app.manager.order_manager:
+        class: AppBundle\Manager\OrderManager
+        arguments:
+            - "@translator"
+            - "@validator"
+
+    app.manager.entity_manager:
+        class: AppBundle\Manager\EntityManager
+        arguments:
+            - "@app.manager.order_manager"
+
+    app.stripe.stripe_service:
+        class: AppBundle\Service\Stripe\StripeService
+        arguments:
+            - "@translator"
+
+    app.mailer.mailer_notificator:
+        class: AppBundle\Service\Mailer\MailerNotificator
+        arguments:
+            - "@mailer"
+            - "@twig"
+            - "@translator"
+    
+    app.booking_form.order_submission_handler:
+        class: AppBundle\Service\BookingForm\OrderSubmissionHandler
+        arguments:
+            - "@app.manager.stock_manager"
+            - "@app.manager.order_manager"
+            - "@app.manager.customer_manager"
+            - "@app.manager.charge_manager"
+            - "@app.manager.entity_manager"
+            - "@app.stripe.stripe_service"
+            - "@translator"
+
+    app.listener.checkout_listener:
+        class: AppBundle\Listener\CheckoutListener
+        arguments:
+            - "@app.mailer.mailer_notificator"
+            - "@app.manager.stock_manager"
+        tags:
+            - { name: kernel.event_listener, event: app.successful_checkout, method: processCheckoutSuccess }

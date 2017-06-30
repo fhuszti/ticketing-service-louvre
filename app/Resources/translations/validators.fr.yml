@@ -1,0 +1,71 @@
+core:
+    ticket_order_type:
+        date:
+            message: La date de visite doit être un objet de type DateTime valide ou une date valide au format string.
+            label:   Date de la visite
+        type:
+            label:   Type de billet
+            choice:
+                half: Demi-journée
+                full: Journée complète
+        count:
+            message: Le nombre de billets de la commande doit être un nombre supérieur à 0.
+            label:   Nombre de billets
+        price:
+            message:   Le prix de la commande doit être un nombre supérieur à 1.
+    ticket_type:
+        first_name:
+            label:     Prénom
+        name:
+            label:     Nom
+        country:
+            label:     Pays
+            placeholder: Sélectionnez un pays...
+        birth_date:
+            label:     Date de naissance
+            message:   La date de naissance doit être un objet de type DateTime valide ou une date valide au format string.
+        discounted:
+            label: |
+                Tarif réduit
+                Étudiant(e), militaire, employé(e) du Musée ou du Ministère de la Culture.
+                Une carte d'identité vous sera demandée à l'entrée.
+        price:
+            message:   Le prix du billet doit être un nombre supérieur ou égal à 0.
+    constraints:
+        charge:
+            amount:    Le montant à régler pour la commande doit être supérieur ou égal à 1.
+            currency:  La monnaie doit être au format ISO à trois caractères.
+        customer:
+            stripe_id: Un client doit avoir un ID Stripe associé.
+            email:     L'adresse email fournie n'est pas valide.
+        ticket:
+            first_name:
+                type:  Le prénom doit être une chaîne de caractères valide.
+                min:   Le prénom doit comporter au minimum 2 caractères.
+                max:   Le prénom doit comporter au maximum 50 caractères.
+            name:
+                type:  Le nom doit être une chaîne de caractères valide.
+                min:   Le nom doit comporter au minimum 2 caractères.
+                max:   Le nom doit comporter au maximum 50 caractères.
+            country:
+                type:  Le pays doit être une chaîne de caractères valide.
+                min:   Le pays doit comporter au minimum 2 caractères.
+                max:   Le pays doit comporter au maximum 50 caractères.
+            birth_date:
+                blank: Une date de naissance doit être renseignée.
+                type: La date de naissance doit être un objet de type DateTime valide ou une date valide au format string.
+            discounted: Le tarif réduit doit être un booléen.
+            price: Le prix du billet doit être un nombre supérieur ou égal à 0.
+        order:
+            date:  La date de commande doit être un objet de type DateTime valide ou une date valide au format string.
+            type:  Le type de commande doit être de type booléen.
+            count: Le nombre de billets doit être supérieur à 0.
+            price: Le prix de la commande doit être supérieur ou égal à 1.
+            reference:
+                type:  Le Code Référence de la commande doit être une chaîne de caractères valide.
+                exact: Le Code Référence de la commande doit être long de 15 caractères.
+    sdffsfsd:
+        next:   Suivant
+        finish: Terminer
+        back:   Retour
+        reset:  Recommencer

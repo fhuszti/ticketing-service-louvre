@@ -1,5 +1,13 @@
-{% extends "OTSCoreBundle::errors_layout.html.twig" %}
+{% extends "layout_errors.html.twig" %}
+
+{% block title %}
+    {{ 'core.errors.generic.title'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block error_title %}
+	{{ 'core.errors.generic.title'|trans }}
+{% endblock %}
 
 {% block content %}
-    {{ 'ots_core.errors.error'|trans|nl2br }}
+    {{ 'core.errors.generic.content'|trans }}
 {% endblock %}

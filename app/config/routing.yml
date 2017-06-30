@@ -1,10 +1,9 @@
-ots_core:
-    resource: "@OTSCoreBundle/Controller/"
+app:
+    resource: "@AppBundle/Controller/"
     type:     annotation
-
-ots_billing:
-    resource: "@OTSBillingBundle/Controller/"
-    type:     annotation
+    prefix:   /{_locale}
+    requirements:
+        _locale: en|fr|
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"

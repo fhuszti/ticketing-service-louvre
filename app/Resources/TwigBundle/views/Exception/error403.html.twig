@@ -1,5 +1,13 @@
-{% extends "OTSCoreBundle::errors_layout.html.twig" %}
+{% extends "layout_errors.html.twig" %}
+
+{% block title %}
+    {{ 'core.errors.e403.title'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block error_title %}
+	{{ 'core.errors.e403.title'|trans }}
+{% endblock %}
 
 {% block content %}
-    {{ 'ots_core.errors.error403'|trans|nl2br }}
+    {{ 'core.errors.e403.content'|trans }}
 {% endblock %}

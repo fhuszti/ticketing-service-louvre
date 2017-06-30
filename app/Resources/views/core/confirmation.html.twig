@@ -1,0 +1,24 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+  	{{ 'core.confirmation.header.title'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite, ?scssphp'
+        'bundles/app/css/default-page.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+	{{ include('templates/flash.html.twig') }}
+
+    <h1 id="title">{{ 'core.confirmation.body.title'|trans }}</h1>
+    <hr />
+
+    <p>
+        {{ 'core.confirmation.body.content'|trans|nl2br }}
+    </p>
+{% endblock %}
