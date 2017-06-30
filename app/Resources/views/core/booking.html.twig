@@ -140,7 +140,7 @@
                     <ul>
                         {% for i in 0..3 %}
                             <li>
-                                {{ ('core.booking.step3.help_list.'~i)|trans|striptags('<span>')|raw }}
+                                {{ ('core.booking.step3.help_list.'~i)|trans({'%start_span%': '<span class="highlight">', '%end_span%': '</span>'})|raw }}
                             </li>
                         {% endfor %}
                     </ul>

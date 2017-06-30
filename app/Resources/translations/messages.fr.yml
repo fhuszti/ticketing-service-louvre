@@ -132,9 +132,9 @@ core:
                 - "Des informations supplémentaires vous seront demandées après avoir cliqué sur le bouton ci-dessus, afin de simuler une transaction :"
             help_list:
                 - Entrez votre adresse mail si vous souhaitez recevoir les faux billets créés avec la commande, ou n'importe quelle fausse adresse si cela ne vous intéresse pas. Votre entrée doit tout de même garder un format valide d'adresse mail. Quelque chose comme <span class="highlight">abcde@fgh.ijk</span> fonctionnera
-                - Utilisez <span class="highlight">4242 4242 4242 4242</span> comme numéro de Carte Bleue
-                - Remplissez le champ de date d'expiration avec n'importe quelle date dans le futur, comme <span class="highlight">12/22</span>
-                - Entrez n'importe quel triolet de chiffres dans le champ CVV, comme <span class="highlight">123</span>
+                - Utilisez %start_span%4242 4242 4242 4242%end_span% comme numéro de Carte Bleue
+                - Remplissez le champ de date d'expiration avec n'importe quelle date dans le futur, comme %start_span%12/22%end_span%
+                - Entrez n'importe quel triolet de chiffres dans le champ CVV, comme %start_span%123%end_span%
     confirmation:
         header:
             title:  Merci !

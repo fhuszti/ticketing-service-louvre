@@ -132,9 +132,9 @@ core:
                 - "Upon clicking on the payment button above, you'll be asked a few more informations to simulate a payment:"
             help_list:
                 - Enter your own email address if you want to check out the fake tickets generated with your order, or any fake address if you're not interested. It still has to be a valid email address format though. Something like <span class="highlight">abcde@fgh.ijk</span> will do
-                - Use <span class="highlight">4242 4242 4242 4242</span> as the card number
-                - Fill the expiration date field with any date in the future, e.g. <span class="highlight">12/22</span>
-                - Enter any three-figures number in the CVV field, e.g. <span class="highlight">123</span>
+                - Use %start_span%4242 4242 4242 4242%end_span% as the card number
+                - Fill the expiration date field with any date in the future, e.g. %start_span%12/22%end_span%
+                - Enter any three-figures number in the CVV field, e.g. %start_span%123%end_span%
     confirmation:
         header:
             title:  Thank you!
