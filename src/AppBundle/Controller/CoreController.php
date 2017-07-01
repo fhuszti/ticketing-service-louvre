@@ -61,6 +61,7 @@ class CoreController extends Controller
     public function bookingAction(Request $request)
     {
     	$order = new TicketOrder();
+    	$validator = $this->get('validator');
     	
     	$flow = $this->get('app.form.flow.ticketOrder'); // must match the flow's service id
 		$flow->bind($order);
@@ -68,12 +69,74 @@ class CoreController extends Controller
 		// form of the current step
 		$form = $flow->createForm();
 		if ($flow->isValid($form)) {
+			//validating data for step 1
+			if ( $flow->getCurrentStepNumber() === 1 ) {
+				$errors = $validator->validate($order, null, array('step1'));
+		        
+		        //if there's any problem with step 1, we abort and display an error
+		        if (count($errors) > 0) {
+		            //we add all error messages to flashbag
+		            $i = 0;
+		            while ( $errors->has($i) == 1 ) {
+		                $request->getSession()->getFlashBag()->add( 'error', $errors->get($i)->getMessage() );
+		                
+		                $i++;
+		            }
+
+		            $form = $flow->createForm();
+		            return $this->render('core/booking.html.twig', array(
+		                    'orderForm' => $form->createView(),
+		                    'flow' => $flow,
+		                )
+		            );
+		        }
+			}
+
+			//validating data for step 2
+			if ( $flow->getCurrentStepNumber() === 2 ) {
+				$errors = $validator->validate($order, null, array('pre-charge'));
+		        
+		        //if there's any problem with step 2, we abort and display an error
+		        if (count($errors) > 0) {
+		            //we add all error messages to flashbag
+		            $i = 0;
+		            while ( $errors->has($i) == 1 ) {
+		                $request->getSession()->getFlashBag()->add( 'error', $errors->get($i)->getMessage() );
+		                
+		                $i++;
+		            }
+
+		            $form = $flow->createForm();
+		            return $this->render('core/booking.html.twig', array(
+		                    'orderForm' => $form->createView(),
+		                    'flow' => $flow,
+		                )
+		            );
+		        }
+			}
+
+	        //whatever the current step, we also want to know if there's enough tickets left in stock
+	        if ( !$this->get('app.manager.stock_manager')->checkIfStockOkForDate($order) ) {
+	        	$errString = $this->get('translator')->trans('core.service.stock.error');
+	        	$request->getSession()->getFlashBag()->add('error', $errString);
+
+	        	$form = $flow->createForm();
+	            return $this->render('core/booking.html.twig', array(
+	                    'orderForm' => $form->createView(),
+	                    'flow' => $flow,
+	                )
+	            );
+	        }
+
+			//it's all good, we save data
 			$flow->saveCurrentStepData($form);
 
+			//is there another step after this one ?
 			if ($flow->nextStep()) {
 				// form for the next step
 				$form = $flow->createForm();
-			} else {
+			} 
+			else {
 				$checkoutToken = $form->get('checkoutToken')->getData();
 
 				//we check if everything is alright with the order

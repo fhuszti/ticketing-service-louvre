@@ -57,7 +57,9 @@ core:
             discounted: The discount must be a boolean.
             price: The price of the ticket must be equal to or over 0.
         order:
-            date:  Order date must be either a valid DateTime object or a valid date string.
+            date:
+                type: Order date must be either a valid DateTime object or a valid date string.
+                custom: Order date can't be set in the past, and it can't be neither a sunday, a tuesday, or any french bank holidays.
             type:  Order type must be a boolean.
             count: Number of tikets must be greater than 0.
             price: The price of the order must be equal to or over 1.

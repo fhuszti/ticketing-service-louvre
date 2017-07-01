@@ -18,17 +18,30 @@
 	<h1 id="title">{{ 'core.booking.body.title'|trans }}</h1>
     <hr />
 
-    {% include 'templates/flash.html.twig' %}
-
     <div class="row">
         <div>
             {% include 'core/craueflow/stepList_content.html.twig' %}
         </div>
-        {{ form_start(orderForm) }}
-            {% if form_errors(orderForm) %}
-                {{ form_errors(orderForm) }}
-            {% endif %}
 
+        {% include 'templates/flash.html.twig' %}
+
+        {% if form_errors(orderForm) %}
+            {{ form_errors(orderForm) }}
+        {% endif %}
+
+        {% if form_errors(orderForm.date) %}
+            {{ form_errors(orderForm.date) }}
+        {% endif %}
+
+        {% if form_errors(orderForm.type) %}
+            {{ form_errors(orderForm.type) }}
+        {% endif %}
+
+        {% if form_errors(orderForm.nbTickets) %}
+            {{ form_errors(orderForm.nbTickets) }}
+        {% endif %}
+    
+        {{ form_start(orderForm) }}
             {% if flow.getCurrentStepNumber() == 1 %}
                 {% if orderForm.date is defined %}
                     <div class="col-xs-12 col-sm-6 col-md-4 form-group">
@@ -37,10 +50,6 @@
                                 'attr': {'class': 'control-label'}
                             }) }}
                         </div>
-
-                        {% if form_errors(orderForm.date) %}
-                            {{ form_errors(orderForm.date) }}
-                        {% endif %}
 
                         <div class="col-xs-12" id="order_datepicker">
                         </div>
@@ -58,10 +67,6 @@
                             }) }}
                         </div>
 
-                        {% if form_errors(orderForm.type) %}
-                            {{ form_errors(orderForm.type) }}
-                        {% endif %}
-
                         {{ form_widget(orderForm.type) }}
                     </div>
                 {% endif %}
@@ -73,10 +78,6 @@
                                 'attr': {'class': 'control-label'}
                             }) }}
                         </div>
-
-                        {% if form_errors(orderForm.nbTickets) %}
-                            {{ form_errors(orderForm.nbTickets) }}
-                        {% endif %}
 
                         {{ form_widget(orderForm.nbTickets, {
                             'attr': {'class': 'form-control'}

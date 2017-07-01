@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as CustomAssert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Ticket;
@@ -33,9 +34,13 @@ class TicketOrder
      *
      * @ORM\Column(name="date", type="date")
      * @Assert\Date(
-     *     message="core.constraints.order.date",
-     *     groups={"pre-charge"}
+     *     message="core.constraints.order.date.type",
+     *     groups={"step1", "pre-charge"}
      * )
+     * @CustomAssert\OrderDate(
+     *     message="core.constraints.order.date.custom",
+     *     groups={"step1", "pre-charge"}
+     * );
      */
     private $date;
 
@@ -46,7 +51,7 @@ class TicketOrder
      * @Assert\Type(
      *     type="bool",
      *     message="core.constraints.order.type",
-     *     groups={"pre-charge"}
+     *     groups={"step1", "pre-charge"}
      * )
      */
     private $type;
@@ -58,7 +63,7 @@ class TicketOrder
      * @Assert\GreaterThan(
      *     value=0,
      *     message="core.constraints.order.count",
-     *     groups={"pre-charge"}
+     *     groups={"step1", "pre-charge"}
      * )
      */
     private $nbTickets;
