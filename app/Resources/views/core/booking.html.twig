@@ -29,123 +29,35 @@
             {{ form_errors(orderForm) }}
         {% endif %}
 
-        {% if form_errors(orderForm.date) %}
-            {{ form_errors(orderForm.date) }}
-        {% endif %}
-
-        {% if form_errors(orderForm.type) %}
-            {{ form_errors(orderForm.type) }}
-        {% endif %}
-
-        {% if form_errors(orderForm.nbTickets) %}
-            {{ form_errors(orderForm.nbTickets) }}
-        {% endif %}
-    
         {{ form_start(orderForm) }}
             {% if flow.getCurrentStepNumber() == 1 %}
-                {% if orderForm.date is defined %}
-                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
-                        <div class="col-xs-12">
-                            {{ form_label(orderForm.date, '', {
-                                'attr': {'class': 'control-label'}
-                            }) }}
-                        </div>
 
-                        <div class="col-xs-12" id="order_datepicker">
-                        </div>
-                            {{ form_widget(orderForm.date, {
-                                'attr': {'class': 'form-control'}
-                            }) }}
-                    </div>
+                {% if form_errors(orderForm.date) %}
+                    {{ form_errors(orderForm.date) }}
                 {% endif %}
 
-                {% if orderForm.type is defined %}
-                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
-                        <div class="col-xs-12">
-                            {{ form_label(orderForm.type, '', {
-                                'attr': {'class': 'control-label'}
-                            }) }}
-                        </div>
-
-                        {{ form_widget(orderForm.type) }}
-                    </div>
+                {% if form_errors(orderForm.type) %}
+                    {{ form_errors(orderForm.type) }}
                 {% endif %}
 
-                {% if orderForm.nbTickets is defined %}
-                    <div class="col-xs-12 col-md-4 form-group">
-                        <div class="col-xs-12">
-                            {{ form_label(orderForm.nbTickets, '', {
-                                'attr': {'class': 'control-label'}
-                            }) }}
-                        </div>
-
-                        {{ form_widget(orderForm.nbTickets, {
-                            'attr': {'class': 'form-control'}
-                        }) }}
-
-                        {% include 'templates/calculator.html.twig' %}
-                    </div>
+                {% if form_errors(orderForm.nbTickets) %}
+                    {{ form_errors(orderForm.nbTickets) }}
                 {% endif %}
+
+                {% include 'core/blocks/booking/step1.html.twig' %}
             {% endif %}
 
             {% if flow.getCurrentStepNumber() == 2 %}
-                {% if orderForm.tickets is defined %}
-                    <div class="col-xs-12 form-group">
-                        {% if form_errors(orderForm.tickets) %}
-                            {{ form_errors(orderForm.tickets) }}
-                        {% endif %}
-
-                        {{ form_widget(orderForm.tickets) }}
-
-                        {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
-                            <input type="hidden" id="appbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="appbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
-                        {% endfor %}
-
-                        <h2>{{ 'core.site.total_price'|trans }} <span id="total_price">-</span></h2>
-                    </div>
+                        
+                {% if form_errors(orderForm.tickets) %}
+                    {{ form_errors(orderForm.tickets) }}
                 {% endif %}
+                
+                {% include 'core/blocks/booking/step2.html.twig' %}
             {% endif %}
 
             {% if flow.currentStepNumber == 3 %}
-                <div class="row well">
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="col-xs-12">
-                            {{ 'core.site.date'|trans }} <span id="recap_date"></span>
-                        </h4>
-                        <h4 class="col-xs-12">
-                            {{ 'core.site.type'|trans }} <span id="recap_type"></span>
-                        </h4>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="col-xs-12">
-                            {{ 'core.site.count'|trans }} <span id="recap_nbTickets"></span>
-                        </h4>
-                        <h4 class="col-xs-12">
-                            {{ 'core.site.total_price'|trans }} <span id="recap_price"></span>
-                        </h4>
-                    </div>
-                </div>
-
-                <script src="https://checkout.stripe.com/checkout.js"></script>
-
-                <button class="btn btn-primary" id="btn-stripe-checkout" data-amount="{{ orderForm.price.vars.value * 100 }}" data-nbtickets="{{ orderForm.nbTickets.vars.value }}" data-url="{{ path('core_booking') }}">
-                    {{ 'core.booking.step3.button'|trans }}
-                </button>
-
-                <div class="col-xs-12 alert alert-warning">
-                    {% for i in 0..1 %}
-                        <p>
-                            {{ ('core.booking.step3.help_text.'~i)|trans }}
-                        </p>
-                    {% endfor %}
-                    <ul>
-                        {% for i in 0..3 %}
-                            <li>
-                                {{ ('core.booking.step3.help_list.'~i)|trans({'%start_span%': '<span class="highlight">', '%end_span%': '</span>'})|raw }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% include 'core/blocks/booking/step3.html.twig' %}
             {% endif %}
 
             <div class="row">

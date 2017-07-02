@@ -16,123 +16,13 @@
 {% block body %}
 	{{ include('templates/flash.html.twig') }}
 
-    <div class="row" id="cover">
-        <div class="col-xs-12" id="cover-img">
-        </div>
+    {{ include('core/blocks/index/cover.html.twig') }}
 
-        <div class="title-block">
-            <h1>{{ 'core.home.cover.title_block.title'|trans }}</h1>
+    {{ include('core/blocks/index/opening.html.twig') }}
 
-            <h2>{{ 'core.home.cover.title_block.subtitle'|trans }}</h2>
-        </div>
+    {{ include('core/blocks/index/prices.html.twig') }}
 
-        <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('core_booking') }}">
-            {{ 'core.home.cover.button'|trans }}
-        </a>
-
-        <a href="#opening-time" title="{{ 'core.home.cover.more.link_title'|trans }}" class="scrollspy-link">
-            {{ 'core.home.cover.more.content'|trans }}
-        </a>
-    </div>
-
-    <div class="row text-center">
-        <div class="col-xs-12" id="opening-time">
-            <h2>{{ 'core.home.opening.title'|trans }}</h2>
-
-            <p class="left-centered">
-                {{ 'core.home.opening.content'|trans|nl2br }}
-            </p>
-        </div>
-    </div>
-
-    <div class="row text-center" id="prices">
-        <div class="match-my-cols">
-            <div class="col-xs-12 col-sm-6 price-block">
-                <div class="price-box">
-                    <h2>{{ 'core.home.price.normal.title'|trans }}</h2>
-
-                    <p>
-                        {{ 'core.home.price.normal.content'|trans }}
-                    </p>
-
-                    <h3>{{ 'core.home.price.normal.price'|trans }}</h3>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 price-block">
-                <div class="price-box">
-                    <h2>{{ 'core.home.price.discounted.title'|trans }}</h2>
-
-                    <p>
-                        {{ 'core.home.price.discounted.content'|trans }}
-                    </p>
-
-                    <h3>{{ 'core.home.price.discounted.price'|trans }}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="match-my-cols">
-            <div class="col-xs-12 col-sm-6 price-block">
-                <div class="price-box">
-                    <h2>{{ 'core.home.price.child.title'|trans }}</h2>
-
-                    <p>
-                        {{ 'core.home.price.child.content'|trans|nl2br }}
-                    </p>
-
-                    <h3>{{ 'core.home.price.child.price'|trans }}</h3>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6 price-block">
-                <div class="price-box">
-                    <h2>{{ 'core.home.price.senior.title'|trans }}</h2>
-
-                    <p>
-                        {{ 'core.home.price.senior.content'|trans|nl2br }}
-                    </p>
-
-                    <h3>{{ 'core.home.price.senior.price'|trans }}</h3>
-                </div>
-            </div>
-        </div>
-
-       <div class="col-xs-12">
-           <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('core_booking') }}">
-                {{ 'core.home.price.button'|trans }}
-            </a>
-        </div>
-    </div>
-
-    <div class="row text-center" id="contact">
-        <h2>Contact</h2>
-
-        <div class="vertical-align">
-            <div class="col-xs-12 col-sm-6">
-                <address class="left-centered">
-                    Musée du Louvre, Pavillon Mollien,<br />
-                    75058 PARIS CEDEX 01<br />
-                    FRANCE
-                </address>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <p class="hr-border">
-                    +33 (0)1 40 20 53 17<br />
-                    info@louvre.fr
-                </p>
-                
-                <p>
-                    <a href="https://www.facebook.com" title="Facebook">
-                        <i class="fa fa-facebook-square fa-3x"></i>
-                    </a>
-                    <a href="https://plus.google.com" title="Google+">
-                        <i class="fa fa-google-plus-square fa-3x"></i>
-                    </a>
-                    <a href="https://www.twitter.com" title="Twitter">
-                        <i class="fa fa-twitter-square fa-3x"></i>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
+    {{ include('core/blocks/index/contact.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}

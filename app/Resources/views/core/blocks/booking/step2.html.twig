@@ -1,0 +1,12 @@
+{% if orderForm.tickets is defined %}
+    <div class="col-xs-12 form-group">
+
+        {{ form_widget(orderForm.tickets) }}
+
+        {% for i in 0..orderForm.nbTickets.vars.value - 1 %}
+            <input type="hidden" id="appbundle_ticketorder_tickets_{{ i }}_php_birthDate" name="appbundle_ticketorder[tickets][{{ i }}][birthDate]" required="required" />
+        {% endfor %}
+
+        <h2>{{ 'core.site.total_price'|trans }} <span id="total_price">-</span></h2>
+    </div>
+{% endif %}

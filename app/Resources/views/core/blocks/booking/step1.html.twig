@@ -1,0 +1,43 @@
+{% if orderForm.date is defined %}
+    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+        <div class="col-xs-12">
+            {{ form_label(orderForm.date, '', {
+                'attr': {'class': 'control-label'}
+            }) }}
+        </div>
+
+        <div class="col-xs-12" id="order_datepicker">
+        </div>
+            {{ form_widget(orderForm.date, {
+                'attr': {'class': 'form-control'}
+            }) }}
+    </div>
+{% endif %}
+
+{% if orderForm.type is defined %}
+    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+        <div class="col-xs-12">
+            {{ form_label(orderForm.type, '', {
+                'attr': {'class': 'control-label'}
+            }) }}
+        </div>
+
+        {{ form_widget(orderForm.type) }}
+    </div>
+{% endif %}
+
+{% if orderForm.nbTickets is defined %}
+    <div class="col-xs-12 col-md-4 form-group">
+        <div class="col-xs-12">
+            {{ form_label(orderForm.nbTickets, '', {
+                'attr': {'class': 'control-label'}
+            }) }}
+        </div>
+
+        {{ form_widget(orderForm.nbTickets, {
+            'attr': {'class': 'form-control'}
+        }) }}
+
+        {% include 'templates/calculator.html.twig' %}
+    </div>
+{% endif %}

@@ -1,0 +1,56 @@
+<div class="row text-center" id="prices">
+    <div class="match-my-cols">
+        <div class="col-xs-12 col-sm-6 price-block">
+            <div class="price-box">
+                <h2>{{ 'core.home.price.normal.title'|trans }}</h2>
+
+                <p>
+                    {{ 'core.home.price.normal.content'|trans }}
+                </p>
+
+                <h3>{{ 'core.home.price.normal.price'|trans }}</h3>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 price-block">
+            <div class="price-box">
+                <h2>{{ 'core.home.price.discounted.title'|trans }}</h2>
+
+                <p>
+                    {{ 'core.home.price.discounted.content'|trans }}
+                </p>
+
+                <h3>{{ 'core.home.price.discounted.price'|trans }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="match-my-cols">
+        <div class="col-xs-12 col-sm-6 price-block">
+            <div class="price-box">
+                <h2>{{ 'core.home.price.child.title'|trans }}</h2>
+
+                <p>
+                    {{ 'core.home.price.child.content'|trans|nl2br }}
+                </p>
+
+                <h3>{{ 'core.home.price.child.price'|trans }}</h3>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 price-block">
+            <div class="price-box">
+                <h2>{{ 'core.home.price.senior.title'|trans }}</h2>
+
+                <p>
+                    {{ 'core.home.price.senior.content'|trans|nl2br }}
+                </p>
+
+                <h3>{{ 'core.home.price.senior.price'|trans }}</h3>
+            </div>
+        </div>
+    </div>
+
+   <div class="col-xs-12">
+       <a class="btn btn-default btn-lg" id="booking-btn" href="{{ path('core_booking') }}">
+            {{ 'core.home.price.button'|trans }}
+        </a>
+    </div>
+</div>
