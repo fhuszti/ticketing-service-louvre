@@ -51,7 +51,7 @@ class MailerNotificator {
 		$body = $this->renderTemplate($order, $imgUrl);
 		
 		$mail->setSubject($subject)
-			 ->setFrom('contact@fhuszti.com')
+			 ->setFrom('contact@fhuszti.tech')
 			 ->setTo($cus_email)
 			 ->setBody(
 				 $body,
