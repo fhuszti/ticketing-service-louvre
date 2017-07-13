@@ -28,6 +28,7 @@ class TicketOrderType extends AbstractType
                             'translation_domain' => 'validators'
                         ))
                         ->add('type',      ChoiceType::class, array(
+                            'invalid_message' => "core.constraints.order.type",
                             'label' =>           "core.ticket_order_type.type.label",
                             'choices' =>   array(
                                 'core.ticket_order_type.type.choice.half' => false,
