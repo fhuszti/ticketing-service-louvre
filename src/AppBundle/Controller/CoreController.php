@@ -71,6 +71,8 @@ class CoreController extends Controller
 		if ($flow->isValid($form)) {
 			//validating data for step 1
 			if ( $flow->getCurrentStepNumber() === 1 ) {
+				$this->get('app.manager.order_manager')->manageOrderType($order);
+
 				$errors = $validator->validate($order, null, array('step1'));
 		        
 		        //if there's any problem with step 1, we abort and display an error
@@ -94,6 +96,8 @@ class CoreController extends Controller
 
 			//validating data for step 2
 			if ( $flow->getCurrentStepNumber() === 2 ) {
+				$this->get('app.manager.order_manager')->manageOrderType($order);
+
 				$errors = $validator->validate($order, null, array('pre-charge'));
 		        
 		        //if there's any problem with step 2, we abort and display an error
