@@ -21,7 +21,7 @@
         ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.0",
         "components/font-awesome": "^4.7",
         "coresphere/console-bundle": "^0.5.0",
         "craue/formflow-bundle": "~3.0@dev",
